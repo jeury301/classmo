@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 def index(request):
     ##user=request.user gets user object
