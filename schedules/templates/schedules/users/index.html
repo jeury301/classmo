@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Some shit</title>
+</head>
+
+<body>
+  <!-- <p>{{ id }}</p> --> 
+  {% if user.is_authenticated %}
+  <p>You are logged in</p>
+  <p> {{ user.get_username }}</p>
+{% endif %}
+<form action="{% url 'schedules:new_user' %}" method="post">
+  {% csrf_token %}
+  User: <input type="text" name="user"><br>
+  Pasword: <input type="text" name="password"><br>
+  <input type="submit" value="Submit">
+
+  <p> already a user? <a href="{% url 'login' %}">Login</a></p>
+</form>
+
+<p><a href="{% url 'logout' %}">Log out</a></p>
+
+</body>
+</html>

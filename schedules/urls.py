@@ -1,11 +1,12 @@
 from django.urls import path
-
-from . import views
+from .views import subjects, users
+#from . import views
 
 app_name='schedules'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('register/',views.register,name='register'),
-
+    path('', users.index, name='index'),
+    path('register/',users.register,name='register')
+    path('new_user/',users.new_user,name='new_user'),
+    path('subjects/',subjects.subjects,name='subjects')
 ]

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
 
+
 def index(request):
 	##user=request.user gets user object
 	return render(request,'schedules/index.html')
