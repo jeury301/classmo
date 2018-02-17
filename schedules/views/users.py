@@ -34,3 +34,4 @@ def register(request):
 		return redirect('schedules:index')
 	else:
 		return HttpResponse("something badd happened")
+		#Comment
