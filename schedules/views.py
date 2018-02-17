@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 
+
 def index(request):
 	##user=request.user gets user object
 	return render(request,'schedules/index.html')
