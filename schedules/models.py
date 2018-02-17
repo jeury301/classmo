@@ -1,5 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Class(models.Model):
-    class_name = models.CharField(max_length=200)
+class Subject(models.Model):
+    name = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
