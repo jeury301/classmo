@@ -16,3 +16,20 @@ def new_user(request):
     user.last_name="The hun"
     user.save()
     return HttpResponseRedirect(reverse('schedules:index'))
+
+def register(request):
+	username=request.POST.get('user','')
+	password=request.POST.get('password','')
+	email=request.POST.get('email','')
+	fname=request.POST.get('fname','')
+	lname=request.POST.get('lname','')
+	user=User.objects.create_user(username,email,password)
+	user.first_name=fname
+	user.last_name=lname
+	user.save()
+	check = authenticate(request, username=username, password=password)
+	if check is not None:
+		login(request,user)
+		return redirect('schedules:index')
+	else:
+		return HttpResponse("something badd happened")

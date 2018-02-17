@@ -9,17 +9,26 @@
   <!-- <p>{{ id }}</p> --> 
   {% if user.is_authenticated %}
   <p>You are logged in</p>
-  <p> {{ user.get_username }}</p>
-{% endif %}
-<form action="{% url 'schedules:new_user' %}" method="post">
+  <p> Welcome {{ user.get_username }}</p>
+
+
+{% else %}
+
+<h1> Create a new account</h1>
+<form action="{% url 'schedules:register' %}" method="post">
   {% csrf_token %}
-  User: <input type="text" name="user"><br>
-  Pasword: <input type="text" name="password"><br>
-  <input type="submit" value="Submit">
-
-  <p> already a user? <a href="{% url 'login' %}">Login</a></p>
+  <table><tbody>
+  <tr><td><label for="user">User</label></td><td><input type="text" name="user"></td></tr>
+  <tr><td><label for="password">Password</label></td><td><input type="text" name="password"></td></tr>
+  <tr><td><label for="email">Email</label></td><td><input type="text" name="email"></td></tr>
+  <tr><td><label for="fname">First Name</label></td><td><input type="text" name="fname"></td></tr>
+  <tr><td><label for="lname">Last Name</label></td><td><input type="text" name="lname"></td></tr>
+</tbody>
+  </table>
+  <input type="submit"  style="background-color:cyan" value="Submit">
 </form>
-
+<p> Already a user? <a href="{% url 'login' %}">Login</a></p>
+{% endif %}
 <p><a href="{% url 'logout' %}">Log out</a></p>
 
 </body>

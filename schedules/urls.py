@@ -6,7 +6,7 @@ app_name='schedules'
 
 urlpatterns = [
     path('', users.index, name='index'),
-    path('register/',users.register,name='register')
+    path('register/',users.register,name='register'),
     path('new_user/',users.new_user,name='new_user'),
     path('subjects/',subjects.subjects,name='subjects')
 ]
