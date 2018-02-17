@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Base model for others to inherit from
 class BaseModel(models.Model):
@@ -8,6 +9,25 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-# Create your models here.
 class Subject(BaseModel):
     name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class Location(BaseModel):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class Session(BaseModel):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+
+
+class Registration(BaseModel):
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
