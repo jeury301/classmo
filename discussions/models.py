@@ -7,8 +7,8 @@ class Comment(BaseModel):
     post = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     active = models.BooleanField(default=True)
-	body = models.TextField(max_length=3000)
-	score = models.IntegerField(default=1)
-	
+    body = models.TextField(max_length=3000)
+    score = models.IntegerField(default=1)
+    
 
 
