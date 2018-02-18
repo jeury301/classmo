@@ -2,18 +2,23 @@
 <html>
 <head>
 
-<title>Some shit</title>
+<title>Home</title>
 </head>
 
 <body>
+  <div style="outline:solid 1px red">
+<ul id="nav">
+  <li><a href="{% url 'schedules:index' %}">Home</a></li>
+  <li><a href="{% url 'login' %}">Login</a></li>
+  <li><a href="{% url 'logout' %}">Log Out</a></li>
+</ul>
+</div>
   <!-- <p>{{ id }}</p> --> 
+  {% block content %}
   {% if user.is_authenticated %}
   <p>You are logged in</p>
   <p> Welcome {{ user.get_username }}</p>
-
-
 {% else %}
-
 <h1> Create a new account</h1>
 <form action="{% url 'schedules:register' %}" method="post">
   {% csrf_token %}
@@ -31,5 +36,6 @@
 {% endif %}
 <p><a href="{% url 'logout' %}">Log out</a></p>
 
+{% endblock %}
 </body>
 </html>
