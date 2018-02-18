@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 def index(request):
     ##user=request.user gets user object
     return render(request,'schedules/users/index.html')
-
+"""
 def new_user(request):
     username=request.POST.get('user','')
     password=request.POST.get('password','')
@@ -17,6 +17,7 @@ def new_user(request):
     user.last_name="The hun"
     user.save()
     return HttpResponseRedirect(reverse('schedules:index'))
+    """
 
 def register(request):
 	username=request.POST.get('user','')
