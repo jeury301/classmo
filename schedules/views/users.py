@@ -6,9 +6,11 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 
 def index(request):
-    user=request.user
-    session_list=user.registration_set.all()
-    return render(request,'schedules/users/index.html',{"registrations":session_list})
+	if request.user.is_authenticated:
+		user=request.user
+		session_list=user.registration_set.all()
+		return render(request,'schedules/users/index.html',{"registrations":session_list})
+	return render(request,'schedules/users/index.html')
 """
 def new_user(request):
     username=request.POST.get('user','')

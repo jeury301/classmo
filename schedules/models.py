@@ -30,11 +30,10 @@ class Session(BaseModel):
     name = models.CharField(max_length=200)
 
     def __str__(self):
-<<<<<<< HEAD
-        return str(self.pk)
-=======
+
         return self.name
->>>>>>> 22d317153d275abf2eaf5a8ca8e47040e4cc5744
+
+
 
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
