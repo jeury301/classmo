@@ -3,99 +3,85 @@ import datetime
 from django.utils import timezone
 from django.test import TestCase
 
-from .models import Comment
+from .models import Comment, Post
 from schedules.models import BaseModel, Subject
+
+
+def create_subject():
+    """Creates, saves, and returns a subject object"""
+    subj = Subject(name="Algebra I")
+    subj.save()
+    return subj
+
+def create_a_post():
+    """Creates, saves, and returns a post"""
+    subj = create_subject()
+    post = Post.create(subject=subj, body="I'm a top-level post")
+    post.save()
+    return post
+
+def create_comment_immediately_below_post():
+    """Creates, saves, and returns a comment without a parent,
+    i.e., a comment responding directly to a post
+    """
+    post = create_a_post()
+    comment = Comment.create(post=post, body="I'm a comment right below a post")
+    comment.save()
+    return comment
+
+def create_comment_with_parent_comment(self):
+    parent = create_comment_immediately_below_post()
+    comment = Comment.create(parent=parent, body="I'm a child comment")
 
 
 class CommentModelTests(TestCase):
 
-    def create_subject(self):
-        """Creates, saves, and returns a subject object
+    def test_create_comment_missing_kwarg_raises_type_error(self):
+        """Not passing a required kwarg like body should raise type error
         """
-        subj = Subject(name="Algebra I")
-        subj.save()
-        return subj
-
-    def create_a_post(self):
-        """Creates and returns a post
-        """
-        subj = self.create_subject()
-        post = Comment.create_post(subject=subj, body="I'm a top-level post")
-        return post
-
-    def test_post_parent_is_none(self):
-        """When creating a top-level comment (a post), the value
-        of the parent field should be None
-        """
-        subj = self.create_subject()
-        post = Comment.create_post(subject=subj, body="I'm a top-level post")
-        self.assertIs(post.parent, None)
-
-    def test_post_post_is_self(self):
-        """A top-level comment should have itself as the value
-        of the post field
-        """
-        subj = self.create_subject()
-        post = Comment.create_post(subject=subj, body="I'm a top-level post")
-        self.assertIs(post.post, post)
-
-    def test_create_post_bad_kwargs_raises_type_error(self):
-        """Passing kwargs other than subject and body should raise
-        TypeError
-        """
-        subj = self.create_subject()
+        post = create_a_post()
         with self.assertRaises(TypeError):
-            Comment.create_post(subject=subj, body="Hi", wrong="Oh no")
+            comment = Comment.create(post=post)
+
+    def test_create_comment_either_parent_or_post_must_be_kwarg(self):
+        """If neither 'parent' nor 'post' are passed as kwarg keys,
+        a TypeError should be raised
+        """
+        post = create_a_post()
+        with self.assertRaises(TypeError):
+            Comment.create(body="This shouldn't work")
+
+    def test_create_comment_parent_is_none_when_post_is_kwarg(self):
+        """A comment's 'parent' field should be none when 'post' is
+        passed as a kwarg
+        """
+        post = create_a_post()
+        comment = Comment.create(body="I'm a comment without a parent", post=post)
+        self.assertIs(comment.parent, None)
+
+    def test_post_matches_parent_when_parent_is_comment(self):
+        """A comment's 'post'field should match its parent it when has a
+        non-None parent
+        """
+        post = create_a_post()
+        parent = Comment.create(body="I'm a parent comment", post=post)
+        comment = Comment.create(body="I'm a child comment", parent=parent)
+        self.assertIs(comment.post, parent.post)
+
+    def test_post_is_not_none_when_parent_is_kwarg(self):
+        """A comment's post field should not be none when parent
+        is passed in as a a kwarg to create()
+        """
+        post = create_a_post()
+        parent = Comment.create(body="I'm a parent comment", post=post)
+        comment = Comment.create(body="I'm a child comment", parent=parent)
+        self.assertIsNotNone(comment.post)
+
+class PostModelTests(TestCase):
 
     def test_create_post_missing_kwarg_raises_type_error(self):
         """Not passing a required kwarg like body should raise type error
         """
-        subj = self.create_subject()
+        subj = create_subject()
         with self.assertRaises(TypeError):
-            Comment.create_post(subject=subj)
-
-    def test_create_comment_subject_not_none_when_parent_is_post(self):
-        """A comment's subject field should not be None when its
-        parent is a top-level post
-        """
-        post = self.create_a_post()
-        comment = Comment.create_comment(body="I'm a comment", parent=post)
-        self.assertIsNot(comment.subject, None)
-
-    def test_create_comment_subject_matches_parent_when_parent_is_post(self):
-        """A comment's subject field should match its parent when
-        its parent is a post
-        """
-        post = self.create_a_post()
-        comment = Comment.create_comment(body="I'm a comment", parent=post)
-        self.assertIs(comment.subject, post.subject)
-
-    def test_create_comment_subject_not_none_when_parent_is_comment(self):
-        """A comment's subject feld should not be None when its parent
-        is NOT a top-level post
-        """
-        post = self.create_a_post()
-        parent = Comment.create_comment(body="I'm a parent comment", parent=post)
-        comment = Comment.create_comment(body="I'm a child comment", parent=parent)
-        self.assertIsNot(comment.subject, None)
-
-    def test_create_comment_subject_matches_parent_when_parent_is_comment(self):
-        """A comment's suject should match its parent when a parent
-        is a child comment
-        """
-        post = self.create_a_post()
-        parent = Comment.create_comment(body="I'm a parent comment", parent=post)
-        comment = Comment.create_comment(body="I'm a child comment", parent=parent)
-        self.assertIs(comment.subject, parent.subject)
-
-    def test_create_comment_subject_matches_post_when_parent_not_post(self):
-        """A comment's subject field should match that of the top-level
-        post even whent the comment's parent is not itself a top-level
-        post
-        """
-        post = self.create_a_post()
-        parent = Comment.create_comment(body="I'm a parent comment", parent=post)
-        comment = Comment.create_comment(body="I'm a child comment", parent=parent)
-        self.assertIs(comment.subject, post.subject)
-
-
+            Post.create(subject=subj)
