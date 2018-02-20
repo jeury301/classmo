@@ -15,12 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin, auth
 from django.urls import include, path
+from django.conf.urls import url
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('discussions/', include('discussions.urls')),
     path('schedules/', include('schedules.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    url(r'^.*$', RedirectView.as_view(url='schedules', permanent=False), name='index')
 ]
 
 
