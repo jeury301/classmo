@@ -1,5 +1,8 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 from schedules.models import BaseModel, Subject
 
@@ -95,6 +98,9 @@ class Comment(BaseModel):
 
     #TODO (@Michael): Write method for getting top-level posts
     # for a given subjecct
+    def get_posts_for_subject(subject):
+        Comment.objects.filter(post=).order_by('-created_date')[:10]
+
 
     #TODO (@Michael): Wite method for getting all comments for a given
     # top level post
