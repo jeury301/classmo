@@ -30,10 +30,11 @@ class Session(BaseModel):
     name = models.CharField(max_length=200)
 
     def __str__(self):
-
         return self.name
 
-
+    def is_registered(self,user):
+        check=self.registration_set.filter(user=user).exists()
+        return check
 
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)

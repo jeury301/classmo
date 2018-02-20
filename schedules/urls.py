@@ -10,12 +10,10 @@ urlpatterns = [
 
     #path('new_user/',users.new_user,name='new_user'),
     path('subjects/',subjects.subjects,name='subjects'),
-    path('sessions/<int:session_id>/',sessions.sessions,name='sessions'),
+    #redundant after merge with jeury's view
+    #path('sessions/<int:session_id>/',sessions.sessions,name='sessions'),
    	path('sessions/<int:session_id>/registration',sessions.registration,name='registration'),
-
-    
-    path('subjects/<int:subject_id>/detail',subjects.detail, name='detail'),
+	path('subjects/<int:subject_id>/detail',subjects.detail, name='detail'),
     path('subjects/<int:subject_id>/sessions',subjects.sessions, name='sessions'),
     path('sessions/<int:session_id>/detail',subjects.session, name='session'),
-
 ]

@@ -28,5 +28,13 @@
             </div>
         </div>
     </div>
+    <div>
+            <P>Register for this section</P>
+        <form action="{% url 'schedules:registration' session.id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{user.id}}">
+        <input type="submit"  style="background-color:cyan" value="Register">
+    </form>
+</div>
 </div>
 {%endblock content%}
