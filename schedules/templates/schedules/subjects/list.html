@@ -1,7 +1,16 @@
+{% extends 'base.html' %}
+
+{%block content%}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+  <li class="breadcrumb-item active">Subjects</li>
+</ol>
+<h1> Subjects</h1>
 <ul>
     {%for subject in subjects%}
     <li>
-        <a href="#">{{subject.name}}</a>
+        <a href="{% url 'schedules:detail' subject.id %}">{{subject.name}}</a>
     </li>
     {%endfor%}
 </ul>
+{%endblock%}
