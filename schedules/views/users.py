@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 
 def index(request):
-    ##user=request.user gets user object
-    return render(request,'schedules/users/index.html')
+    user=request.user
+    session_list=user.registration_set.all()
+    return render(request,'schedules/users/index.html',{"registrations":session_list})
 """
 def new_user(request):
     username=request.POST.get('user','')
@@ -34,5 +35,5 @@ def register(request):
 		login(request,user)
 		return redirect('schedules:index')
 	else:
-		return HttpResponse("something badd happened")
+		return HttpResponse("something bad happened")
 		#Comment

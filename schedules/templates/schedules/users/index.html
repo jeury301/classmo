@@ -34,7 +34,11 @@
 </form>
 <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
 {% endif %}
-<p><a href="{% url 'logout' %}">Log out</a></p>
+
+{% for reg in registrations %}
+<li>Location:{{reg.session.location}} Subject:{{reg.session.subject}}</li>
+{% endfor %}
+<a href="{% url 'logout' %}">Log out</a>
 
 {% endblock %}
 </body>

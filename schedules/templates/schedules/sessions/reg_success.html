@@ -1,0 +1,14 @@
+{% extends "schedules/sessions/session.html" %}
+
+{% block content %}
+
+{% if error %}
+<p> You already registered</p>
+{% else %}
+<P>Registration Successful</p>
+{% endif %}
+<a href="{% url 'schedules:sessions' session %}">Go back</a>
+{% endblock %}
+
+
+
