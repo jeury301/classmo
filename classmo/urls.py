@@ -21,7 +21,6 @@ urlpatterns = [
     path('discussions/', include('discussions.urls')),
     path('schedules/', include('schedules.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    
 ]
 
 

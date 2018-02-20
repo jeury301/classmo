@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {%block content%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'schedules:detail' session.subject.id %}">{{session.subject.name}}</a></li>
+
+    <li class="breadcrumb-item active">{{session.name}}</li>
+</ol>
+<h1>
+    {{session.subject.name}} - {{session.name}}
+</h1>
+<div id="info-container">
+    <div class="card">
+        <div class="card-block" style="padding: 20px;">
+            <h4 class="card-title">Instructor Info</h4>
+            <div style="padding: 10px;">
+                <p class="card-text"><strong>Instructor: </strong>{{session.instructor.last_name}}, {{session.instructor.first_name}}</p>
+                <a href="mailto:{{session.instructor.email}}" class="card-link" >{{session.instructor.email}}</a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-block" style="padding: 20px;">
+            <h4 class="card-title">Location Info (NJIT)</h4>
+            <div style="padding: 10px;">
+                <p class="card-text"><strong>Building: </strong>{{session.location.name}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock content%}

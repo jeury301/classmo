@@ -1,41 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html' %}
 
-<title>Home</title>
-</head>
-
-<body>
-  <div style="outline:solid 1px red">
-<ul id="nav">
-  <li><a href="{% url 'schedules:index' %}">Home</a></li>
-  <li><a href="{% url 'login' %}">Login</a></li>
-  <li><a href="{% url 'logout' %}">Log Out</a></li>
-</ul>
-</div>
-  <!-- <p>{{ id }}</p> --> 
-  {% block content %}
-  {% if user.is_authenticated %}
-  <p>You are logged in</p>
-  <p> Welcome {{ user.get_username }}</p>
+{% block content %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item active">Home</li>
+</ol>
+{% if user.is_authenticated %}
+<p>You are logged in</p>
+<p> Welcome {{ user.get_username }}</p>
 {% else %}
 <h1> Create a new account</h1>
 <form action="{% url 'schedules:register' %}" method="post">
-  {% csrf_token %}
-  <table><tbody>
-  <tr><td><label for="user">User</label></td><td><input type="text" name="user"></td></tr>
-  <tr><td><label for="password">Password</label></td><td><input type="text" name="password"></td></tr>
-  <tr><td><label for="email">Email</label></td><td><input type="text" name="email"></td></tr>
-  <tr><td><label for="fname">First Name</label></td><td><input type="text" name="fname"></td></tr>
-  <tr><td><label for="lname">Last Name</label></td><td><input type="text" name="lname"></td></tr>
-</tbody>
-  </table>
-  <input type="submit"  style="background-color:cyan" value="Submit">
+    {% csrf_token %}
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <label for="user">User</label>
+                </td>
+                <td>
+                    <input type="text" name="user">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password">Password</label>
+                </td>
+                <td>
+                    <input type="text" name="password">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="email">Email</label>
+                </td>
+                <td>
+                    <input type="text" name="email">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fname">First Name</label>
+                </td>
+                <td>
+                    <input type="text" name="fname">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="lname">Last Name</label>
+                </td>
+                <td>
+                    <input type="text" name="lname">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" style="background-color:cyan" value="Submit">
 </form>
 <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
 {% endif %}
 <p><a href="{% url 'logout' %}">Log out</a></p>
 
-{% endblock %}
-</body>
-</html>
+{%endblock%}

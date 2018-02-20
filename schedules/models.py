@@ -11,6 +11,7 @@ class BaseModel(models.Model):
 
 class Subject(BaseModel):
     name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, default="")
 
     def __str__(self):
         return self.name
@@ -22,12 +23,16 @@ class Location(BaseModel):
     def __str__(self):
         return self.name
 
-
 class Session(BaseModel):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
 
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+

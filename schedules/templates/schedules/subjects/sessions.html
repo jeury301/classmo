@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {%block content%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'schedules:detail' subject.id %}">{{subject.name}}</a></li>
+    <li class="breadcrumb-item active">Sessions</li>
+</ol>
+{%if sessions|length%}
+<h2>Available Sessions: </h2>
+<ul>
+    {%for session in sessions%}
+    <li><a href="{% url 'schedules:session' session.id %}">{{session.name}}</a></li>
+    {%endfor%}
+</ul>
+{%else%}
+<h3>No sessions available</h3> {%endif%} {%endblock content%}
