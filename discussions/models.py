@@ -97,9 +97,8 @@ class Comment(BaseModel):
         return comment
 
     #TODO (@Michael): Write method for getting top-level posts
-    # for a given subjecct
-    def get_posts_for_subject(subject):
-        Comment.objects.filter(post=).order_by('-created_date')[:10]
+    # for a given subject
+
 
 
     #TODO (@Michael): Wite method for getting all comments for a given
