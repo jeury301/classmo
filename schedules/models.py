@@ -36,6 +36,12 @@ class Session(BaseModel):
         check=self.registration_set.filter(user=user).exists()
         return check
 
+    def is_instructor(self,user):
+        if self.instructor.pk==user.pk:
+            return True
+        else:
+            return False
+
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
