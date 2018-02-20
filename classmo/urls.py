@@ -23,7 +23,7 @@ urlpatterns = [
     path('discussions/', include('discussions.urls')),
     path('schedules/', include('schedules.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    url(r'^.*$', RedirectView.as_view(url='schedules', permanent=False), name='index')
+    path('', RedirectView.as_view(url='schedules/', permanent=False), name='index')
 ]
 
 
