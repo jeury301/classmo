@@ -17,6 +17,21 @@ def create_shit():
 	'test_subject':test_subject,'test_location':test_location,'test_registration':test_registration,
 	'test_session':test_session}
 
+def create_shit_alt():
+    time = timezone.now() + datetime.timedelta(days=30)
+    test_user=User.objects.create_user("Joe5","poop@aol.com","fook")
+    test_user2=User.objects.create_user("Joe6","poop22@aol.com","fook22")
+    test_instructor=User.objects.create_user('SteveO','poopy2@aol.com',"fook2")
+    test_subject=Subject(name='Math',description="Math sucks")
+    test_subject.save()
+    test_location=Location(name="New Jersey")
+    test_location.save()
+    test_session=Session(subject=test_subject,location=test_location,instructor=test_instructor,name="test sesh")
+    test_session.save()
+    test_registration=Registration(session=test_session,user=test_user)
+    test_registration.save()
+    return "OK"
+
 def save(test_list):
 	for var in test_list.values():
 		var.save()
