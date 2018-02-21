@@ -57,7 +57,8 @@ class Registration(BaseModel):
 
 class Assignment(BaseModel):
     name=models.CharField(max_length=200)
-    instructor=models.ForeignKey(User,on_delete=models.CASCADE)
+    #instructor=models.ForeignKey(User,on_delete=models.CASCADE)
+    session=models.ForeignKey(Session,on_delete=models.CASCADE,default=1,null=True)
     description=models.CharField(max_length=200)
     due_date=models.DateTimeField(auto_now=False)
     def __str__(self):

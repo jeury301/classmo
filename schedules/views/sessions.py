@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
-from schedules.models import Session, Registration, Subject, User
+from schedules.models import Session, Registration, Subject, User, Assignment
 
 def sessions(request,session_id):
 	try:
@@ -31,7 +31,11 @@ def registration(request,session_id):
 @login_required
 def assignments(request):
 	user=request.user
-	ass_list=user.assignment_set.all()
+	session_list=user.registration_set.all()
+	ass_list=[]
+	for sesh in session_list:
+		ass_list+=sesh.session.assignment_set.all() #this works???
+
 	return render(request,'schedules/sessions/assignments.html',{'assignments':ass_list,'user':user})
 
 
