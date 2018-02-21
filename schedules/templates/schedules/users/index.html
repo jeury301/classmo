@@ -5,8 +5,8 @@
   <li class="breadcrumb-item active">Home</li>
 </ol>
 {% if user.is_authenticated %}
-<p>You are logged in</p>
 <h4> Welcome {{ user.get_username }}</h4>
+<br>
 {% else %}
 <h1> Create a new account</h1>
 <form action="{% url 'schedules:register' %}" method="post">
@@ -59,23 +59,27 @@
 </form>
 <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
 {% endif %}
+{% if registrations %}
 <div id="info-container">
     <div class="card">
         <div class="card-block" style="padding: 20px;">
             <h4 class="card-title">Registered Sessions</h4>
             <div style="padding-top: 5px">
-                {% for reg in registrations %}
                 <table class="table table-hover">
-                    <thead style="background-color:#e6e6e6"><tr><th>Location</th><th>Subject</th><th>Instructor</th></tr></thead>
+                    <thead style="background-color:#e6e6e6"><tr><th>Location</th><th>Subject</th><th>Instructor</th></tr>
+                    </thead>
                     <tbody>
+                        {% for reg in registrations %}
                         <tr><th>{{reg.session.location}}</th><th>{{reg.session.subject}}</th><th>{{reg.session.instructor}}
                         </th></tr>
+                        {% endfor %}
                     </tbody>
-                    </table>
-                {% endfor %}
+                </table>
             </div>
         </div>
     </div>
-    <br>
+</div>
+{% endif %}
+ <br>
     <a href="{% url 'logout' %}"><button type="submit" class="btn btn-primary">Log Out</button></a>
 {%endblock%}
