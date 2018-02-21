@@ -63,10 +63,10 @@
     <div class="card">
         <div class="card-block" style="padding: 20px;">
             <h4 class="card-title">Registered Sessions</h4>
-            <div style="padding: 10px;">
+            <div style="padding-top: 5px">
                 {% for reg in registrations %}
                 <table class="table table-hover">
-                    <thead><tr><th>Location</th><th>Subject</th><th>Instructor</th></tr></thead>
+                    <thead style="background-color:#e6e6e6"><tr><th>Location</th><th>Subject</th><th>Instructor</th></tr></thead>
                     <tbody>
                         <tr><th>{{reg.session.location}}</th><th>{{reg.session.subject}}</th><th>{{reg.session.instructor}}
                         </th></tr>
@@ -76,5 +76,6 @@
             </div>
         </div>
     </div>
-    <a href="{% url 'logout' %}">Log out</a>
+    <br>
+    <a href="{% url 'logout' %}"><button type="submit" class="btn btn-primary">Log Out</button></a>
 {%endblock%}
