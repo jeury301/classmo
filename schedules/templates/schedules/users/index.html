@@ -6,7 +6,7 @@
 </ol>
 {% if user.is_authenticated %}
 <p>You are logged in</p>
-<p> Welcome {{ user.get_username }}</p>
+<h4> Welcome {{ user.get_username }}</h4>
 {% else %}
 <h1> Create a new account</h1>
 <form action="{% url 'schedules:register' %}" method="post">
@@ -59,10 +59,22 @@
 </form>
 <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
 {% endif %}
-
-{% for reg in registrations %}
-<li>Location:{{reg.session.location}} Subject:{{reg.session.subject}}</li>
-{% endfor %}
-<a href="{% url 'logout' %}">Log out</a>
-
+<div id="info-container">
+    <div class="card">
+        <div class="card-block" style="padding: 20px;">
+            <h4 class="card-title">Registered Sessions</h4>
+            <div style="padding: 10px;">
+                {% for reg in registrations %}
+                <table class="table table-hover">
+                    <thead><tr><th>Location</th><th>Subject</th><th>Instructor</th></tr></thead>
+                    <tbody>
+                        <tr><th>{{reg.session.location}}</th><th>{{reg.session.subject}}</th><th>{{reg.session.instructor}}
+                        </th></tr>
+                    </tbody>
+                    </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'logout' %}">Log out</a>
 {%endblock%}

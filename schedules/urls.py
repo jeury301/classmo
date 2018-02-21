@@ -7,8 +7,7 @@ app_name='schedules'
 urlpatterns = [
     path('', users.index, name='index'),
     path('register/',users.register,name='register'),
-
-    #path('new_user/',users.new_user,name='new_user'),
+	#path('new_user/',users.new_user,name='new_user'),
     path('subjects/',subjects.subjects,name='subjects'),
     #redundant after merge with jeury's view
     #path('sessions/<int:session_id>/',sessions.sessions,name='sessions'),
@@ -16,4 +15,5 @@ urlpatterns = [
 	path('subjects/<int:subject_id>/detail',subjects.detail, name='detail'),
     path('subjects/<int:subject_id>/sessions',subjects.sessions, name='sessions'),
     path('sessions/<int:session_id>/detail',subjects.session, name='session'),
+    path('sessions/my_assignments',sessions.assignments,name='assignments')
 ]

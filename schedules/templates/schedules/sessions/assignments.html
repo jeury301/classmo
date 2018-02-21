@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+  <li class="breadcrumb-item active">Assignments</li>
+</ol>
+{% if ass_list %}
+{% for ass in ass_list %}
+
+<li>ass.name</li>
+
+{% endfor %}
+{% else %}
+<p> No Assignments for {{user.username}}</p>
+{% endif %}
+<div>
+{% endblock %}
