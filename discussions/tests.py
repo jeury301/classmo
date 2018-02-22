@@ -7,9 +7,48 @@ from .models import Comment, Post
 from schedules.models import BaseModel, Subject
 
 
-def create_subject():
+def create_x_posts(x, subject):
+    """Creates, saves, and returns a list of x posts"""
+    posts = []
+    for counter, value in enumerate("abcdefghijklmnopqrstuvwxyz"):
+        posts.append(Post.create(subject=subject, body=(value*10)))
+        posts[counter].save()
+
+def create_comment_trees_for_post(depth, children, post):
+    """Creates, saves, and returns a list of comments for a post
+
+    Arguments:
+        depth - the depth of the comment tree
+        children - the number of child comments each node in the
+            comment tree has
+        post - the post under which the comments are made
+    """
+    comments = []
+    last_level = [None]
+    current_level = []
+    # for counter, value in enumerate("abcdefghijklmnopqrstuvwxyz"):
+    #     posts.append(Post.create(subject=subject, body=(value*10)))
+    #     posts[counter].save()
+    alpha = "abcdefghijklmnopqrstuvwxyz"
+    max_depth = depth
+    while depth > 0:
+        cur_depth = max_depth - depth
+        for parent in last_level:
+            for i in range(children):
+                current_level.append(Comment.create(parent=parent,
+                                                    post=post,
+                                                    body=(alpha[i%26]*5) + "(Depth{})".format(cur_depth)))
+        for comment in current_level:
+            comment.save()
+        comments += current_level
+        last_level = current_level
+        current_level = []
+        depth -= 1
+    return comments
+
+def create_subject(name="Basket Weaving"):
     """Creates, saves, and returns a subject object"""
-    subj = Subject(name="Algebra I")
+    subj = Subject(name=name)
     subj.save()
     return subj
 
