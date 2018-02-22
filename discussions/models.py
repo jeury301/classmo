@@ -107,6 +107,8 @@ class Comment(BaseComment):
         if kwargs.get('parent'):
             # If we have the a non-None parent, we can copy
             # the value of its 'post' attribute to its child
+            # and disregard whatever 'post' kwarg was passed
+            kwargs.pop('post', None)
             comment = Comment(**kwargs, post=kwargs.get('parent').post)
         elif kwargs.get('post'):
             # Otherwise, the 'post' field should have been

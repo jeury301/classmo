@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% load tz%}
+
+    {% for post in posts %}
+        <br/>
+            <a href="{% url 'list_comments' post.id %}">{{post.body}} ({{post.created_date|localtime}})</a>
+        <br/>
+    {% endfor %}
+
+{% endblock %}
