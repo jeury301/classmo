@@ -1,0 +1,8 @@
+{% extends "schedules/users/index.html" %}
+{% block content %}
+<p>Logged out!</p>  
+{% if user.is_authenticated %}
+<P>{{user.get_username}}</P>
+{% endif %}
+<a href="{% url 'login'%}">Click here to login</a>
+{% endblock %}
