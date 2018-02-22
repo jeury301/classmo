@@ -28,6 +28,7 @@ class Subject(BaseModel):
 
 class Location(BaseModel):
     name = models.CharField(max_length=200)
+    #TODO (@Jeury): add max capacity field and logic
 
     def __str__(self):
         return self.name
@@ -37,6 +38,11 @@ class Session(BaseModel):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
+    #TODO (@Jeury): add max capacity field
+
+    #TODO (@Jeury): add create method with validation logic
+    # - Is session max capacity more than location capacity
+    # - 
 
     def __str__(self):
         return self.name
