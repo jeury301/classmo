@@ -23,11 +23,12 @@
     {# The Document Body #}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-2 border-right">
                 {% block sidebar %}
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'schedules:index' %}">Home</a></li>
                     <li><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
+                    <li><a href="{% url 'schedules:assignments' %}">Assignments</a></li>
                 </ul>
                 {% endblock %}
             </div>

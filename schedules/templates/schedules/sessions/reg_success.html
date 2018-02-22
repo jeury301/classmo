@@ -1,4 +1,4 @@
-{% extends "schedules/sessions/session.html" %}
+{% extends "schedules/subjects/session.html" %}
 
 {% block content %}
 
@@ -7,7 +7,7 @@
 {% else %}
 <P>Registration Successful</p>
 {% endif %}
-<a href="{% url 'schedules:sessions' session %}">Go back</a>
+<a href="{% url 'schedules:session' session %}">Go back</a>
 {% endblock %}
 
 

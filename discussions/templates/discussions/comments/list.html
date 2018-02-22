@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h3>{{post.body}}</h3>
+    {% load tz %}
+    {% for comment in comments %}
+        <li>
+            {{comment.body}} ({{comment.created_date|localtime}})
+        </li>
+    {% endfor %}
+{% endblock %}

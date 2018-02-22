@@ -11,16 +11,7 @@ def index(request):
 		session_list=user.registration_set.all()
 		return render(request,'schedules/users/index.html',{"registrations":session_list})
 	return render(request,'schedules/users/index.html')
-"""
-def new_user(request):
-    username=request.POST.get('user','')
-    password=request.POST.get('password','')
-    user=User.objects.create_user(username,'invadeyou67@email.com',password)
-    user.first_name='Attila'
-    user.last_name="The hun"
-    user.save()
-    return HttpResponseRedirect(reverse('schedules:index'))
-    """
+
 
 def register(request):
 	username=request.POST.get('user','')
