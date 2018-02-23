@@ -4,7 +4,11 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from schedules.models import Subject, Session
+from schedules.services import portal_tools
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
+@login_required
 def subjects(request):
     """
     List all subjects in the system
@@ -13,6 +17,7 @@ def subjects(request):
     context = {'subjects': subjects}
     return render(request, 'schedules/subjects/list.html', context)
 
+@login_required
 def detail(request, subject_id):
     """
     Display details for a given subject.
@@ -29,6 +34,7 @@ def detail(request, subject_id):
     context['sessions'] = sessions
     return render(request, 'schedules/subjects/detail.html', context)
 
+@login_required
 def sessions(request, subject_id):
     """
     Display sessions for a given subject.
@@ -44,14 +50,20 @@ def sessions(request, subject_id):
 
     return render(request, 'schedules/subjects/sessions.html', context)
 
+@login_required
 def session(request, session_id):
     """
     Display details for a given session of a subject.
     """
+    current_user = request.user
+    is_instructor = portal_tools.is_member(current_user, settings.GROUPS["INSTRUCTORS"])
     context = {}
     try:
         session = Session.objects.get(pk=session_id)
-        context['session'] = session
+        context = {
+            "session":session,
+            "is_instructor":is_instructor
+        }
     except Subject.DoesNotExist:
         raise Http404("Session does not exist")
 
