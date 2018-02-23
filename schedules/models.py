@@ -42,7 +42,8 @@ class Session(BaseModel):
 
     #TODO (@Jeury): add create method with validation logic
     # - Is session max capacity more than location capacity
-    # - 
+    # - Is session start date/end date in conflict with another session at
+    # sane time and location
 
     def __str__(self):
         return self.name
