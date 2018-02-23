@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
-from schedules.models import Session, Registration, Subject, User, Assignment
+from schedules.models import Session, Registration, Subject, User, Homework
 
 def sessions(request,session_id):
 	"""
@@ -36,7 +36,7 @@ def registration(request,session_id):
 		return render(request,'schedules/sessions/reg_success.html',{'session':sesh.id})
 
 @login_required
-def assignments(request):
+def homework(request):
 	"""
 	Gets all the user's HW assignments. They assignments are associated to a session, 
 	which is associated to a user by a registration. Comes from schedules/users/index.html
@@ -45,7 +45,7 @@ def assignments(request):
 	reg_list=user.registration_set.all()
 	ass_list=[]
 	for reg in reg_list:
-		ass_list+=reg.session.assignment_set.all() #this works???
+		ass_list+=reg.session.homework_set.all() #this works???
 
 	return render(request,'schedules/sessions/assignments.html',{'assignments':ass_list,'user':user})
 

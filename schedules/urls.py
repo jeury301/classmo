@@ -15,5 +15,5 @@ urlpatterns = [
 	path('subjects/<int:subject_id>/detail',subjects.detail, name='detail'),
     path('subjects/<int:subject_id>/sessions',subjects.sessions, name='sessions'),
     path('sessions/<int:session_id>/detail',subjects.session, name='session'),
-    path('sessions/my_assignments',sessions.assignments,name='assignments')
+    path('sessions/my_assignments',sessions.homework,name='homework')
 ]

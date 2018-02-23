@@ -61,7 +61,7 @@ class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Assignment(BaseModel):
+class Homework(BaseModel):
     name=models.CharField(max_length=200)
     #instructor=models.ForeignKey(User,on_delete=models.CASCADE)
     session=models.ForeignKey(Session,on_delete=models.CASCADE,default=1,null=True)
