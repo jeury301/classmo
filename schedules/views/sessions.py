@@ -5,22 +5,10 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from schedules.models import Session, Registration, Subject, User, Homework
-from schedules.services.portal_tools import is_member, student, instructor
+from schedules.services.portal_tools import instructors_only, students_only
 
 @login_required
-def sessions(request,session_id):
-    """Get's a session, this controller is probably redundent at this point. 
-    No html or view leads to this view
-    """
-    try:
-        sesh = Session.objects.get(pk=session_id)
-    except Session.DoesNotExist:
-        return render(request,'schedules/sessions/session.html')
-    reg_list=sesh.registration_set.all()
-    return render(request,'schedules/sessions/session.html',{'session':sesh,'reg_list':reg_list})
-
-@login_required
-@student
+@students_only
 def registration(request,session_id):
     """
     Process's a registration, given user.pk as post, login is required. Comes from subject/session.html
@@ -38,20 +26,20 @@ def registration(request,session_id):
         return render(request,'schedules/sessions/reg_success.html',{'session':sesh.id})
 
 @login_required
-@student
+@students_only
 def drop_session(request,session_id):
     """Drops session for a given user
     """
     try:
         registration_to_drop=Registration.student_registration_for_session(
             request.user.pk, session_id)
+        registration_to_drop.delete()
     except Exception as e:
         raise Http404("ERROR: {}".format(e))
-    return redirect(reverse("schedules:registrations"))
-
+    return redirect("schedules:registrations")
 
 @login_required
-@student
+@students_only
 def registrations(request):
     """Get's all user's registrations
     """
@@ -64,9 +52,8 @@ def registrations(request):
     }
     return render(request, 'schedules/sessions/registrations.html', context)
 
-
 @login_required
-@student
+@students_only
 def homework(request):
     """
     Gets all the user's HW assignments. They assignments are associated to a session, 
@@ -81,7 +68,7 @@ def homework(request):
     return render(request,'schedules/sessions/homeworks.html',{'assignments':ass_list,'user':user})
 
 @login_required
-@instructor
+@instructors_only
 def assignments(request):
     """Show session assignemnts for current instructor
     """

@@ -79,11 +79,35 @@ class Registration(BaseModel):
     def save(self, *args, **kwargs):
         """On save, update session and validate this registration
         """
-        print(self.session)
-        return super(Registration, self).save(*args, **kwargs)
+        
+        if self.registration_validator():
+            # updating session registration count
+            session = self.session
+            session.registered_students += 1
+            session.save()
+            return super(Registration, self).save(*args, **kwargs)
+        else:
+            return None
 
     def registration_validator(self):
-        pass
+        """Validating registration before creation. A registration will be 
+        created, only if any of the following violations occur:
+        - registered_students == max_capacity
+        - some undefined ones yet
+        """
+        print("Session Name: {}".format(self.session.name))
+        print("Location Name: {}".format(self.session.location.name))
+
+        registered_students_count = self.session.registered_students
+        max_capacity = self.session.max_capacity
+        violations = []
+
+        if registered_students_count >= max_capacity:
+            # session is full
+            violations.append(1)
+
+        return bool(violations)
+        
 
     @classmethod    
     def student_registrations(cls,student):

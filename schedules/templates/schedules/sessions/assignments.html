@@ -11,7 +11,8 @@
             <tr>
                 <th>Subject</th>
                 <th>Name</th>  
-                <th>Registered Students</th>              
+                <th>Registered Students</th> 
+                <th>Max Capacity</th>             
                 <th>Schedule Info</th>
                 <th>My Students</th>
             </tr>
@@ -21,7 +22,8 @@
             <td>{{ass.subject.name}}</td>
             <td>{{ass.name}}</td>
             <td>{{ass.registered_students}}</td>
-            <td>{{ass.start_date}} - {{ass.end_date}}</td>
+            <td>{{ass.max_capacity}}</td>
+            <td>{{ass.start_date|date:'Y-m-d'}} - {{ass.end_date|date:'Y-m-d'}}</td>
             <td><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></td>
         </tr>
         {% endfor %}
