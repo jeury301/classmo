@@ -4,13 +4,25 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 def index(request):
+	"""
 	if request.user.is_authenticated:
 		user=request.user
 		session_list=user.registration_set.all()
 		return render(request,'schedules/users/index.html',{"registrations":session_list})
+		"""
 	return render(request,'schedules/users/index.html')
+	
+
+@login_required
+def my_sessions(request):
+	if request.user.is_authenticated:
+		user=request.user
+		session_list=user.registration_set.all()
+		return render(request,'schedules/users/my_sessions.html',{"registrations":session_list})
+	return render(request,'schedules/users/my_sessions.html')
 
 
 def register(request):

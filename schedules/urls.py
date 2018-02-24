@@ -16,7 +16,10 @@ urlpatterns = [
     path('subjects/<int:subject_id>/sessions',subjects.sessions, name='sessions'),
     path('sessions/<int:session_id>/detail',subjects.session, name='session'),
     path('sessions/my_assignments',sessions.homework,name='homework'),
+
     path('sessions/my_sessions',sessions.assignments,name='assignments'),
-    path('sessions/my_registrations',sessions.registrations,name='registrations')
+    path('sessions/my_registrations',sessions.registrations,name='registrations'),
+
+    path('users/my_sessions',users.my_sessions,name='my_sessions')
 
 ]
