@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %} 
 {% block usertools %} 
 {% if user.is_authenticated %}
 <div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
@@ -21,32 +20,35 @@
 {% endblock %} 
 
 
-
-
-{% block content %}
-{% if assignments %}
-<table class="table table-hover">
-	<tbody>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Session</th>
-				<th>Subject</th>
-				<th>Due Date</th>
-			</tr>
-		</thead>
-		{% for ass in assignments %}
-			<tr>
-				<th>{{ass.name}}</th>
-				<th>{{ass.session.name}}</th>
-				<th>{{ass.session.subject.name}}</th>
-				<th>{{ass.due_date}}</th>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-{% else %}
-<p> No Assignments for {{user.username}}</p>
-{% endif %}
-
+{% block content %} 
+{% if registrations %}
+<div id="info-container">
+    <div class="card">
+        <div class="card-block" style="padding: 20px;">
+            <h4 class="card-title">Registered Sessions</h4>
+            <div style="padding-top: 5px">
+                <table class="table table-hover">
+                    <thead style="background-color:#e6e6e6">
+                        <tr>
+                            <th>Location</th>
+                            <th>Subject</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reg in registrations %}
+                        <tr>
+                            <th>{{reg.session.location}}</th>
+                            <th>{{reg.session.subject}}</th>
+                            <th>{{reg.session.instructor}}
+                            </th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} 
 {% endblock %}
