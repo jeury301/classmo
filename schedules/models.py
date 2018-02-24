@@ -76,11 +76,26 @@ class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        """On save, update session and validate this registration
+        """
+        print(self.session)
+        return super(Registration, self).save(*args, **kwargs)
+
+    def registration_validator(self):
+        pass
+
     @classmethod    
-    def student_registrations(self,student):
+    def student_registrations(cls,student):
         """Returns list of registrations for given students
         """
-        return self.objects.filter(user=student.pk)
+        return cls.objects.filter(user=student.pk)
+
+    @classmethod
+    def student_registration_for_session(cls, student, session):
+        """Returns the student's registration for a given session
+        """
+        return cls.objects.get(user=student, session=session)
 
 class Homework(BaseModel):
     name=models.CharField(max_length=200)

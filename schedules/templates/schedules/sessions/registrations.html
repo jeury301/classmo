@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">My Registered Sessions</li>
 </ol>
 {% if student_registrations %}
-<table class="table table-hover">
+<table class="table table-striped">
     <tbody>
         <thead>
             <tr>
@@ -14,15 +14,17 @@
                 <th>Instructor</th> 
                 <th>Location</th>             
                 <th>Schedule Info</th>
+                <th>Drop Session</th>
             </tr>
         </thead>
         {% for reg in student_registrations %}
         <tr>
-            <th>{{reg.session.subject.name}}</th>
-            <th>{{reg.session.name}}</th>
-            <th>{{reg.session.instructor.username}}</th>
-            <th>{{reg.session.location.name}}</th>
-            <th>{{reg.start_date}} - {{reg.end_date}}</th>
+            <td>{{reg.session.subject.name}}</td>
+            <td>{{reg.session.name}}</td>
+            <td>{{reg.session.instructor.username}}</td>
+            <td>{{reg.session.location.name}}</td>
+            <td>{{reg.session.start_date|date:'Y-m-d'}} - {{reg.session.end_date | date:'Y-m-d'}}</td>
+            <td><button type="button" class="btn btn-danger" OnClick="window.location.href='{%url 'schedules:drop_session'%}'"></td>
         </tr>
         {% endfor %}
     </tbody>

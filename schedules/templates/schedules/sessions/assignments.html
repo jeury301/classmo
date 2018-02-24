@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">My Sessions</li>
 </ol>
 {% if assigned_sessions %}
-<table class="table table-hover">
+<table class="table table-striped">
     <tbody>
         <thead>
             <tr>
@@ -18,11 +18,11 @@
         </thead>
         {% for ass in assigned_sessions %}
         <tr>
-            <th>{{ass.subject.name}}</th>
-            <th>{{ass.name}}</th>
-            <th>{{ass.registered_students}}</th>
-            <th>{{ass.start_date}} - {{ass.end_date}}</th>
-            <th><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></th>
+            <td>{{ass.subject.name}}</td>
+            <td>{{ass.name}}</td>
+            <td>{{ass.registered_students}}</td>
+            <td>{{ass.start_date}} - {{ass.end_date}}</td>
+            <td><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></td>
         </tr>
         {% endfor %}
     </tbody>

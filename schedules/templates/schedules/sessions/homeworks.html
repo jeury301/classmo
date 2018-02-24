@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">My Assignments</li>
 </ol>
 {% if homeworks %}
-<table class="table table-hover">
+<table class="table table-striped">
     <tbody>
         <thead>
             <tr>
@@ -17,10 +17,10 @@
         </thead>
         {% for ass in homeworks %}
         <tr>
-            <th>{{ass.name}}</th>
-            <th>{{ass.session.name}}</th>
-            <th>{{ass.session.subject.name}}</th>
-            <th>{{ass.due_date}}</th>
+            <td>{{ass.name}}</td>
+            <td>{{ass.session.name}}</td>
+            <td>{{ass.session.subject.name}}</td>
+            <td>{{ass.due_date}}</td>
         </tr>
         {% endfor %}
     </tbody>
