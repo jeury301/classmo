@@ -18,6 +18,15 @@
     <header>
         <nav class="navbar navbar-light bg-faded">
           <h1>Classmo</h1>
+          {%if current_user.is_authenticated %}
+          <h2><strong>Role: </strong>
+            {%if is_instructor%}
+            Instructor G
+            {%else%}
+            Mere Student
+            {%endif%}
+          </h2>
+          {%endif%}
         </nav>
     </header>
     {# The Document Body #}
@@ -28,7 +37,14 @@
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'schedules:index' %}">Home</a></li>
                     <li><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
-                    <li><a href="{% url 'schedules:homework' %}">Homework</a></li>
+                    {%if current_user.is_authenticated %}
+                        {%if is_instructor%}
+                        <li><a href="{% url 'schedules:assignments' %}">My Sessions</a></li>
+                        {%else%}
+                        <li><a href="{% url 'schedules:registrations' %}">Registrations</a></li>
+                        <li><a href="{% url 'schedules:homework' %}">Assignments</a></li>
+                        {%endif%}
+                    {%endif%}
                 </ul>
                 {% endblock %}
             </div>

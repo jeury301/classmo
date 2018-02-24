@@ -1,34 +1,33 @@
-{% extends "base.html" %}
-
+{% extends "base.html" %} 
 {% block content %}
 <ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
-  <li class="breadcrumb-item active">Assignments</li>
+    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+    <li class="breadcrumb-item active">My Sessions</li>
 </ol>
-
-{% if assignments %}
+{% if assigned_sessions %}
 <table class="table table-hover">
-	<tbody>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Session</th>
-				<th>Subject</th>
-				<th>Due Date</th>
-			</tr>
-		</thead>
-		{% for ass in assignments %}
-			<tr>
-				<th>{{ass.name}}</th>
-				<th>{{ass.session.name}}</th>
-				<th>{{ass.session.subject.name}}</th>
-				<th>{{ass.due_date}}</th>
-			</tr>
-		{% endfor %}
-	</tbody>
+    <tbody>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Name</th>  
+                <th>Registered Students</th>              
+                <th>Schedule Info</th>
+                <th>My Students</th>
+            </tr>
+        </thead>
+        {% for ass in assigned_sessions %}
+        <tr>
+            <th>{{ass.subject.name}}</th>
+            <th>{{ass.name}}</th>
+            <th>{{ass.registered_students}}</th>
+            <th>{{ass.start_date}} - {{ass.end_date}}</th>
+            <th><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></th>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% else %}
-<p> No Assignments for {{user.username}}</p>
-{% endif %}
-
+<p> No Sessions for {{user.username}}</p>
+{% endif %} 
 {% endblock %}

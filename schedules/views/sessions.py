@@ -5,10 +5,12 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from schedules.models import Session, Registration, Subject, User, Homework
+from schedules.services.portal_tools import is_member, student, instructor
 
+@login_required
 def sessions(request,session_id):
-	"""
-    Get's a session, this controller is probably redundent at this point. No html or view leads to this view
+	"""Get's a session, this controller is probably redundent at this point. 
+	No html or view leads to this view
     """
 	try:
 		sesh = Session.objects.get(pk=session_id)
@@ -36,6 +38,22 @@ def registration(request,session_id):
 		return render(request,'schedules/sessions/reg_success.html',{'session':sesh.id})
 
 @login_required
+@student
+def registrations(request):
+	"""Get's all user's registrations
+	"""
+	student=request.user
+	student_registrations = Registration.student_registrations(student)
+
+	context = {
+		"student":student,
+		"student_registrations":student_registrations
+	}
+	return render(request, 'schedules/sessions/registrations.html', context)
+
+
+@login_required
+@student
 def homework(request):
 	"""
 	Gets all the user's HW assignments. They assignments are associated to a session, 
@@ -47,10 +65,20 @@ def homework(request):
 	for reg in reg_list:
 		ass_list+=reg.session.homework_set.all() #this works???
 
-	return render(request,'schedules/sessions/assignments.html',{'assignments':ass_list,'user':user})
+	return render(request,'schedules/sessions/homeworks.html',{'assignments':ass_list,'user':user})
 
+@login_required
+@instructor
+def assignments(request):
+	"""Show session assignemnts for current instructor
+	"""
+	user=request.user
+	assigned_sessions = Session.instructor_assignments(user)
 
+	context = {
+		"assigned_sessions":assigned_sessions,
+		"user":user
+	}
 
-
-
+	return render(request, 'schedules/sessions/assignments.html', context)
 	

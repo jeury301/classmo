@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+{% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+    <li class="breadcrumb-item active">My Registered Sessions</li>
+</ol>
+{% if student_registrations %}
+<table class="table table-hover">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Session</th>  
+                <th>Instructor</th> 
+                <th>Location</th>             
+                <th>Schedule Info</th>
+            </tr>
+        </thead>
+        {% for reg in student_registrations %}
+        <tr>
+            <th>{{reg.session.subject.name}}</th>
+            <th>{{reg.session.name}}</th>
+            <th>{{reg.session.instructor.username}}</th>
+            <th>{{reg.session.location.name}}</th>
+            <th>{{reg.start_date}} - {{reg.end_date}}</th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p> No Registrations for {{user.username}}</p>
+{% endif %} 
+{% endblock %}

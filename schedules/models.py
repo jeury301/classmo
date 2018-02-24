@@ -28,7 +28,13 @@ class Subject(BaseModel):
 
 class Location(BaseModel):
     name = models.CharField(max_length=200)
-    #TODO (@Jeury): add max capacity field and logic
+    max_capacity = models.IntegerField(default=0)
+    address_1 = models.CharField(max_length=128, default="")
+    address_2 = models.CharField(max_length=128, blank=True)
+    city = models.CharField(max_length=64, default="New York")
+    state = models.CharField(max_length=2, default="NY")
+    zip_code = models.CharField(max_length=5, default="00000")
+    country = models.CharField(max_length=128, default="United States")
 
     def __str__(self):
         return self.name
@@ -38,8 +44,10 @@ class Session(BaseModel):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    #TODO (@Jeury): add max capacity field
-
+    max_capacity = models.IntegerField(default=0)
+    registered_students = models.IntegerField(default=0)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
     #TODO (@Jeury): add create method with validation logic
     # - Is session max capacity more than location capacity
     # - Is session start date/end date in conflict with another session at
@@ -58,9 +66,21 @@ class Session(BaseModel):
         else:
             return False
 
+    @classmethod    
+    def instructor_assignments(self,instructor):
+        """Returns list of sessions assigned to current instructor
+        """
+        return self.objects.filter(instructor=instructor.pk)
+
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @classmethod    
+    def student_registrations(self,student):
+        """Returns list of registrations for given students
+        """
+        return self.objects.filter(user=student.pk)
 
 class Homework(BaseModel):
     name=models.CharField(max_length=200)

@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% block content %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
+    <li class="breadcrumb-item active">My Assignments</li>
+</ol>
+{% if homeworks %}
+<table class="table table-hover">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Session</th>
+                <th>Subject</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        {% for ass in homeworks %}
+        <tr>
+            <th>{{ass.name}}</th>
+            <th>{{ass.session.name}}</th>
+            <th>{{ass.session.subject.name}}</th>
+            <th>{{ass.due_date}}</th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p> No Assigments for {{user.username}}</p>
+{% endif %} 
+{% endblock %}
