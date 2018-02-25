@@ -7,8 +7,8 @@ from schedules.models import Subject
 
 def list_comments(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    comments = Comment.objects.filter(post=post).order_by('-created_date')
-    return render(request, 'discussions/comments/list.html', 
+    comments = Comment.get_ordered_comments(post, 4, '-created_date')
+    return render(request, 'discussions/comments/list.html',
         {'post': post,
          'comments': comments})
 

@@ -1,12 +1,53 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 
 {% block content %}
+    <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
+
     <h3>{{post.body}}</h3>
     {% load tz %}
-    {% for comment in comments %}
-        <li>
-            {{comment.body}} ({{comment.created_date|localtime}})
-        </li>
-    {% endfor %}
+
+    {% if comments %}
+        <ul class="no-bullets">
+        {% for comment in comments %}
+            {% if comment.rel_depth > 0 %} 
+                {% for i in comment.depth_counter %}
+                <ul class="no-bullets"> 
+                {% endfor %}
+            {% endif %}
+            {% if comment.rel_depth < 0 %}
+                {% for i in comment.depth_counter %}
+                </ul> 
+                {% endfor %}
+            {% endif %}
+            <li>
+                <div>
+                    <span>  
+                        <strong>
+                        {% if comment.comment.author %} 
+                            comment.comment.author 
+                        {% else %}
+                            Anonymous 
+                        {% endif %}
+                        </strong>
+                        at {{comment.comment.created_date}}
+                    </span>
+                </div>
+                <div>
+                    {{comment.comment.body}}
+                </div>
+                <div>
+                    <a href="#">Report</a> | <a href="#">Reply</a>
+                </div>
+            </li>
+            
+        {% endfor %}
+        </ul>
+    {% else %}
+        Looks like there's no comments yet.  
+        <a href="#">Why not post the first?</a>
+    {% endif %}
+
 {% endblock %}

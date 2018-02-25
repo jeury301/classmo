@@ -14,6 +14,52 @@ def create_x_posts(x, subject):
         posts.append(Post.create(subject=subject, body=(value*10)))
         posts[counter].save()
 
+def create_basic_comment_tree():
+    from discussions.models import Post, Comment
+    import pprint
+
+    mypost = create_a_post()
+    print("mypost id: {}".format(mypost.id))
+
+    #Direct responses
+    comm1 = Comment.create(post=mypost, body="I'm comm1. I'm the first direct response to a post")
+    comm1.save()
+    comm2 = Comment.create(post=mypost, body="I'm comm2. I'm the second direct response to a post")
+    comm2.save()
+
+    # Responses to comm1
+    comm3 = Comment.create(parent=comm1, body="I'm comm3. I'm the first response to comm1")
+    comm3.save()
+    comm4 = Comment.create(parent=comm1, body="I'm comm4. I'm the second response to comm1")
+    comm4.save()
+
+    # Responses to comm2
+    comm5 = Comment.create(parent=comm2, body="I'm comm5. I'm the first response to comm2")
+    comm5.save()
+    comm6 = Comment.create(parent=comm2, body="I'm comm6. I'm the second response to comm2")
+    comm6.save()
+
+    # Response to comm3
+    comm7 = Comment.create(parent=comm3, body="I'm comm7. I'm the only response to comm3")
+    comm7.save()
+
+    # Response to comm4
+    comm8 = Comment.create(parent=comm4, body="I'm comm8. I'm the only response to comm4")
+    comm8.save()
+
+    # Response to comm5
+    comm9 = Comment.create(parent=comm5, body="I'm comm9. I'm the only response to comm5")
+    comm9.save()
+
+    # Response to comm6
+    comm10 = Comment.create(parent=comm6, body="I'm comm10. I'm the only response to comm6")
+    comm10.save()
+
+    print("mypost id: {}".format(mypost.id))
+
+    tupp = Comment.get_comment_tree_tuple(mypost, 4, 'created_date')
+    pprint.pprint(tupp)
+
 def create_comment_trees_for_post(depth, children, post):
     """Creates, saves, and returns a list of comments for a post
 
@@ -23,12 +69,10 @@ def create_comment_trees_for_post(depth, children, post):
             comment tree has
         post - the post under which the comments are made
     """
+    # FIXME: THIS DOESN'T WORK
     comments = []
     last_level = [None]
     current_level = []
-    # for counter, value in enumerate("abcdefghijklmnopqrstuvwxyz"):
-    #     posts.append(Post.create(subject=subject, body=(value*10)))
-    #     posts[counter].save()
     alpha = "abcdefghijklmnopqrstuvwxyz"
     max_depth = depth
     while depth > 0:
@@ -37,7 +81,9 @@ def create_comment_trees_for_post(depth, children, post):
             for i in range(children):
                 current_level.append(Comment.create(parent=parent,
                                                     post=post,
-                                                    body=(alpha[i%26]*5) + "(Depth{})".format(cur_depth)))
+                                                    body=(alpha[i%26]*5) + 
+                                                          "(Depth{})".format(
+                                                            cur_depth)))
         for comment in current_level:
             comment.save()
         comments += current_level
