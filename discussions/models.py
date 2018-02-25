@@ -1,9 +1,5 @@
-import datetime
-import pprint
-
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
 
 from schedules.models import BaseModel, Subject
 
@@ -31,22 +27,6 @@ class BaseComment(BaseModel):
         """Prettified toString with max length of 53 chars"""
         msg = (self.body[:50] + '...') if len(self.body) > 53 else self.body
         return msg
-
-    # BaseComment must implement __hash__ and __eq__ in order
-    # to use BaseComment objects as dict keys.  This is useful
-    # for making tree-like dictionaries to pass to the template
-    # engine for rendering nested comment threads
-    def __hash__(self):
-        return hash(repr(self))
-
-    def __eq__(self, other):
-        return repr(self) == repr(other)
-
-    def __ne__(self, other):
-        # Not strictly necessary, but to avoid having both x==y and x!=y
-        # True at the same time
-        return not(self == other)
-
 
 class Post(BaseComment):
     """A model for top-level discussion forum posts
@@ -98,6 +78,7 @@ class Comment(BaseComment):
                              on_delete=models.CASCADE, blank=True, null=True)
     parent = models.ForeignKey('self', related_name='parent_comment',
                                on_delete=models.CASCADE, blank=True, null=True)
+
     @classmethod
     def create(cls, **kwargs):
         """Create, save, and return a comment
@@ -132,7 +113,7 @@ class Comment(BaseComment):
             # be set to None implicitly
             comment = Comment(**kwargs)
         else:
-             raise TypeError("Either 'parent' or 'post' are required kwargs")
+            raise TypeError("Either 'parent' or 'post' are required kwargs")
         return comment
 
     @classmethod
@@ -146,6 +127,14 @@ class Comment(BaseComment):
         """
 
         def get_children(parent, comment_list):
+            """Given a list of comments, 'comment_list', returns a tuple
+            of two lists:
+
+            1.) a list containing children of the 'parent' contained
+            in 'comment_list'
+            2.) a list containing the elements in 'comment_list', except
+            the children of the 'parent' comment
+            """
             children = []
             other_comments = []
             for comment in comment_list:
@@ -155,15 +144,13 @@ class Comment(BaseComment):
                     else:
                         other_comments.append(comment)
                 else:
-                    if (comment.parent == parent):
+                    if comment.parent == parent:
                         children.append(comment)
                     else:
                         other_comments.append(comment)
             return (children, other_comments)
 
-        queryset = Comment.objects.filter(post=post).order_by(order_by)
-        comment_list = list(queryset)
-        comm_cnt = len(comment_list)
+        comment_list = list(Comment.objects.filter(post=post).order_by(order_by))
         depth = 0
         big_tuple = (None, None, [])
 
@@ -172,7 +159,6 @@ class Comment(BaseComment):
 
         old_tuples = [big_tuple]
         new_tuples = []
-        total_tuples = 1
         while depth < max_depth:
             for cur_tuple in old_tuples:
                 cur_head = cur_tuple[0]
@@ -180,13 +166,11 @@ class Comment(BaseComment):
                 children, comment_list = get_children(cur_head, comment_list)
                 for child in children:
                     child_tuple = (child, depth, [])
-                    total_tuples += 1
                     cur_tail.append(child_tuple)
                     new_tuples.append(child_tuple)
             old_tuples = new_tuples
             new_tuples = []
             depth += 1
-        assert comm_cnt == total_tuples - 1
         return big_tuple
 
     @classmethod
@@ -214,7 +198,7 @@ class Comment(BaseComment):
         level of a commment when rendering a template.
 
         depth_counter is a string that, insanely, is used as a loop
-        counter by the Django template.  We should have used Jinja2
+        counter by the Django template.  We should have used Jinja2.
 
         """
         tree = cls.get_comment_tree_tuple(post, max_depth, order_by)
@@ -238,20 +222,14 @@ class Comment(BaseComment):
                 stack.append(child)
 
         # Now that we have a list of comments in order, we need
-        # to complete the rel_depth field in each dict
-        # so we can either indent or unindent each comment
-        # relative to the last comment in the list when
+        # to complete the rel_depth and depth_counter fields in
+        # each dict so we can either indent or unindent each
+        # comment relative to the last comment in the list when
         # displaying them
         if output:
             parent_depth = output[0]['abs_depth']
             for comm_dict in output:
-                print("parent_depth: {} | comm_dict['abs_depth']: {} | p_d - c_d['a_d'] = {}".format(
-                    parent_depth, comm_dict['abs_depth'], parent_depth - comm_dict['abs_depth']))
                 comm_dict['rel_depth'] = comm_dict['abs_depth'] - parent_depth
                 comm_dict['depth_counter'] = abs(comm_dict['rel_depth']) * "x"
                 parent_depth = comm_dict['abs_depth']
-        print(output)
-        print(len(output))
         return output
-
-
