@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-<<<<<<< HEAD
+
 	"""
 	if request.user.is_authenticated:
 		user=request.user
@@ -19,18 +19,12 @@ def index(request):
 
 @login_required
 def my_sessions(request):
-	if request.user.is_authenticated:
-		user=request.user
-		session_list=user.registration_set.all()
-		return render(request,'schedules/users/my_sessions.html',{"registrations":session_list})
-	return render(request,'schedules/users/my_sessions.html')
-=======
     if request.user.is_authenticated:
         user=request.user
         session_list=user.registration_set.all()
         return render(request,'schedules/users/index.html',{"registrations":session_list})
     return render(request,'schedules/users/index.html')
->>>>>>> ca6b59486c1c5082881e48978bae8911f3f15bbd
+
 
 
 def register(request):

@@ -19,11 +19,10 @@ urlpatterns = [
 
     path('sessions/my_sessions',sessions.assignments,name='assignments'),
     path('sessions/my_registrations',sessions.registrations,name='registrations'),
-<<<<<<< HEAD
 
-    path('users/my_sessions',users.my_sessions,name='my_sessions')
+    path('users/my_sessions',users.my_sessions,name='my_sessions'),
 
-=======
+
     path('sessions/<int:session_id>/drop_session', sessions.drop_session, name='drop_session')
->>>>>>> ca6b59486c1c5082881e48978bae8911f3f15bbd
+
 ]
