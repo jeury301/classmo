@@ -76,11 +76,50 @@ class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        """On save, update session and validate this registration
+        """
+        
+        if self.registration_validator():
+            # updating session registration count
+            session = self.session
+            session.registered_students += 1
+            session.save()
+            return super(Registration, self).save(*args, **kwargs)
+        else:
+            return None
+
+    def registration_validator(self):
+        """Validating registration before creation. A registration will be 
+        created, only if any of the following violations occur:
+        - registered_students == max_capacity
+        - some undefined ones yet
+        """
+        print("Session Name: {}".format(self.session.name))
+        print("Location Name: {}".format(self.session.location.name))
+
+        registered_students_count = self.session.registered_students
+        max_capacity = self.session.max_capacity
+        violations = []
+
+        if registered_students_count >= max_capacity:
+            # session is full
+            violations.append(1)
+
+        return bool(violations)
+        
+
     @classmethod    
-    def student_registrations(self,student):
+    def student_registrations(cls,student):
         """Returns list of registrations for given students
         """
-        return self.objects.filter(user=student.pk)
+        return cls.objects.filter(user=student.pk)
+
+    @classmethod
+    def student_registration_for_session(cls, student, session):
+        """Returns the student's registration for a given session
+        """
+        return cls.objects.get(user=student, session=session)
 
 class Homework(BaseModel):
     name=models.CharField(max_length=200)

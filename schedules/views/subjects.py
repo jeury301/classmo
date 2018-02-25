@@ -5,6 +5,7 @@ from django.http import HttpResponse, Http404
 from django.urls import reverse
 from schedules.models import Subject, Session
 from schedules.services import portal_tools
+from schedules.services.portal_tools import instructors_only, students_only
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
@@ -35,6 +36,7 @@ def detail(request, subject_id):
     return render(request, 'schedules/subjects/detail.html', context)
 
 @login_required
+@instructors_only
 def sessions(request, subject_id):
     """
     Display sessions for a given subject.
