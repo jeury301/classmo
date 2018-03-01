@@ -11,7 +11,7 @@ def create_x_posts(x, subject):
     """Creates, saves, and returns a list of x posts"""
     posts = []
     for counter, value in enumerate("abcdefghijklmnopqrstuvwxyz"):
-        posts.append(Post.create(subject=subject, body=(value*10)))
+        posts.append(Post.create(subject=subject, title=(value*10), body=(value*100)))
         posts[counter].save()
 
 def create_basic_comment_tree():
@@ -101,7 +101,7 @@ def create_subject(name="Basket Weaving"):
 def create_a_post():
     """Creates, saves, and returns a post"""
     subj = create_subject()
-    post = Post.create(subject=subj, body="I'm a top-level post")
+    post = Post.create(subject=subj, title="A great title", body="Just a great day!")
     post.save()
     return post
 

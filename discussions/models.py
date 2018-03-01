@@ -23,10 +23,6 @@ class BaseComment(BaseModel):
     score = models.IntegerField(default=1)
     adjusted_score = models.FloatField(default=1.0)
 
-    def __str__(self):
-        """Prettified toString with max length of 53 chars"""
-        msg = (self.body[:50] + '...') if len(self.body) > 53 else self.body
-        return msg
 
 class Post(BaseComment):
     """A model for top-level discussion forum posts
@@ -34,11 +30,18 @@ class Post(BaseComment):
     Fields:
         subject: The subject (e.g. Math 101) that top-level posts
             are organized under
+        title: The title of the post, displayed when listing posts
 
     Inherited fields from BaseComment:
         author, activ, body, score, adjusted_score
     """
+    title = models.CharField(max_length=280, default="")
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Prettified toString with max length of 53 chars"""
+        msg = (self.title[:50] + '...') if len(self.title) > 53 else self.title
+        return msg
 
     @classmethod
     def create(cls, **kwargs):
@@ -46,6 +49,7 @@ class Post(BaseComment):
 
         Kwargs:
             subject (obj): An instance of the Subject model
+            title (string): The title of the post
             body (string): The body text of the post
             author (obj): An instance of the Django User model (optional)
 
@@ -53,7 +57,7 @@ class Post(BaseComment):
             TypeError if an invalid kwarg is passed, or if a required
                 kwarg (body, subject, author) is missing
         """
-        expected_keys = ['subject', 'body']
+        expected_keys = ['subject', 'title', 'body']
         for key in expected_keys:
             if key not in set(kwargs.keys()):
                 raise TypeError("%s are required kwargs" % repr(expected_keys))
@@ -78,6 +82,11 @@ class Comment(BaseComment):
                              on_delete=models.CASCADE, blank=True, null=True)
     parent = models.ForeignKey('self', related_name='parent_comment',
                                on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        """Prettified toString with max length of 53 chars"""
+        msg = (self.body[:50] + '...') if len(self.body) > 53 else self.body
+        return msg
 
     @classmethod
     def create(cls, **kwargs):

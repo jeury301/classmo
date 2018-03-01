@@ -6,8 +6,12 @@
 {% block content %}
     <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
 
-    <h3>{{post.body}}</h3>
-    {% load tz %}
+<!--     TODO: Style this div and add bottom padding, get rid of br-->
+    <div>
+        <h3>{{post.title}}</h3>
+        {{post.body}}
+    </div>
+    <br/>
 
     {% if comments %}
         <ul class="no-bullets">
