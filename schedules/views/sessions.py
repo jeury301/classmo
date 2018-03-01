@@ -6,6 +6,7 @@ from django.http import HttpResponse, Http404
 from django.urls import reverse
 from schedules.models import Session, Registration, Subject, User, Homework
 from schedules.services.portal_tools import instructors_only, students_only
+from django.contrib import messages
 
 @login_required
 @students_only
@@ -20,9 +21,17 @@ def registration(request,session_id):
     reg=Registration(session=sesh,user=user)
     check=sesh.is_registered(user)
     if check:
-        return render(request,'schedules/sessions/reg_success.html',{'session':sesh.id,'error':"already exists"})
+        error = "You are already registered"
+        messages.error(request, error)
+        return render(request,'schedules/sessions/reg_success.html',{'session':sesh.id,'error':error})
     else:   
-        reg.save()
+        registered_user = reg.save()
+        print(": {}".format(registered_user))
+        if not registered_user:
+            error = "Sorry buddy, this session is full already!"
+            messages.error(request, error)
+            return redirect("schedules:session", session_id)
+        messages.success(request, "Welcome to {}-{}".format(sesh.subject.name, sesh.name))
         return render(request,'schedules/sessions/reg_success.html',{'session':sesh.id})
 
 @login_required

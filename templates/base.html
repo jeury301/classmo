@@ -17,16 +17,14 @@
     {# Navigation Menu #}
     <header>
         <nav class="navbar navbar-light bg-faded">
-          <h1>Classmo</h1>
-          {%if current_user.is_authenticated %}
-          <h2><strong>Role: </strong>
+            <h1>Classmo</h1> {%if current_user.is_authenticated %}
+            <h2><strong>Role: </strong>
             {%if is_instructor%}
             Instructor G
             {%else%}
             Mere Student
             {%endif%}
-          </h2>
-          {%endif%}
+          </h2> {%endif%}
         </nav>
     </header>
     {# The Document Body #}
@@ -37,19 +35,26 @@
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'schedules:index' %}">Home</a></li>
                     <li><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
-                    {%if current_user.is_authenticated %}
-                        {%if is_instructor%}
-                        <li><a href="{% url 'schedules:assignments' %}">My Sessions</a></li>
-                        {%else%}
-                        <li><a href="{% url 'schedules:registrations' %}">Registrations</a></li>
-                        <li><a href="{% url 'schedules:homework' %}">Assignments</a></li>
-                        {%endif%}
-                    {%endif%}
+                    {%if current_user.is_authenticated %} {%if is_instructor%}
+                    <li><a href="{% url 'schedules:assignments' %}">My Sessions</a></li>
+                    {%else%}
+                    <li><a href="{% url 'schedules:registrations' %}">Registrations</a></li>
+                    <li><a href="{% url 'schedules:homework' %}">Assignments</a></li>
+                    {%endif%} {%endif%}
                 </ul>
                 {% endblock %}
             </div>
             <div class="col-sm-10 ">
-                {% block content %}
+                {# Flash messages notifications #} 
+                {% if messages %}
+                    {% for flash in messages %}
+                    <div class="alert alert-{{flash.tags}}">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>{{flash}}</strong>
+                    </div>
+                    {% endfor %}
+                {%endif%} 
+                {% block content %} 
                 {% endblock %}
             </div>
         </div>
@@ -61,10 +66,10 @@
         </div>
     </div>
 </body>
-{# Set of blocks that can be used to display JavaScript files #} 
-{% block footer_javascript %}
+{# Set of blocks that can be used to display JavaScript files #} {% block footer_javascript %}
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/app.js' %}"></script>
 {% endblock footer_javascript %}
+
 </html>

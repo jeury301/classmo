@@ -40,8 +40,6 @@ def instructors_only(instructor_action):
     def filtered_instructor_action(request, **kwargs):
         is_instructor = request.user.groups.filter(name=settings.GROUPS["INSTRUCTORS"])
 
-        print("HELLO FROM EARTH: {}".format(kwargs))
-
         if is_instructor:
             # user is indeed an instructor, allowed the given requested action
             return instructor_action(request, **kwargs)
