@@ -1,0 +1,61 @@
+
+{% extends "base.html" %}
+
+{% block usertools %} 
+{% if user.is_authenticated %}
+<div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
+    {% block welcome-msg %}
+    <Span>Welcome</Span>
+    <strong style="font-weight:bold">{% firstof user.get_short_name user.get_username %}</strong> / {% endblock %} {% block userlinks %} {% if user.is_staff %}
+    <a href="/admin/login?next=/admin/"><span>Admin site link</span></a> / {% endif %}
+    <!--{% if user.is_active and user.is_staff %}-->
+    <a href="#"><span>My Profile</span></a> /
+    <!--{% endif %}-->
+    <a href="{% url 'admin:password_change' %}"><span>Change password</span></a> /
+    <a href="{% url 'logout' %}"><span>Log Out</span></a> {% endblock %}
+</div>
+{% else %}
+<div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
+    <a href="{% url 'login' %}"><strong><span>Login</span></strong></a>
+</div>
+{% endif %} 
+{% endblock %} 
+
+
+
+
+{% block content %}
+<<<<<<< HEAD
+{% if assignments %}
+
+<table class="table table-hover">
+{% if assigned_sessions %}
+
+
+    <tbody>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Name</th>  
+                <th>Registered Students</th> 
+                <th>Max Capacity</th>             
+                <th>Schedule Info</th>
+                <th>My Students</th>
+            </tr>
+        </thead>
+        {% for ass in assigned_sessions %}
+        <tr>
+            <td>{{ass.subject.name}}</td>
+            <td>{{ass.name}}</td>
+            <td>{{ass.registered_students}}</td>
+            <td>{{ass.max_capacity}}</td>
+            <td>{{ass.start_date|date:'Y-m-d'}} - {{ass.end_date|date:'Y-m-d'}}</td>
+            <td><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p> No Sessions for {{user.username}}</p>
+{% endif %} 
+{% endblock %}
