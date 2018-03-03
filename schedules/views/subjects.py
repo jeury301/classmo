@@ -2,12 +2,14 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse, Http404
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.urls import reverse
+
 from schedules.models import Subject, Session
 from schedules.services import portal_tools
 from schedules.services.portal_tools import instructors_only, students_only
-from django.contrib.auth.decorators import login_required
-from django.conf import settings
+
 
 @login_required
 def subjects(request):
