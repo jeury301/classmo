@@ -1,0 +1,7 @@
+.no-bullets {
+  list-style-type: none !important;
+}
+
+ul li {
+  list-style-type: none;
+}

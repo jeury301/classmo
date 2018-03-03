@@ -1,6 +1,4 @@
-
-{% extends "base.html" %}
-
+{% extends 'base.html' %} 
 {% block usertools %} 
 {% if user.is_authenticated %}
 <div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
@@ -22,40 +20,35 @@
 {% endblock %} 
 
 
-
-
-{% block content %}
-<<<<<<< HEAD
-{% if assignments %}
-
-<table class="table table-hover">
-{% if assigned_sessions %}
-
-
-    <tbody>
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Name</th>  
-                <th>Registered Students</th> 
-                <th>Max Capacity</th>             
-                <th>Schedule Info</th>
-                <th>My Students</th>
-            </tr>
-        </thead>
-        {% for ass in assigned_sessions %}
-        <tr>
-            <td>{{ass.subject.name}}</td>
-            <td>{{ass.name}}</td>
-            <td>{{ass.registered_students}}</td>
-            <td>{{ass.max_capacity}}</td>
-            <td>{{ass.start_date|date:'Y-m-d'}} - {{ass.end_date|date:'Y-m-d'}}</td>
-            <td><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p> No Sessions for {{user.username}}</p>
+{% block content %} 
+{% if registrations %}
+<div id="info-container">
+    <div class="card">
+        <div class="card-block" style="padding: 20px;">
+            <h4 class="card-title">Registered Sessions</h4>
+            <div style="padding-top: 5px">
+                <table class="table table-hover">
+                    <thead style="background-color:#e6e6e6">
+                        <tr>
+                            <th>Location</th>
+                            <th>Subject</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reg in registrations %}
+                        <tr>
+                            <th>{{reg.session.location}}</th>
+                            <th>{{reg.session.subject}}</th>
+                            <th>{{reg.session.instructor}}
+                            </th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endif %} 
 {% endblock %}

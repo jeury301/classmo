@@ -4,9 +4,21 @@
 
     {% load tz%}
 
+    <div>
+        <h3>{{subject.name}}</h3>
+        <h4><a href="{% url 'new_post' subject.id %}">*** NEW POST ***</a></h4>
+    </div>
+
     {% for post in posts %}
         <br/>
-            <a href="{% url 'list_comments' post.id %}">{{post.body}} ({{post.created_date|localtime}})</a>
+            <a href="{% url 'list_comments' post.id %}">
+            {% if post.title %}
+                {{post.title}}  
+            {% else %} 
+                No title 
+            {% endif %}
+            ({{post.created_date|localtime}})
+        </a>
         <br/>
     {% endfor %}
 

@@ -13,8 +13,8 @@ def create_shit():
     test_location=Location(pk=1,name="New Jersey")
     test_session=Session(pk=1,subject=test_subject,location=test_location,instructor=test_instructor,name="test sesh")
     test_registration=Registration(pk=1,session=test_session,user=test_user)
-    test_assignment=Assignment(pk=1,session=test_session,name="Test HW",description="A test HW",due_date=timezone.now()
-        +datetime.timedelta(days=7))
+    test_assignment=Assignment(pk=1,session=test_session,name="Test HW",description="A test HW",
+        due_date=timezone.now()+datetime.timedelta(days=7))
     return {'test_user':test_user,'test_user2':test_user2,'test_instructor':test_instructor,
     'test_subject':test_subject,'test_location':test_location,'test_registration':test_registration,
     'test_session':test_session}
