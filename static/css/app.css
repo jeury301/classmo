@@ -7,3 +7,26 @@
 .discuss-topnav {
     margin-bottom: 20px;
 }
+
+.discuss-regmargin {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.comment-leftbox {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.comment-metabox {
+    color: #666;
+}
+
+.comment-votecontrol {
+    text-align: center;
+    color: #666;
+}
+
+.comment-rightbox {
+    display: inline-block;
+}

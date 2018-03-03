@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="discuss-topnav">
+    <a href="{% url 'list_posts' subject.id %}">< Back to {{ subject.name }} forum</a>
+</div>
+
 <div>
     <h3>New post - {{ subject.name }}</h3>
 </div>

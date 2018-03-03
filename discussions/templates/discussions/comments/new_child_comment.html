@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="discuss-topnav">
+    <a href="{% url 'list_comments' parent.post.id %}">< Back to thread</a>
+</div>
+
 <div>
-    <h3>You're responding to:</h3>
+    You're responding to:
 </div>
 
 <div>
@@ -23,7 +27,10 @@
  
 <form action="{% url 'new_child' parent.id %}" method="post">
     {% csrf_token %}
-    {{ form }}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <br/>
     <input type="submit" value="Submit" />
 </form>
 
