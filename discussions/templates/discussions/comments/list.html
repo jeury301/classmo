@@ -10,6 +10,15 @@
         <a href="{% url 'list_posts' post.subject.id %}">< Back to {{post.subject.name}} forum</a>
     </div>
 
+    {% if not user.is_authenticated %}
+    <div>
+        <em>
+        You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="#">create an account</a>.
+        </em>
+    </div>
+    <br/>
+    {% endif %}
+
     {% include "discussions/elements/post_view_controls.html" %}
 
     {% if comments %}
@@ -41,15 +50,25 @@
                 <div>
                     {{comment.comment.body}}
                 </div>
+
+                    
+                {% if user.is_authenticated%}
                 <div>
-                    <a href="#">Report</a> | <a href="{% url 'new_child' comment.comment.id %}">Reply</a>
+                    <a href="#">Report</a>
+                    |
+                    <a href="{% url 'new_child' comment.comment.id %}">Reply</a>
                 </div>
+                {% else %}
+                <div>
+                    <a href="{% url 'login' %}">Log in to reply</a>
+                </div>
+                {% endif %}
             </li>
             
         {% endfor %}
         </ul>
     {% else %}
-        Looks like there's no comments yet.  
+        Looks like there's no comments here yet.  
         <a href="{% url 'new_top' post.id %}">Why not post the first?</a>
     {% endif %}
 

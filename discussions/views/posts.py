@@ -1,4 +1,5 @@
 """posts.py - Views for top-level posts (parentless comments)"""
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -25,6 +26,7 @@ def list_posts(request, subject_id):
     }
     return render(request, 'discussions/posts/list.html', context)
 
+@login_required
 def new_post(request, subject_id):
     subj = get_object_or_404(Subject, id=subject_id)
     # if this is a POST request we need to process the form data
