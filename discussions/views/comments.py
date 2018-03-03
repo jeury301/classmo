@@ -1,4 +1,5 @@
 """comments.py - Views for child comments"""
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -20,6 +21,7 @@ def detail_comment(request, comment_id):
     return HttpResponse("Hello from detail_comment")
 
 
+@login_required
 def new_top_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     # if this is a POST request we need to process the form data
@@ -45,6 +47,8 @@ def new_top_comment(request, post_id):
     }
     return render(request, 'discussions/comments/new_top_comment.html', context)
 
+
+@login_required
 def new_child_comment(request, comment_id):
     parent = get_object_or_404(Comment, id=comment_id)
     # if this is a POST request we need to process the form data

@@ -4,10 +4,28 @@
 
     {% load tz%}
 
+    <div class="discuss-topnav">
+        <a href="{% url 'discussion_index' %}">< Back to forum directory</a>
+    </div>
+
     <div>
         <h3>{{subject.name}}</h3>
-        <h4><a href="{% url 'new_post' subject.id %}">*** NEW POST ***</a></h4>
     </div>
+
+    {% if user.is_authenticated %}
+        {% if posts %}
+             <a href="{% url 'new_post' subject.id %}">New post</a>
+             <!-- TODO: style this correctly -->
+        {% else %}
+            Looks like there's no posts here yet.  
+            <a href="{% url 'new_post' subject.id %}">Why not post the first?</a>
+        {% endif %}
+    {% else %}
+        <em>
+        You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="#">create an account</a>.
+        </em>
+    {% endif %}
+    <br/>
 
     {% for post in posts %}
         <br/>
