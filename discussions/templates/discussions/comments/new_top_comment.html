@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h3>You're responding to:</h3>
+</div>
+
+    {% include "discussions/elements/post_view.html" %}
+     
+<form action="{% url 'new_top' post.id %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

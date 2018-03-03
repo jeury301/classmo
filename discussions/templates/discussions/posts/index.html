@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+        <h3>Discussion Forums</h3>
+    </div>
+
+    {% for subject in subjects %}
+        <br/>
+            <a href="{% url 'list_posts' subject.id %}">
+            {% if subject.name %}
+                {{subject.name}}  
+            {% else %} 
+                No name subject 
+            {% endif %}
+        </a>
+        <br/>
+    {% endfor %}
+
+{% endblock %}

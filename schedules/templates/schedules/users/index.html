@@ -1,12 +1,31 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<ol class="breadcrumb">
-  <li class="breadcrumb-item active">Home</li>
-</ol>
+{% extends 'base.html' %} 
+{% block usertools %} 
 {% if user.is_authenticated %}
-<p>You are logged in</p>
-<p> Welcome {{ user.get_username }}</p>
+<div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
+    {% block welcome-msg %}
+    <Span>Welcome</Span>
+    <strong style="font-weight:bold">{% firstof user.get_short_name user.get_username %}</strong> / 
+    {% endblock %} 
+    {% block userlinks %} 
+    {% if user.is_staff %}
+    <a href="/admin/login?next=/admin/"><span>Admin site link</span></a> / 
+    {% endif %}
+    <!--{% if user.is_active and user.is_staff %}-->
+    <a href="#"><span>My Profile</span></a> /
+    <!--{% endif %}-->
+    <a href="{% url 'admin:password_change' %}"><span>Change password</span></a> /
+    <a href="{% url 'logout' %}"><span>Log Out</span></a> 
+    {% endblock %}
+</div>
+{% else %}
+<div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
+    <a href="{% url 'login' %}"><strong><span>Login</span></strong></a>
+</div>
+{% endif %} 
+{% endblock %} 
+{% block content %} 
+{% if user.is_authenticated %}
+<div><h1>Display Content Here</h1></div> 
 {% else %}
 <h1> Create a new account</h1>
 <form action="{% url 'schedules:register' %}" method="post">
@@ -58,11 +77,7 @@
     <input type="submit" style="background-color:cyan" value="Submit">
 </form>
 <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
+
 {% endif %}
-
-{% for reg in registrations %}
-<li>Location:{{reg.session.location}} Subject:{{reg.session.subject}}</li>
-{% endfor %}
-<a href="{% url 'logout' %}">Log out</a>
-
-{%endblock%}
+ <br>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h3>You're responding to:</h3>
+</div>
+
+<div>
+    <span>  
+        <strong>
+        {% if parent.author %} 
+            {{parent.author}} 
+        {% else %}
+            Anonymous 
+        {% endif %}
+        </strong>
+        at {{parent.created_date}}
+    </span>
+</div>
+<div>
+    {{parent.body}}
+</div>
+ 
+<form action="{% url 'new_child' parent.id %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

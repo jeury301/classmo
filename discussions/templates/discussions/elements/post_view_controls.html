@@ -1,0 +1,21 @@
+<!-- This element expects a Post object named post in context -->
+
+<!--     TODO: Style this div and add bottom padding, get rid of br-->
+<div>
+    <h3>{{post.title}}</h3>
+    <div>
+        {{post.body}}
+    </div>
+    {% if user.is_authenticated %}
+    <div>
+        <a href="#">Report</a>
+        |
+        <a href="{% url 'new_top' post.id %}">Reply</a>
+    </div>
+    {% else %}
+    <div>
+        <a href="{% url 'login' %}">Log in to reply</a>
+    </div>
+    {% endif %}
+</div>
+<br/>
