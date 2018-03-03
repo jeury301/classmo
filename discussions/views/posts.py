@@ -7,7 +7,16 @@ from discussions.forms import PostForm
 from discussions.models import Post
 from schedules.models import Subject
 
+def index(request):
+    """List all subjects and and link to corresponding
+    discussion forums
+    """
+    subjects = Subject.objects.all().order_by('name')
+    context = {'subjects': subjects}
+    return render(request, 'discussions/posts/index.html', context)
+
 def list_posts(request, subject_id):
+    """List all posts in a given subject forum"""
     subj = get_object_or_404(Subject, id=subject_id)
     posts = Post.objects.filter(subject=subj).order_by('-created_date')
     context = {

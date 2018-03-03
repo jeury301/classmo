@@ -4,6 +4,10 @@
 
     {% load tz%}
 
+    <div class="discuss-topnav">
+        <a href="{% url 'discussion_index' %}">< Back to forum directory</a>
+    </div>
+
     <div>
         <h3>{{subject.name}}</h3>
         <h4><a href="{% url 'new_post' subject.id %}">*** NEW POST ***</a></h4>

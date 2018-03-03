@@ -1,35 +1,13 @@
+"""models.py - Vote, Comment and Post models
+for the discussions app
+"""
+
+# pylint: disable=no-member
+
 from django.contrib.auth.models import User
 from django.db import models
 
 from schedules.models import BaseModel, Subject
-
-
-class Vote(Model):
-    """Model for upvotes/downvotes
-
-    Either comment or post must have a non-null value,
-    depending on whether the vote concerned a comment
-    or a post 
-    """
-    comment = models.ForeignKey('Comment', on_delete=models.CASCADE, 
-                            blank=True, null=True)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, 
-                              blank=True, null=True)
-    voter = models.ForeignKey(User, on_delete=models.CASCADE,
-                              blank=True, null=True)
-    value = models.IntegerField(default=1)
-
-    def create_comment_vote(cls, **kwargs):
-        expected_keys = ['comment', 'voter', 'value']
-        for key in expected_keys:
-            if key not in set(kwargs.keys()):
-                raise TypeError("%s are required kwargs" % repr(expected_keys))
-        # Check if user already voted on this comment
-        return post
-
-class CommentVote(models):
-
-
 
 
 class BaseComment(BaseModel):
@@ -43,6 +21,8 @@ class BaseComment(BaseModel):
         adjusted_score: The score, weighted by an algorithm TBD
     """
     class Meta:
+        # pylint: disable=missing-docstring
+        # pylint: disable=too-few-public-methods
         abstract = True
 
     author = models.ForeignKey(User, on_delete=models.CASCADE,
@@ -69,7 +49,13 @@ class Post(BaseComment):
 
     def __str__(self):
         """Prettified toString with max length of 53 chars"""
-        msg = (self.title[:50] + '...') if len(self.title) > 53 else self.title
+        if self.title:
+            if len(self.title) > 53:
+                msg = (self.title[:50] + '...')
+            else:
+                msg= self.title
+        else:
+            msg = ""
         return msg
 
     @classmethod
@@ -114,7 +100,13 @@ class Comment(BaseComment):
 
     def __str__(self):
         """Prettified toString with max length of 53 chars"""
-        msg = (self.body[:50] + '...') if len(self.body) > 53 else self.body
+        if self.body:
+            if len(self.body) > 53:
+                msg = (self.body[:50] + '...')
+            else:
+                msg= self.body
+        else:
+            msg = ""
         return msg
 
     @classmethod
@@ -271,3 +263,102 @@ class Comment(BaseComment):
                 comm_dict['depth_counter'] = abs(comm_dict['rel_depth']) * "x"
                 parent_depth = comm_dict['abs_depth']
         return output
+
+
+class Vote(BaseModel):
+    """Model for upvotes/downvotes
+
+    Either comment or post must have a non-null value,
+    depending on whether the vote concerned a comment
+    or a post
+
+    Attributes:
+        comment: A Comment object that the user is upvoting
+            or downvoting.  Must be passed as a kwarg
+            if post is not passed
+        post: A Post object that the user is upvoting
+            or downvoting.  Must be passed as a kwarg
+            if post is not passed
+        topic_post: A Post object corresponding to the
+            top level post in a thread.  For a vote on
+            a post, this is the same as the post attribute
+        voter: A User object (the user voting)
+        value: Either 1 for an upvote or -1 for a downvote
+
+    """
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE,
+                                blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,
+                             blank=True, null=True)
+    topic_post = models.ForeignKey(Post, related_name='topic_post',
+                                   on_delete=models.CASCADE, blank=True,
+                                   null=True)
+    voter = models.ForeignKey(User, on_delete=models.CASCADE,
+                              blank=True, null=True)
+    value = models.IntegerField(default=1)
+
+    @classmethod
+    def create(cls, **kwargs):
+        """Construct and save a new Vote object and
+        update the corresponding Post or Comment
+        """
+        expected_keys = ['voter', 'value']
+        for key in expected_keys:
+            if key not in set(kwargs.keys()):
+                raise TypeError("%s are required kwargs" % repr(expected_keys))
+        if (kwargs['value'] not in [-1, 1]):
+            raise ValueError("Value must be either 1 (for an upvote) or "
+                             "-1 for a downvote")
+
+        # Get user's previous vote on this comment/post, if it exists
+        if 'comment' in kwargs:
+            old_vote = Vote.objects.filter(voter=kwargs['voter'],
+                                           comment=kwargs['comment']).first()
+        elif 'post' in kwargs:
+            old_vote = Vote.objects.filter(voter=kwargs['voter'],
+                                           post=kwargs['post']).first()
+        else:
+            # Either comment or post are necessary kwargs
+            raise TypeError("You must provide either comment or post as kwarg.")
+
+        if old_vote:
+            # The user voted before. Update the vote value
+            # and update the comment/post if necessary
+            if old_vote.value != kwargs['value']:
+                # The user changed from an upvote to downvote;
+                # we have to update the corresponding comment/post
+                vote_diff = kwargs['value'] - old_vote.value
+                if 'comment' in kwargs:
+                    comment = old_vote.comment
+                    comment.score += vote_diff
+                    comment.save()
+
+                else:
+                    post = old_vote.post
+                    post.score += vote_diff
+                    post.save()
+                old_vote.value = kwargs['value']
+                old_vote.save()
+            # There's nothing to do if the new vote and the old
+            # vote have the same value
+            return old_vote
+        else:
+            # There wasn't an previous vote by this user
+            if 'comment' in kwargs:
+                vote = Vote(comment=kwargs['comment'],
+                            topic_post=kwargs['comment'].post,
+                            voter=kwargs['voter'],
+                            value=kwargs['value'])
+                comment = vote.comment
+                comment.score += kwargs['value']
+                comment.save()
+            else:
+                vote = Vote(post=kwargs['post'],
+                            topic_post=kwargs['post'],
+                            voter=kwargs['voter'],
+                            value=kwargs['value'])
+                post = vote.post
+                post.score += kwargs['value']
+                post.save()
+            vote.save()
+            return vote

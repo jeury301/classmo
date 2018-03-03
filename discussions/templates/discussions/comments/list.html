@@ -6,8 +6,8 @@
 {% block content %}
     <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
 
-    <div>
-        <h5><a href="{% url 'list_posts' post.subject.id %}">< Back to {{post.subject.name}}</a></h5>
+    <div class="discuss-topnav">
+        <a href="{% url 'list_posts' post.subject.id %}">< Back to {{post.subject.name}} forum</a>
     </div>
 
     {% include "discussions/elements/post_view_controls.html" %}
