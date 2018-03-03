@@ -14,7 +14,7 @@
 
     {% if user.is_authenticated %}
         {% if posts %}
-             <a href="{% url 'new_post' subject.id %}">New post</a>
+             <a href="{% url 'new_post' subject.id %}">Add a new post</a>
              <!-- TODO: style this correctly -->
         {% else %}
             Looks like there's no posts here yet.  
