@@ -1,0 +1,13 @@
+<!-- This element expects a Post object named post in context -->
+
+<!--     TODO: Style this div and add bottom padding, get rid of br-->
+<div>
+    <h3>{{post.title}}</h3>
+    <div>
+        {{post.body}}
+    </div>
+    <div>
+        <a href="#">Report</a> | <a href="{% url 'new_top' post.id %}">Reply</a>
+    </div>
+</div>
+<br/>

@@ -3,6 +3,35 @@ from django.db import models
 
 from schedules.models import BaseModel, Subject
 
+
+class Vote(Model):
+    """Model for upvotes/downvotes
+
+    Either comment or post must have a non-null value,
+    depending on whether the vote concerned a comment
+    or a post 
+    """
+    comment = models.ForeignKey('Comment', on_delete=models.CASCADE, 
+                            blank=True, null=True)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, 
+                              blank=True, null=True)
+    voter = models.ForeignKey(User, on_delete=models.CASCADE,
+                              blank=True, null=True)
+    value = models.IntegerField(default=1)
+
+    def create_comment_vote(cls, **kwargs):
+        expected_keys = ['comment', 'voter', 'value']
+        for key in expected_keys:
+            if key not in set(kwargs.keys()):
+                raise TypeError("%s are required kwargs" % repr(expected_keys))
+        # Check if user already voted on this comment
+        return post
+
+class CommentVote(models):
+
+
+
+
 class BaseComment(BaseModel):
     """A base model for Comments and Posts
 
