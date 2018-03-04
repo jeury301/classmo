@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Subject, Location, Session, Registration, Homework
+from .models import Subject, Location, Session, Registration, Homework, Profile
 
 class SessionForm(forms.ModelForm):
     """A form model for Session
@@ -36,6 +36,9 @@ admin.site.register(Location)
 admin.site.register(Session, SessionAdmin)
 admin.site.register(Registration)
 admin.site.register(Homework)
+admin.site.register(Profile)
+admin.site.site_header = 'Classmo Admin'
+
 
 
 

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
 import logging
 
 def is_member(user, group):
@@ -27,6 +28,9 @@ def students_only(student_action):
             # user is indeed a student, allowed the given requested action
             return student_action(request, **kwargs)
         else:
+            messages.add_message(request, messages.ERROR, 
+                'You must be a <strong>student</strong> to access this view. '
+                'You have been redirected to Home!', extra_tags='safe')
             return redirect("/")
     return filtered_student_action
 
@@ -44,6 +48,9 @@ def instructors_only(instructor_action):
             # user is indeed an instructor, allowed the given requested action
             return instructor_action(request, **kwargs)
         else:
+            messages.add_message(request, messages.ERROR, 
+                'You must be an <strong>instructor</strong> to access this view. '
+                'You have been redirected to Home!', extra_tags='safe')
             return redirect("/")
     return filtered_instructor_action
 

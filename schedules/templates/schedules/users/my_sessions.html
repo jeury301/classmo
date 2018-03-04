@@ -1,54 +1,33 @@
-{% extends 'base.html' %} 
-{% block usertools %} 
-{% if user.is_authenticated %}
-<div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
-    {% block welcome-msg %}
-    <Span>Welcome</Span>
-    <strong style="font-weight:bold">{% firstof user.get_short_name user.get_username %}</strong> / {% endblock %} {% block userlinks %} {% if user.is_staff %}
-    <a href="/admin/login?next=/admin/"><span>Admin site link</span></a> / {% endif %}
-    <!--{% if user.is_active and user.is_staff %}-->
-    <a href="#"><span>My Profile</span></a> /
-    <!--{% endif %}-->
-    <a href="{% url 'admin:password_change' %}"><span>Change password</span></a> /
-    <a href="{% url 'logout' %}"><span>Log Out</span></a> {% endblock %}
-</div>
-{% else %}
-<div style="float:right;font-family:Roboto Lucida Grande Sans Bitstream Vera Sans Verdana Arial sans-serif;padding:0;text-transform:uppercase;letter-spacing:.5px;font-size:10px">
-    <a href="{% url 'login' %}"><strong><span>Login</span></strong></a>
-</div>
-{% endif %} 
-{% endblock %} 
-
-
-{% block content %} 
-{% if registrations %}
-<div id="info-container">
-    <div class="card">
-        <div class="card-block" style="padding: 20px;">
-            <h4 class="card-title">Registered Sessions</h4>
-            <div style="padding-top: 5px">
-                <table class="table table-hover">
-                    <thead style="background-color:#e6e6e6">
-                        <tr>
-                            <th>Location</th>
-                            <th>Subject</th>
-                            <th>Instructor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for reg in registrations %}
-                        <tr>
-                            <th>{{reg.session.location}}</th>
-                            <th>{{reg.session.subject}}</th>
-                            <th>{{reg.session.instructor}}
-                            </th>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+{% extends 'base.html' %}
+{% block content %}
+    {% if registrations %}
+        <div id="info-container">
+            <div class="card">
+                <div class="card-block" style="padding: 20px;">
+                    <h4 class="card-title">Registered Sessions</h4>
+                    <div style="padding-top: 5px">
+                        <table class="table table-hover">
+                            <thead style="background-color:#e6e6e6">
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Subject</th>
+                                    <th>Instructor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reg in registrations %}
+                                    <tr>
+                                        <th>{{reg.session.location}}</th>
+                                        <th>{{reg.session.subject}}</th>
+                                        <th>{{reg.session.instructor}}
+                                        </th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-{% endif %} 
+    {% endif %}
 {% endblock %}

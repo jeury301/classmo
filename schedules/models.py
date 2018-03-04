@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Base model for others to inherit from
 class BaseModel(models.Model):
@@ -142,3 +144,15 @@ class Homework(BaseModel):
         return self.name
 
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address_1 = models.CharField(max_length=128, default="")
+    address_2 = models.CharField(max_length=128, blank=True)
+    city = models.CharField(max_length=64, default="New York")
+    state = models.CharField(max_length=2, default="NY")
+    zip_code = models.CharField(max_length=5, default="00000")
+    country = models.CharField(max_length=128, default="United States")
+    phone = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.user.username

@@ -1,12 +1,5 @@
 {% extends 'base.html' %} 
 {%block content%}
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'schedules:detail' session.subject.id %}">{{session.subject.name}}</a></li>
-
-    <li class="breadcrumb-item active">{{session.name}}</li>
-</ol>
 <h1>
     {{session.subject.name}} - {{session.name}}
 </h1>
