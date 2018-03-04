@@ -1,19 +1,22 @@
-{% extends "schedules/users/index.html" %} {% block content %} {% if session %}
-<ul>
-    <li>Subject:{{session.subject}}</li>
-    <li>Location:{{session.location}}
-</ul>
-{% if reg_list %} {% for reg in reg_list %}
-<li>{{reg.user}}</li>
-{% endfor %} {% else %}
-<P>There are currently no registrations</P>
-{% endif %}
-<P>Register for this section</P>
-<form action="{% url 'schedules:registration' session.id %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="user_id" value="{{user.id}}">
-    <input type="submit" style="background-color:cyan" value="Register">
-</form>
-{% else %}
-<P> No such session exists</P>
-{% endif %} {% endblock %}
+{% extends "schedules/users/index.html" %} 
+{% block content %} 
+    {% if session %}
+        <ul>
+            <li>Subject:{{session.subject}}</li>
+            <li>Location:{{session.location}}
+            </ul>
+            {% if reg_list %} {% for reg in reg_list %}
+                <li>{{reg.user}}</li>
+            {% endfor %} {% else %}
+            <P>There are currently no registrations</P>
+        {% endif %}
+        <P>Register for this section</P>
+        <form action="{% url 'schedules:registration' session.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <input type="submit" style="background-color:cyan" value="Register">
+        </form>
+    {% else %}
+        <P> No such session exists</P>
+    {% endif %} 
+{% endblock %}
