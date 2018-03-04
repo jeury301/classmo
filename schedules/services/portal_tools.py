@@ -29,8 +29,8 @@ def students_only(student_action):
             return student_action(request, **kwargs)
         else:
             messages.add_message(request, messages.ERROR, 
-                'You must be a student to access this view. '
-                'You have been redirected to Home!')
+                'You must be a <strong>student</strong> to access this view. '
+                'You have been redirected to Home!', extra_tags='safe')
             return redirect("/")
     return filtered_student_action
 
@@ -49,8 +49,8 @@ def instructors_only(instructor_action):
             return instructor_action(request, **kwargs)
         else:
             messages.add_message(request, messages.ERROR, 
-                'You must be an instructor to access this view. '
-                'You have been redirected to Home!')
+                'You must be an <strong>instructor</strong> to access this view. '
+                'You have been redirected to Home!', extra_tags='safe')
             return redirect("/")
     return filtered_instructor_action
 
