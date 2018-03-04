@@ -37,6 +37,8 @@ admin.site.register(Session, SessionAdmin)
 admin.site.register(Registration)
 admin.site.register(Homework)
 admin.site.register(Profile)
+admin.site.site_header = 'Classmo Admin'
+
 
 
 
