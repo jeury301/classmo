@@ -20,5 +20,4 @@ urlpatterns = [
     path('sessions/my_registrations',sessions.registrations,name='registrations'),
     path('sessions/<int:session_id>/drop_session', sessions.drop_session, name='drop_session'),
     path('register/',users.user_registration,name='register'),
-
 ]

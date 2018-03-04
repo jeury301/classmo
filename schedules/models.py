@@ -154,6 +154,5 @@ class Profile(models.Model):
     country = models.CharField(max_length=128, default="United States")
     phone = models.CharField(max_length=128)
 
-
     def __str__(self):
-        return self.user
+        return self.user.username
