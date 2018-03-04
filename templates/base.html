@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}" /> {% if LANGUAGE_BIDI %}
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive_rtl.css' %}" /> {% endif %} {% endblock %} {% block blockbots %}
     <meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    <!--Custom App CSS File-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css'%}">
 </head>
 {% load i18n %}
 
@@ -53,13 +55,13 @@
             <!-- END Header -->
             {% block breadcrumbs %}
             <div class="breadcrumbs">
-                <a href="{% url 'schedules:index' %}">{% trans 'Home' %}</a>&#47;
+                <a href="{% url 'schedules:index' %}">{% trans 'Home' %}</a>
                 {%if is_instructor or user.is_staff%}
-                <a href="{% url 'schedules:assignments' %}">{% trans 'My Sessions' %}</a>&#47;
+                &#47;<a href="{% url 'schedules:assignments' %}">{% trans 'My Sessions' %}</a>
                 {%endif%}
                 {%if is_student or user.is_staff%}
-                <a href="{% url 'schedules:subjects' %}">{% trans 'Subjects' %}</a>&#47;
-                <a href="{% url 'schedules:homework' %}">{% trans 'Homework' %}</a>
+                &#47;<a href="{% url 'schedules:subjects' %}">{% trans 'Subjects' %}</a>
+                &#47;<a href="{% url 'schedules:homework' %}">{% trans 'Homework' %}</a>
                 {%endif%}
             </div>
             {% endblock %} 
