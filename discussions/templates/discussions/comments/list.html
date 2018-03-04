@@ -35,7 +35,13 @@
                 {% endfor %}
             {% endif %}
             <li>
-                {% include "discussions/elements/comment_view_controls.html" %}
+                {% if comment.abs_depth < max_depth %}
+                    {% include "discussions/elements/comment_view_controls.html" %}
+                {% else %}
+                    <div class="discuss-regmargin">
+                        <a href="#">See more comments</a>
+                    </div>
+                {% endif %}
             </li>
             
         {% endfor %}
