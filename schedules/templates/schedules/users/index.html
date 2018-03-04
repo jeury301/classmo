@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if user.is_authenticated %}
-        <div><h1>Display Content Here</h1></div>
+        <div>
+            
+            <h1>
+                Hello 
+                {%if user.first_name%}
+                    {{user.first_name}},
+                {%else%}
+                    {{user.username}}, 
+                {%endif%}
+            </h1>
+            <h1>
+                This is Classmo's <strong>Home!</strong>
+            </h1>
+        </div>
     {% else %}
         <h1> Create a new account</h1>
         <form action="{% url 'schedules:register' %}" method="post">

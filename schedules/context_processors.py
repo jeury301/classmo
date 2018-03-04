@@ -8,9 +8,21 @@ def global_context(request):
     """
     current_user = request.user
     is_instructor = portal_tools.is_member(current_user, settings.GROUPS["INSTRUCTORS"])
+    is_student = portal_tools.is_member(current_user, settings.GROUPS["STUDENTS"])
+    
+    role = "user"
+    
+    if is_instructor:
+        role = "instructor"
+    elif is_student:
+        role = "student"
+    elif current_user.is_staff:
+        role = "staff"
 
     global_context = {
         "current_user":current_user,
-        "is_instructor":is_instructor
+        "is_instructor":is_instructor,
+        "is_student":is_student,
+        "role":role
     }           
     return global_context

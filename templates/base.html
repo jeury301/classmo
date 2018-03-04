@@ -29,7 +29,7 @@
                 {% if user.is_authenticated %}
                 <div id="user-tools">
                     Welcome,
-                    <strong>{% firstof user.get_short_name user.get_username %}</strong>. 
+                    <strong>{% firstof user.get_short_name user.get_username %} ({{role}})</strong>. 
                     {% block userlinks %} 
                         {% if user.is_staff %}
                         <a href="/admin/login?next=/admin/">{% trans 'Admin Site' %}</a> / 
@@ -54,9 +54,13 @@
             {% block breadcrumbs %}
             <div class="breadcrumbs">
                 <a href="{% url 'schedules:index' %}">{% trans 'Home' %}</a>&#47;
-                <a href="{% url 'schedules:my_sessions' %}">{% trans 'My Sessions' %}</a>&#47;
+                {%if is_instructor or user.is_staff%}
+                <a href="{% url 'schedules:assignments' %}">{% trans 'My Sessions' %}</a>&#47;
+                {%endif%}
+                {%if is_student or user.is_staff%}
                 <a href="{% url 'schedules:subjects' %}">{% trans 'Subjects' %}</a>&#47;
                 <a href="{% url 'schedules:homework' %}">{% trans 'Homework' %}</a>
+                {%endif%}
             </div>
             {% endblock %} 
         {% endif %} 
