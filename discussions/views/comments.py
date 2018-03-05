@@ -11,10 +11,14 @@ from schedules.models import Subject
 
 def list_comments(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    comments = Comment.get_ordered_comments(post, 4, '-created_date')
-    return render(request, 'discussions/comments/list.html',
-        {'post': post,
-         'comments': comments})
+    max_depth = 5
+    comments = Comment.get_ordered_comments(post, max_depth, '-created_date')
+    context = {
+        'post': post,
+        'comments': comments,
+        'max_depth': max_depth - 1 # Compensate for first element having 0 depth
+    }
+    return render(request, 'discussions/comments/list.html', context)
 
 
 def detail_comment(request, comment_id):

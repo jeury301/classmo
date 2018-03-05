@@ -35,33 +35,12 @@
                 {% endfor %}
             {% endif %}
             <li>
-                <div>
-                    <span>  
-                        <strong>
-                        {% if comment.comment.author %} 
-                            {{comment.comment.author}} 
-                        {% else %}
-                            Anonymous 
-                        {% endif %}
-                        </strong>
-                        at {{comment.comment.created_date}}
-                    </span>
-                </div>
-                <div>
-                    {{comment.comment.body}}
-                </div>
-
-                    
-                {% if user.is_authenticated%}
-                <div>
-                    <a href="#">Report</a>
-                    |
-                    <a href="{% url 'new_child' comment.comment.id %}">Reply</a>
-                </div>
+                {% if comment.abs_depth < max_depth %}
+                    {% include "discussions/elements/comment_view_controls.html" %}
                 {% else %}
-                <div>
-                    <a href="{% url 'login' %}">Log in to reply</a>
-                </div>
+                    <div class="discuss-regmargin">
+                        <a href="#">See more comments</a>
+                    </div>
                 {% endif %}
             </li>
             

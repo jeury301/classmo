@@ -1,35 +1,34 @@
-<!-- This element expects a Post object named post in context -->
+<!-- This element expects a Comment object named post in context -->
 
 <div class="discuss-regmargin">
-    <div>
-        <h4>{{post.title}}</h4>
-    </div>
     <div class="comment-leftbox">
         <div class="comment-votecontrol">&#x25B4;<i class="fa fa-arrow-circle-o-up"></i></div>
         <div class="comment-votecontrol">&#x2715;</div>
         <div class="comment-votecontrol">&#x25BE;<i class="fa fa-arrow-circle-o-down"></i></div>
     </div>
+
     <div class="comment-rightbox">
         <div class="comment-metabox">
-            <span>
+            <span>  
                 <strong>
-                {% if post.author %}
-                    {{post.author}}
+                {% if comment.comment.author %} 
+                    {{comment.comment.author}} 
                 {% else %}
-                    Anonymous
+                    Anonymous 
                 {% endif %}
                 </strong>
-                at {{post.created_date}}
+                at {{comment.comment.created_date}}
             </span>
         </div>
         <div>
-            {{post.body}}
+            {{comment.comment.body}}
         </div>
-        {% if user.is_authenticated %}
+            
+        {% if user.is_authenticated%}
         <div>
             <a href="#">Report</a>
             |
-            <a href="{% url 'new_top' post.id %}">Reply</a>
+            <a href="{% url 'new_child' comment.comment.id %}">Reply</a>
         </div>
         {% else %}
         <div>
