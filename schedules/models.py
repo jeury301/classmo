@@ -6,6 +6,9 @@ from django.dispatch import receiver
 
 # Base model for others to inherit from
 class BaseModel(models.Model):
+    """Base model exists for the sole purpose of creating the created_date
+    & modified_date with the correct date format
+    """
     created_date = models.DateTimeField()
     modified_date = models.DateTimeField()
 
@@ -21,6 +24,9 @@ class BaseModel(models.Model):
 
 
 class Subject(BaseModel):
+    """Subject its a dump table that contains the list of subjects that the 
+    system supports
+    """
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200, default="")
 
@@ -29,6 +35,8 @@ class Subject(BaseModel):
 
 
 class Location(BaseModel):
+    """Location contains information about the location of a session.
+    """
     name = models.CharField(max_length=200)
     max_capacity = models.IntegerField(default=0)
     address_1 = models.CharField(max_length=128, default="")
@@ -41,7 +49,11 @@ class Location(BaseModel):
     def __str__(self):
         return self.name
 
+
 class Session(BaseModel):
+    """Session is the main entity for the scheduling app, which creates a rela-
+    tionship between a subject, a location and a student.
+    """
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     instructor = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,10 +62,6 @@ class Session(BaseModel):
     registered_students = models.IntegerField(default=0)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    #TODO (@Jeury): add create method with validation logic
-    # - Is session max capacity more than location capacity
-    # - Is session start date/end date in conflict with another session at
-    # sane time and location
 
     def __str__(self):
         return self.name
@@ -73,6 +81,7 @@ class Session(BaseModel):
         """Returns list of sessions assigned to current instructor
         """
         return self.objects.filter(instructor=instructor.pk)
+
 
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
@@ -134,10 +143,14 @@ class Registration(BaseModel):
         """
         return cls.objects.get(user=student, session=session)
 
+
 class Homework(BaseModel):
+    """Homework contains data about homework assignments
+    """
     name=models.CharField(max_length=200)
     #instructor=models.ForeignKey(User,on_delete=models.CASCADE)
-    session=models.ForeignKey(Session,on_delete=models.CASCADE,default=1,null=True)
+    session=models.ForeignKey(Session,on_delete=models.CASCADE,
+        default=1,null=True)
     description=models.CharField(max_length=200)
     due_date=models.DateTimeField(auto_now=False)
     def __str__(self):
@@ -145,6 +158,9 @@ class Homework(BaseModel):
 
 
 class Profile(models.Model):
+    """Profile contains metadata from the user that are not essential, 
+    but its useful to have
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address_1 = models.CharField(max_length=128, default="")
     address_2 = models.CharField(max_length=128, blank=True)
@@ -156,3 +172,36 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+    @classmethod
+    def update_profile(cls, user, **profile_data):
+        """Updating the user's profile with the information passed from the form
+        """
+        user.first_name = profile_data.get("first_name")
+        user.last_name = profile_data.get("last_name")
+        user.profile.address_1 = profile_data.get("address_1")
+        user.profile.address_2 = profile_data.get("address_2")
+        user.profile.city = profile_data.get("city")
+        user.profile.state = profile_data.get("state")
+        user.profile.zip_code = profile_data.get("zip_code")
+        user.profile.country = profile_data.get("country")
+        user.profile.phone = profile_data.get("phone_number")
+        user.save()
+        return True
+
+    @classmethod
+    def update_account(cls, user, **account_data):
+        """Updating the user account with the information passed from the form
+        """
+        user.username = account_data.get("username")
+        user.email = account_data.get("email")
+        user.save()
+        return True
+
+
+        
+
+
+
+

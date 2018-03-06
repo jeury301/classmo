@@ -15,17 +15,6 @@
                 This is Classmo's <strong>Home!</strong>
             </h1>
         </div>
-    {% else %}
-        <h1> Create a new account</h1>
-        <form action="{% url 'schedules:register' %}" method="post">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <br>
-            <input type="submit" value="Submit">
-        </form>
-        <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
     {% endif %}
     <br>
 {% endblock %}

@@ -30,3 +30,7 @@
 .comment-rightbox {
     display: inline-block;
 }
+
+.active-link {
+    font-weight: bold;
+}

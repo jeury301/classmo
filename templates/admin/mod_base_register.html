@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Classmo') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'schedules:index' %}">{{ site_header|default:_('Classmo Register') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
