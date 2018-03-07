@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{%block content%}
+<h1>
+    <a href="{% url 'schedules:assignments' 'mine'%}"><i class="fas fa-angle-left"></i></a>&nbsp;
+    {{session.subject}}:{{session.name}} - Students
+</h1>
+
+<div id="content-main">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table dt-responsive table-hover" id="session_students">
+                <thead>
+                    <tr>
+                        <th>Registration Date</th>
+                        <th>Student Name</th>
+                        <th>Student Email</th>
+                        <th>Drop Student</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for student in setudents%}
+                    <tr>
+                        <td>{{student.created_date|date}}</td>
+                        {%if student.user.first_name%}
+                        <td>{{student.user.first_name}} {{student.user.last_name}}</td>
+                        {%else%}
+                        <td>{{student.name}}</td>
+                        {%endif%}
+                        {%if student.user.email%}
+                        <td>{{student.user.email}}</td>
+                        {%else%}
+                        <td>N/A</td>
+                        {%endif%}
+                        <td><input type="button" class="delete-button" value="Drop" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#session_students').DataTable({
+    "deferRender": true,
+    "iDisplayLength": 25,
+    "lengthMenu": [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"]
+    ],
+    select: true,
+    "oLanguage": {
+        "sSearch": "Filter Students:"
+    },
+    order: [
+        [0, "asc"]
+    ],
+    dom: "lfr<'row'<'col-sm-6'>>Btip",
+    buttons: [
+        'colvis',
+        {
+            extend: 'excel',
+            text: 'Export to Excel',
+            "oSelectorOpts": {
+                "filter": "applied"
+            }
+        }
+    ]
+});
+</script>
+{% endblock %}

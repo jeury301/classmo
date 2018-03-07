@@ -102,4 +102,36 @@ def assignments(request, request_type):
     }
 
     return render(request, 'schedules/sessions/assignments.html', context)
+
+
+@login_required
+@instructors_only
+def session_students(request, session_id):
+    """Show students for a given session
+    """
+    user=request.user
+    students=Registration.session_students(session_id)
+    session=Session.objects.get(pk=session_id)
+    
+    context = {
+        "students":students,
+        "user":user,
+        "session":session
+    }
+    return render(request, 'schedules/sessions/session_students.html', context)
+
+
+@login_required
+@instructors_only
+def drop_student(request, registration_id):
+    """Drop a student from a session. Remove a registration
+    @TODO: Jeury
+    """
+    pass
+
+
+
+
+
+
     

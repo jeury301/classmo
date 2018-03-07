@@ -143,6 +143,26 @@ class Registration(BaseModel):
         """
         return cls.objects.get(user=student, session=session)
 
+    @classmethod
+    def session_students(cls, session_id):
+        """Returns a list of students for a given session
+        """
+        return cls.objects.filter(session=session_id)
+
+    @classmethod
+    def subjects_for_student(cls, student_id):
+        """Returns all subjects for a given student
+        """
+        registrations = cls.objects.filter(user=student_id)
+        subjects = []
+
+        for registration in registrations:
+            # for registration check if subject is in list
+            if registration.session.subject not in subjects:
+                # new subject
+                subjects.append(registration.session.subject) 
+        return subjects
+
 
 class Homework(BaseModel):
     """Homework contains data about homework assignments
@@ -164,9 +184,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address_1 = models.CharField(max_length=128, default="")
     address_2 = models.CharField(max_length=128, blank=True)
-    city = models.CharField(max_length=64, default="New York")
-    state = models.CharField(max_length=2, default="NY")
-    zip_code = models.CharField(max_length=5, default="00000")
+    city = models.CharField(max_length=128, default="New York")
+    state = models.CharField(max_length=128, default="NY")
+    zip_code = models.CharField(max_length=128, default="00000")
     country = models.CharField(max_length=128, default="United States")
     phone = models.CharField(max_length=128)
 

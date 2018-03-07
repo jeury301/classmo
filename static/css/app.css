@@ -58,3 +58,13 @@
     color: #fff !important; 
     cursor: pointer !important;
 }
+
+.delete-button {
+    background: #ba2121 !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important; 
+}
+

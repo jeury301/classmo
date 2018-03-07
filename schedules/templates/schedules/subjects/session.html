@@ -36,10 +36,10 @@
                             <strong>Registrations: </strong>{{session.registered_students}}/{{session.max_capacity}}
                         </p>
                         <p class="card-text">
-                            <strong>Start Date: </strong>{{session.start_date}}
+                            <strong>Start Date: </strong>{{session.start_date|date}}
                         </p>
                         <p class="card-text">
-                            <strong>End Date: </strong>{{session.end_date}}
+                            <strong>End Date: </strong>{{session.end_date|date}}
                         </p>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
                     <h2 class="card-title">Instructor Info</h2>
                     <div style="padding: 10px;">
-                        <p class="card-text"><strong>Instructor: </strong> {%if session.instructor.firs_name%} {{session.instructor.first_name}} {{session.instructor.last_name}} {%else%} {{session.instructor}} {%endif%}
+                        <p class="card-text"><strong>Instructor: </strong> {%if session.instructor.first_name%} {{session.instructor.first_name}} {{session.instructor.last_name}} {%else%} {{session.instructor}} {%endif%}
                         </p>
                         <p>
                             <a href="mailto:{{session.instructor.email}}" class="card-link">{{session.instructor.email}}</a>

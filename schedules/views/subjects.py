@@ -6,19 +6,33 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
 
-from schedules.models import Subject, Session
+from schedules.models import Subject, Session, Registration
 from schedules.services import portal_tools
 from schedules.services.portal_tools import instructors_only, students_only
 
 
 @login_required
 @students_only
-def subjects(request):
+def subjects(request, request_type):
     """
     List all subjects in the system
     """
-    subjects = Subject.objects.all()
-    context = {'subjects': subjects}
+    user = request.user
+    my_courses = ""
+    all_courses = ""
+    
+    if request_type == "all":
+        all_courses = "active-link-blue"
+        subjects = Subject.objects.all()
+    else:
+        my_courses = "active-link-blue"
+        subjects = Registration.subjects_for_student(user.id)
+
+    context = {
+        "courses": subjects,
+        "my_courses":my_courses,
+        "all_courses":all_courses
+    }
     return render(request, 'schedules/subjects/list.html', context)
 
 @login_required
