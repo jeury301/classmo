@@ -147,10 +147,17 @@ def drop_student(request, registration_id):
     if student.first_name:
         student_name = student.first_name+" "+student.last_name
 
+    is_session_instructor = False
+    if session.instructor.id == user.id:
+        # this is an instructor for this session
+        is_session_instructor = True
+
     context = {
         "students":students,
         "user":user,
-        "session":session
+        "session":session,
+        "is_session_instructor":is_session_instructor
+
     }
     messages.success(request,"<strong>{}</strong> has been successfully "
             "dropped from this session!".format(student_name), 
