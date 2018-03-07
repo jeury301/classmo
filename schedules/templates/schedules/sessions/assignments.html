@@ -31,8 +31,8 @@
                         <td>{{session.registered_students}}/{{session.max_capacity}}</td>
                         <td>{{session.start_date}}</td>
                         <td>{{session.end_date}}</td>
-                        <td><input type="button" value="View Details" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
-                        <td><input type="button" value="View Students"/></td>
+                        <td><input type="button" class="default-button" value="View Details" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
+                        <td><input type="button" class="success-button" value="View Students"/></td>
                     </tr>
                     {%endfor%}
                 </tbody>

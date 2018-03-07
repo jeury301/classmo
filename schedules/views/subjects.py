@@ -63,12 +63,15 @@ def session(request, session_id):
     """
     current_user = request.user
     is_instructor = portal_tools.is_member(current_user, settings.GROUPS["INSTRUCTORS"])
+    is_student = portal_tools.is_member(current_user, settings.GROUPS["STUDENTS"])
+
     context = {}
     try:
         session = Session.objects.get(pk=session_id)
         context = {
             "session":session,
-            "is_instructor":is_instructor
+            "is_instructor":is_instructor,
+            "is_student":is_student
         }
     except Subject.DoesNotExist:
         raise Http404("Session does not exist")

@@ -40,3 +40,21 @@
     color: #447e9b;
     text-decoration: underline;
 }
+
+.submit-button, .default-button {
+    background: #417690 !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important;
+}
+
+.success-button {
+    background: #5cb85c !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important;
+}

@@ -1,39 +1,69 @@
-{% extends 'base.html' %} 
-{%block content%}
+{% extends 'base.html' %} {%block content%}
 <h1>
-    {{session.subject.name}} - {{session.name}}
+    {%if is_instructor%}
+    <a href="{% url 'schedules:assignments' 'mine'%}"><i class="fas fa-angle-left"></i></a>&nbsp;{{session.subject.name}} - {{session.name}}
+    {%elif is_student%}
+    <a href="{% url 'schedules:index'%}"><i class="fas fa-angle-left"></i></a>&nbsp;{{session.subject.name}} - {{session.name}}
+    {%endif%}
 </h1>
 <div id="info-container">
-    <div class="card" id="changelist">
-        <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
-            <h1 class="card-title">Instructor Info</h1>
-            <div style="padding: 10px;">
-                <p class="card-text"><strong>Instructor: </strong>{{session.instructor.last_name}}, {{session.instructor.first_name}}</p>
-                <a href="mailto:{{session.instructor.email}}" class="card-link" >{{session.instructor.email}}</a>
+    <div class="row">
+        {%if is_student%}
+        <div class="col-md-3">
+            <div class="card" id="changelist">
+                <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <h2 class="card-title">Register for this section</h2>
+                    <div style="padding: 10px;">
+                        <form action="{% url 'schedules:registration' session.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{user.id}}">
+                            <input type="submit" class="submit-button" value="Register" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endif%}
+        <div class="col-md-9">
+            <div class="card" id="changelist">
+                <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <h2 class="card-title">Session Details</h2>
+                    <div style="padding: 10px;">
+                        <p class="card-text">
+                            <strong>Subject: </strong> {{session.subject.name}} {%if session.subject.description%} - {{session.subject.description}} {%endif%}
+                        </p>
+                        <p class="card-text">
+                            <strong>Registrations: </strong>{{session.registered_students}}/{{session.max_capacity}}
+                        </p>
+                        <p class="card-text">
+                            <strong>Start Date: </strong>{{session.start_date}}
+                        </p>
+                        <p class="card-text">
+                            <strong>End Date: </strong>{{session.end_date}}
+                        </p>
+                    </div>
+                </div>
+                <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <h2 class="card-title">Location Info</h2>
+                    <div style="padding: 10px;">
+                        <p class="card-text"><strong>Building Name: </strong>{{session.location.name}}</p>
+                        <p class="card-text">
+                            <strong>Address: </strong> {{session.location.address_1}} {{session.location.address_2}}, {{session.location.city}}, {{session.location.country}} {{session.location.zip_code}}
+                        </p>
+                    </div>
+                </div>
+                <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <h2 class="card-title">Instructor Info</h2>
+                    <div style="padding: 10px;">
+                        <p class="card-text"><strong>Instructor: </strong> {%if session.instructor.firs_name%} {{session.instructor.first_name}} {{session.instructor.last_name}} {%else%} {{session.instructor}} {%endif%}
+                        </p>
+                        <p>
+                            <a href="mailto:{{session.instructor.email}}" class="card-link">{{session.instructor.email}}</a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <br />
-    <div class="card" id="changelist">
-        <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
-            <h1 class="card-title">Location Info (NJIT)</h1>
-            <div style="padding: 10px;">
-                <p class="card-text"><strong>Building: </strong>{{session.location.name}}</p>
-            </div>
-        </div>
-    </div>
-    {%if not is_instructor%}
-    <div>
-        <br>
-            <div>
-                <P>Register for this section</P>
-                <form action="{% url 'schedules:registration' session.id %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="user_id" value="{{user.id}}">
-                    <button type="submit" class="btn btn-primary">Register</button>
-                </form>
-            </div>
-    </div>
-    {%endif%}
 </div>
 {%endblock content%}
