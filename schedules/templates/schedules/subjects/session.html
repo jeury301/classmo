@@ -3,7 +3,7 @@
     {%if is_instructor%}
     <a href="{% url 'schedules:assignments' 'mine'%}"><i class="fas fa-angle-left"></i></a>&nbsp;{{session.subject.name}} - {{session.name}}
     {%elif is_student%}
-    <a href="{% url 'schedules:index'%}"><i class="fas fa-angle-left"></i></a>&nbsp;{{session.subject.name}} - {{session.name}}
+    <a href="{% url 'schedules:sessions' session.subject.id 'mine' %}"><i class="fas fa-angle-left"></i></a>&nbsp;{{session.subject.name}} - {{session.name}}
     {%endif%}
 </h1>
 <div id="info-container">
@@ -11,6 +11,16 @@
         {%if is_student%}
         <div class="col-md-3">
             <div class="card" id="changelist">
+                {%if is_registered%}
+                <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <h2 class="card-title" style="background: ">Registration Status</h2>
+                    <div style="padding: 10px;">
+                        <span class="badge badge-success">
+                            <h4>You are registered!</h4>
+                        </span>                   
+                    </div>
+                </div>
+                {%else%}
                 <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
                     <h2 class="card-title">Register for this section</h2>
                     <div style="padding: 10px;">
@@ -21,6 +31,7 @@
                         </form>
                     </div>
                 </div>
+                {%endif%}
             </div>
         </div>
         {%endif%}

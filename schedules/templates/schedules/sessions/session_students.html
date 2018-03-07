@@ -16,11 +16,13 @@
                         <th>Registration Date</th>
                         <th>Student Name</th>
                         <th>Student Email</th>
+                        {%if is_session_instructor%}
                         <th>Drop Student</th>
+                        {%endif%}
                     </tr>
                 </thead>
                 <tbody>
-                    {%for student in setudents%}
+                    {%for student in students%}
                     <tr>
                         <td>{{student.created_date|date}}</td>
                         {%if student.user.first_name%}
@@ -33,7 +35,12 @@
                         {%else%}
                         <td>N/A</td>
                         {%endif%}
-                        <td><input type="button" class="delete-button" value="Drop" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
+                        {%if is_session_instructor %}
+                        <td><input type="button" class="delete-button" value="Drop" data-toggle="modal" data-target="#confirm_student_drop_{{student.id}}"/></td>
+                        <!-- BEGIN: Drop Student Modal -->
+                        {% include "schedules/sessions/elements/drop_student_confirmation.html"%}
+                        <!-- END: Drop Student Model -->
+                        {%endif%}
                     </tr>
                     {%endfor%}
                 </tbody>

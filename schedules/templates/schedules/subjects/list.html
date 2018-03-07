@@ -10,6 +10,7 @@
             <table class="table dt-responsive table-hover" id="subjects">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Subject</th>
                         <th>Description</th>
                         <th>Sessions</th>
@@ -18,9 +19,10 @@
                 <tbody>
                     {%for course in courses%}
                     <tr>
+                        <td>{{course.id}}</td>
                         <td>{{course.name}}</td>
                         <td>{{course.description}}</td>
-                        <td><input type="button" class="default-button" value="View Sessions" OnClick="window.location.href='{%url 'schedules:session' course.pk%}'"/></td>
+                        <td><input type="button" class="default-button" value="View Sessions" OnClick="window.location.href='{%url 'schedules:sessions' course.pk 'mine'%}'"/></td>
                     </tr>
                     {%endfor%}
                 </tbody>

@@ -54,17 +54,31 @@ def detail(request, subject_id):
     return render(request, 'schedules/subjects/detail.html', context)
 
 @login_required
-@instructors_only
-def sessions(request, subject_id):
+@students_only
+def sessions(request, subject_id, request_type):
     """
     Display sessions for a given subject.
     """
     context = {}
     try:
         subject = Subject.objects.get(pk=subject_id)
-        sessions = Session.objects.filter(subject=subject_id)
-        context['sessions'] = sessions
-        context['subject'] = subject
+        student = request.user
+        my_sessions = ""
+        all_sessions = ""
+
+        if request_type == "all":
+            all_sessions = "active-link-blue"
+            sessions = Session.other_sessions(subject_id, student.id)
+        else:
+            my_sessions = "active-link-blue"
+            sessions = Session.my_sessions(subject_id, student.id)
+        
+        context = {
+            "sessions":sessions,
+            "subject":subject,
+            "my_sessions":my_sessions,
+            "all_sessions":all_sessions
+        }
     except Subject.DoesNotExist:
         raise Http404("Sessions does not exist")
 
@@ -73,7 +87,7 @@ def sessions(request, subject_id):
 @login_required
 def session(request, session_id):
     """
-    Display details for a given session of a subject.
+    Display details for a given session of a session.
     """
     current_user = request.user
     is_instructor = portal_tools.is_member(current_user, settings.GROUPS["INSTRUCTORS"])
@@ -81,11 +95,24 @@ def session(request, session_id):
 
     context = {}
     try:
+        print(session_id)
         session = Session.objects.get(pk=session_id)
+
+        is_registered = False
+        if is_student:
+            # checking if registration exists
+            try:
+                registration = Registration.student_registration_for_session(
+                    current_user.id, session_id)
+                is_registered = True
+            except:
+                pass
+
         context = {
             "session":session,
             "is_instructor":is_instructor,
-            "is_student":is_student
+            "is_student":is_student,
+            "is_registered":is_registered
         }
     except Subject.DoesNotExist:
         raise Http404("Session does not exist")

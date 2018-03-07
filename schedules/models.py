@@ -82,6 +82,50 @@ class Session(BaseModel):
         """
         return self.objects.filter(instructor=instructor.pk)
 
+    @classmethod
+    def other_sessions(self, subject_id, student_id):
+        """Returns old sessions for a given subject in which the current 
+        student does not belong to
+        """
+        subject_sessions = self.objects.filter(subject=subject_id)
+        final_sessions = []
+
+        # filtering out sessions based off student's registrations
+        for session in subject_sessions:
+            print("Printing session: ")
+            print(session)
+            print("Checking other sessions")
+            try:
+                print("Checking count sessions")
+                print(Registration.student_registration_for_session(student_id, 
+                    session.id))
+                if Registration.student_registration_for_session(student_id, 
+                    session.id):
+                    # student is registered for session, ignored.
+                    pass
+            except:
+                # studesnt is not registered, lets add it
+                final_sessions.append(session)
+        return final_sessions
+
+    @classmethod
+    def my_sessions(self, subject_id, student_id):
+        """Return current sessions for subject in which a student has been 
+        registered
+        """
+        subject_sessions = self.objects.filter(subject=subject_id)
+        final_sessions = []
+
+        for session in subject_sessions:
+            print("Checking my sessions")
+            try:
+                if Registration.student_registration_for_session(student_id, 
+                    session.id):
+                    # student is registered for session
+                    final_sessions.append(session)
+            except:
+                pass
+        return final_sessions
 
 class Registration(BaseModel):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
