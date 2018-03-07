@@ -4,9 +4,9 @@
     {{session.subject.name}} - {{session.name}}
 </h1>
 <div id="info-container">
-    <div class="card">
-        <div class="card-block" style="padding: 20px;">
-            <h4 class="card-title">Instructor Info</h4>
+    <div class="card" id="changelist">
+        <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+            <h1 class="card-title">Instructor Info</h1>
             <div style="padding: 10px;">
                 <p class="card-text"><strong>Instructor: </strong>{{session.instructor.last_name}}, {{session.instructor.first_name}}</p>
                 <a href="mailto:{{session.instructor.email}}" class="card-link" >{{session.instructor.email}}</a>
@@ -14,9 +14,9 @@
         </div>
     </div>
     <br />
-    <div class="card">
-        <div class="card-block" style="padding: 20px;">
-            <h4 class="card-title">Location Info (NJIT)</h4>
+    <div class="card" id="changelist">
+        <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+            <h1 class="card-title">Location Info (NJIT)</h1>
             <div style="padding: 10px;">
                 <p class="card-text"><strong>Building: </strong>{{session.location.name}}</p>
             </div>

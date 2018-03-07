@@ -8,7 +8,9 @@ urlpatterns = [
     # Home
     path('', users.index, name='index'),
     # My Sessions (instructors only)
-    path('sessions/my_sessions',sessions.assignments,name='assignments'),
+    path('sessions/<request_type>',sessions.assignments,name='assignments'),
+    # Session Details
+    path('sessions/<int:session_id>/detail',subjects.session, name='session'),
     # Subjects (students only)
     path('subjects/',subjects.subjects,name='subjects'),
     # Homeworks (students only)
@@ -22,7 +24,6 @@ urlpatterns = [
     path('sessions/<int:session_id>/registration',sessions.registration,name='registration'),
     path('subjects/<int:subject_id>/detail',subjects.detail, name='detail'),
     path('subjects/<int:subject_id>/sessions',subjects.sessions, name='sessions'),
-    path('sessions/<int:session_id>/detail',subjects.session, name='session'),
     path('sessions/my_registrations',sessions.registrations,name='registrations'),
     path('sessions/<int:session_id>/drop_session', sessions.drop_session, name='drop_session'),
 ]

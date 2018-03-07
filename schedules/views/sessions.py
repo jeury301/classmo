@@ -78,15 +78,27 @@ def homework(request):
 
 @login_required
 @instructors_only
-def assignments(request):
+def assignments(request, request_type):
     """Show session assignemnts for current instructor
     """
     user=request.user
-    assigned_sessions = Session.instructor_assignments(user)
+    my_sessions = ""
+    all_sessions = ""
+
+    if request_type == "all":
+        # retrieve all sessions
+        all_sessions = "active-link-blue"
+        sessions = Session.objects.all()
+    else:
+        # retrieve all sessions for current instructor
+        my_sessions = "active-link-blue"
+        sessions = Session.instructor_assignments(user)
 
     context = {
-        "assigned_sessions":assigned_sessions,
-        "user":user
+        "sessions":sessions,
+        "user":user,
+        "my_sessions":my_sessions,
+        "all_sessions":all_sessions
     }
 
     return render(request, 'schedules/sessions/assignments.html', context)

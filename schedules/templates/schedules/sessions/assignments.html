@@ -3,37 +3,38 @@
 
 {%block content%}
 <h1>Sessions</h1>
+
 <div id="content-main">
     <div class="row">
         <div class="col-md-9">
             <table class="table dt-responsive table-hover" id="sessions">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>ID Verification</th>
-                        <th>Visits History</th>
-                        <th>Log Visit</th>
-                        <th>Reader Info</th>
+                        <th>Subject</th>
+                        <th>Session Name</th>
+                        <th>Location</th>
+                        <th>Instructor</th>
+                        <th>Registrations</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Details</th>
+                        <th>Students</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {%for session in sessions%}
                     <tr>
-                        <td>Hello World</td>
-                        <td>Fuck the world</td>
-                        <td><span class="label label-success">Verified</span></td>
-                        <td><span class="label label-warning">Not Verified</span></td>
-                        <td><button type="button" class="btn btn-default" >Add</button></td>
-                        <td><button type="button" class="btn btn-primary" >Reader Details</button></td>
+                        <td>{{session.subject.name}}</td>
+                        <td>{{session.name}}</td>
+                        <td>{{session.location.name}}</td>
+                        <td>{{session.instructor}}</td>
+                        <td>{{session.registered_students}}/{{session.max_capacity}}</td>
+                        <td>{{session.start_date}}</td>
+                        <td>{{session.end_date}}</td>
+                        <td><input type="button" value="View Details" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
+                        <td><input type="button" value="View Students"/></td>
                     </tr>
-                    <tr>
-                        <td>Hello World</td>
-                        <td>Fuck the world</td>
-                        <td><span class="label label-success">Verified</span></td>
-                        <td><span class="label label-warning">Not Verified</span></td>
-                        <td><button type="button" class="btn btn-default" >Add</button></td>
-                        <td><button type="button" class="btn btn-primary" >Reader Details</button></td>
-                    </tr>
+                    {%endfor%}
                 </tbody>
             </table>
         </div>
@@ -43,14 +44,15 @@
                     <h2>Select View</h2>
                     <h3> Sessions to view: </h3>
                     <ul>
-                        <li class="selected"><a href="?o=-1" title="All">My Sessions</a></li>
-                        <li><a href="?is_staff__exact=1&amp;o=-1" title="Yes">All Session</a></li>
+                        <li class="{{my_sessions}}"><a href="{%url 'schedules:assignments' 'mine'%}" title="My Sessions">My Sessions</a></li>
+                        <li class="{{all_sessions}}"><a href="{%url 'schedules:assignments' 'all'%}" title="All Sessions">All Sessions</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
 $('#sessions').DataTable({
     "deferRender": true,
@@ -78,6 +80,7 @@ $('#sessions').DataTable({
         }
     ]
 });
+$(".active-link").css("color", "#447e9b")
 </script>
 </script>
 {% endblock %}

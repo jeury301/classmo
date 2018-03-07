@@ -78,7 +78,7 @@
             <div class="breadcrumbs">
                 <a href="{% url 'schedules:index' %}">{% trans 'Home' %}</a>
                 {%if is_instructor or user.is_staff%}
-                &#47;<a href="{% url 'schedules:assignments' %}">{% trans 'My Sessions' %}</a>
+                &#47;<a href="{% url 'schedules:assignments' 'mine' %}">{% trans 'Sessions' %}</a>
                 {%endif%}
                 {%if is_student or user.is_staff%}
                 &#47;<a href="{% url 'schedules:subjects' %}">{% trans 'Subjects' %}</a>

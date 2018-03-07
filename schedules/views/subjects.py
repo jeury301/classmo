@@ -57,7 +57,6 @@ def sessions(request, subject_id):
     return render(request, 'schedules/subjects/sessions.html', context)
 
 @login_required
-@students_only
 def session(request, session_id):
     """
     Display details for a given session of a subject.

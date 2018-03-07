@@ -34,3 +34,9 @@
 .active-link {
     font-weight: bold;
 }
+
+.active-link-blue {
+    font-weight: bold;
+    color: #447e9b;
+    text-decoration: underline;
+}
