@@ -12,6 +12,7 @@ from schedules.services.portal_tools import instructors_only, students_only
 
 
 @login_required
+@students_only
 def subjects(request):
     """
     List all subjects in the system
@@ -21,6 +22,7 @@ def subjects(request):
     return render(request, 'schedules/subjects/list.html', context)
 
 @login_required
+@students_only
 def detail(request, subject_id):
     """
     Display details for a given subject.
@@ -55,6 +57,7 @@ def sessions(request, subject_id):
     return render(request, 'schedules/subjects/sessions.html', context)
 
 @login_required
+@students_only
 def session(request, session_id):
     """
     Display details for a given session of a subject.

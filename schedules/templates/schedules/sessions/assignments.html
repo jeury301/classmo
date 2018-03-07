@@ -1,32 +1,83 @@
-{% extends "base.html" %}
-{% block content %}
-    {% if assignments %}
-    <table class="table table-hover">
-        {% if assigned_sessions %}
-            <tbody>
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{%block content%}
+<h1>Sessions</h1>
+<div id="content-main">
+    <div class="row">
+        <div class="col-md-9">
+            <table class="table dt-responsive table-hover" id="sessions">
                 <thead>
                     <tr>
-                        <th>Subject</th>
                         <th>Name</th>
-                        <th>Registered Students</th>
-                        <th>Max Capacity</th>
-                        <th>Schedule Info</th>
-                        <th>My Students</th>
+                        <th>Email</th>
+                        <th>ID Verification</th>
+                        <th>Visits History</th>
+                        <th>Log Visit</th>
+                        <th>Reader Info</th>
                     </tr>
                 </thead>
-                {% for ass in assigned_sessions %}
+                <tbody>
                     <tr>
-                        <td>{{ass.subject.name}}</td>
-                        <td>{{ass.name}}</td>
-                        <td>{{ass.registered_students}}</td>
-                        <td>{{ass.max_capacity}}</td>
-                        <td>{{ass.start_date|date:'Y-m-d'}} - {{ass.end_date|date:'Y-m-d'}}</td>
-                        <td><button type="button" class="btn btn-primary" OnClick="window.location.href='{%url 'schedules:index'%}'">View</button></td>
+                        <td>Hello World</td>
+                        <td>Fuck the world</td>
+                        <td><span class="label label-success">Verified</span></td>
+                        <td><span class="label label-warning">Not Verified</span></td>
+                        <td><button type="button" class="btn btn-default" >Add</button></td>
+                        <td><button type="button" class="btn btn-primary" >Reader Details</button></td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p> No Sessions for {{user.username}}</p>
-    {% endif %}
+                    <tr>
+                        <td>Hello World</td>
+                        <td>Fuck the world</td>
+                        <td><span class="label label-success">Verified</span></td>
+                        <td><span class="label label-warning">Not Verified</span></td>
+                        <td><button type="button" class="btn btn-default" >Add</button></td>
+                        <td><button type="button" class="btn btn-primary" >Reader Details</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <div class="module filtered">
+                <div id="changelist-filter" style="width: 100%">
+                    <h2>Select View</h2>
+                    <h3> Sessions to view: </h3>
+                    <ul>
+                        <li class="selected"><a href="?o=-1" title="All">My Sessions</a></li>
+                        <li><a href="?is_staff__exact=1&amp;o=-1" title="Yes">All Session</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#sessions').DataTable({
+    "deferRender": true,
+    "iDisplayLength": 25,
+    "lengthMenu": [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"]
+    ],
+    select: true,
+    "oLanguage": {
+        "sSearch": "Filter Sessions:"
+    },
+    order: [
+        [0, "asc"]
+    ],
+    dom: "lfr<'row'<'col-sm-6'>>Btip",
+    buttons: [
+        'colvis',
+        {
+            extend: 'excel',
+            text: 'Export to Excel',
+            "oSelectorOpts": {
+                "filter": "applied"
+            }
+        }
+    ]
+});
+</script>
+</script>
 {% endblock %}

@@ -59,7 +59,6 @@ def user_registration(request):
         form = UserRegistrationForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            form.modified_clean_username(request)
             # process the data in form.cleaned_data as required
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -73,8 +72,13 @@ def user_registration(request):
             # authenticating user
             if check is not None:
                 login(request,user)
-                # redirect to a new URL:
-                return redirect('schedules:index')
+                messages.add_message(request, messages.SUCCESS, 
+                '<strong>Congrats!</strong> your account '
+                'have been successfully created. Complete your profile!', 
+                extra_tags='safe')
+
+                # redirect to a prfile
+                return redirect('schedules:profile')
             else:
                 return HttpResponse("Something terrible happened")
 
