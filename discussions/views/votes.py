@@ -16,7 +16,7 @@ from discussions.models import Vote, Comment, Post
 def cast_vote(request):
     logging.info(json.dumps(request.POST))
     if request.POST.get('type') == 'comment':
-        comment_id = int(request.POST.get('commentId'))
+        comment_id = int(request.POST.get('id'))
         comment = get_object_or_404(Comment, id=comment_id)
         vote_value = int(request.POST.get('val'))
         old_score = comment.score
@@ -31,13 +31,13 @@ def cast_vote(request):
             'vote_id': new_vote.id
         }
     elif request.POST.get('type') == 'post':
-        post_id = int(request.POST.get('postId'))
+        post_id = int(request.POST.get('id'))
         post = get_object_or_404(Post, id=post_id)
         vote_value = int(request.POST.get('val'))
         old_score = post.score
         new_vote = Vote.create(voter=request.user,
                                value=vote_value,
-                               post=Post)
+                               post=post)
         post.refresh_from_db()
         response = {
             'new_score': post.score,

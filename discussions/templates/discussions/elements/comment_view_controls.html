@@ -5,15 +5,15 @@
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
         <div class="comment-votecontrol" id="comment-upvote-{{comment.comment.id}}" 
-             onclick="vote_comment({{comment.comment.id}}, 1)">
+             onclick="cast_vote({{comment.comment.id}}, 1, 'comment')">
             &#x25B4;<i class="fa fa-arrow-circle-o-up"></i>
         </div>
         <div class="comment-votecontrol" id="comment-novote-{{comment.comment.id}}" 
-             onclick="vote_comment({{comment.comment.id}}, 0)">
+             onclick="cast_vote({{comment.comment.id}}, 0, 'comment')">
             &#x2715;
         </div>
         <div class="comment-votecontrol" id="comment-downvote-{{comment.comment.id}}" 
-             onclick="vote_comment({{comment.comment.id}}, -1)">
+             onclick="cast_vote({{comment.comment.id}}, -1, 'comment')">
             &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
         </div>
     </div>

@@ -55,53 +55,23 @@
 
 {% block javascript %}
 <script>
-
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie != '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                // Only send the token to relative URLs i.e. locally.
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            }
-        }
-    });
-
-
-    function vote_comment(commentId, val) {
-        var scoreSpanId = "comment-score-" + commentId;
+    function cast_vote(id, val, type) {
+        var scoreSpanId = type + "-score-" + id;
         var oldScore = document.getElementById(scoreSpanId).innerHTML
 
         $.ajax({
             url: "{% url 'discussions:cast_vote' %}",
             type: "POST",
             data: {
-                'commentId': commentId,
-                'type': 'comment',
+                'id': id,
+                'type': type,
                 'val': val
             },
             dataType: 'json',
             success: function (data) {
-                console.log("Ajax worked");
-                console.log(data);
-
-                var upvoteIconId = "comment-upvote-" + commentId
-                var novoteIconId = "comment-novote-" + commentId
-                var downvoteIconId = "comment-downvote-" + commentId
+                var upvoteIconId = type + "-upvote-" + id
+                var novoteIconId = type + "-novote-" + id
+                var downvoteIconId = type + "-downvote-" + id
 
                 /* Highlight the upvote/downvote/no-vote icon as appropriate */
                 if (val == 1) {
@@ -122,13 +92,9 @@
                     document.getElementById(downvoteIconId).style.color = "";
                 }
 
-                /* If the score changed, update and highlight the score */
-                if (data.old_score != data.new_score) {
-                    document.getElementById(scoreSpanId).style.color = "DarkOrange";
-                    document.getElementById(scoreSpanId).innerHTML = data.new_score;
-                } else {
-                    document.getElementById(scoreSpanId).style.color = "";
-                }
+                /* Update and highlight the score */
+                document.getElementById(scoreSpanId).style.color = "DarkOrange";
+                document.getElementById(scoreSpanId).innerHTML = data.new_score;
 
             },
             error: function(data) {
