@@ -5,9 +5,16 @@
         <h4>{{post.title}}</h4>
     </div>
     <div class="comment-leftbox">
-        <div class="comment-votecontrol">&#x25B4;<i class="fa fa-arrow-circle-o-up"></i></div>
-        <div class="comment-votecontrol">&#x2715;</div>
-        <div class="comment-votecontrol">&#x25BE;<i class="fa fa-arrow-circle-o-down"></i></div>
+        <div class="comment-votecontrol" id="post-upvote-{{post.id}}">
+            &#x25B4;<i class="fa fa-arrow-circle-o-up"></i>
+        </div>
+        <div class="comment-votecontrol" id="post-novote-{{post.id}}">
+            &#x2715;
+        </div>
+        <div class="comment-votecontrol" id="post-downvote-{{post.id}}">
+            &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
+        </div>
+
     </div>
     <div class="comment-rightbox">
         <div class="comment-metabox">
@@ -19,7 +26,7 @@
                     Anonymous
                 {% endif %}
                 </strong>
-                at {{post.created_date}}
+                at {{post.created_date}} (Score: <span id="post-score-{{post.id}}">{{post.score}}</span>)
             </span>
         </div>
         <div>

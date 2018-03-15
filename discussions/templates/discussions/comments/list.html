@@ -24,14 +24,14 @@
     {% if comments %}
         <ul class="no-bullets">
         {% for comment in comments %}
-            {% if comment.rel_depth > 0 %} 
+            {% if comment.rel_depth > 0 %}
                 {% for i in comment.depth_counter %}
-                <ul class="no-bullets"> 
+                <ul class="no-bullets">
                 {% endfor %}
             {% endif %}
             {% if comment.rel_depth < 0 %}
                 {% for i in comment.depth_counter %}
-                </ul> 
+                </ul>
                 {% endfor %}
             {% endif %}
             <li>
@@ -43,12 +43,57 @@
                     </div>
                 {% endif %}
             </li>
-            
+
         {% endfor %}
         </ul>
     {% else %}
-        Looks like there's no comments here yet.  
+        Looks like there's no comments here yet.
         <a href="{% url 'discussions:new_top' post.id %}">Why not post the first?</a>
     {% endif %}
 
+{% endblock %}
+
+{% block javascript %}
+<script>
+    function vote_comment(commentId, val) {
+        var scoreSpanId = "comment-score-" + commentId;
+
+
+        var oldScore = document.getElementById(scoreSpanId).innerHTML
+
+        // Put this inside the success callback
+        var upvoteIconId = "comment-upvote-" + commentId
+        var novoteIconId = "comment-novote-" + commentId
+        var downvoteIconId = "comment-downvote-" + commentId
+
+        document.getElementById(scoreSpanId).innerHTML = val;
+
+
+        if (val == 1) {
+            document.getElementById(upvoteIconId).style.color = "DarkOrange";
+        } else {
+            document.getElementById(upvoteIconId).style.color = "";
+        }
+
+        if (val == 0) {
+            document.getElementById(novoteIconId).style.color = "DarkOrange";
+        } else {
+            document.getElementById(novoteIconId).style.color = "";
+        }
+
+        if (val == -1) {
+            document.getElementById(downvoteIconId).style.color = "DarkOrange";
+        } else {
+            document.getElementById(downvoteIconId).style.color = "";
+        }
+
+        if (val != oldScore) {
+            // Highlight the score text if the score has changed
+            document.getElementById(scoreSpanId).style.color = "DarkOrange";
+        } else {
+            document.getElementById(scoreSpanId).style.color = "";
+        }
+
+    }
+</script>
 {% endblock %}

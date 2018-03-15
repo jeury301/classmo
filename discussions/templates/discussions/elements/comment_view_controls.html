@@ -2,9 +2,18 @@
 
 <div class="discuss-regmargin">
     <div class="comment-leftbox">
-        <div class="comment-votecontrol">&#x25B4;<i class="fa fa-arrow-circle-o-up"></i></div>
-        <div class="comment-votecontrol">&#x2715;</div>
-        <div class="comment-votecontrol">&#x25BE;<i class="fa fa-arrow-circle-o-down"></i></div>
+        <div class="comment-votecontrol" id="comment-upvote-{{comment.comment.id}}" 
+             onclick="vote_comment({{comment.comment.id}}, 1)">
+            &#x25B4;<i class="fa fa-arrow-circle-o-up"></i>
+        </div>
+        <div class="comment-votecontrol" id="comment-novote-{{comment.comment.id}}" 
+             onclick="vote_comment({{comment.comment.id}}, 0)">
+            &#x2715;
+        </div>
+        <div class="comment-votecontrol" id="comment-downvote-{{comment.comment.id}}" 
+             onclick="vote_comment({{comment.comment.id}}, -1)">
+            &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
+        </div>
     </div>
 
     <div class="comment-rightbox">
@@ -17,7 +26,7 @@
                     Anonymous 
                 {% endif %}
                 </strong>
-                at {{comment.comment.created_date}}
+                at {{comment.comment.created_date}} (Score: <span id="comment-score-{{comment.comment.id}}">{{comment.comment.score}}</span>)
             </span>
         </div>
         <div>

@@ -25,6 +25,7 @@
 .comment-votecontrol {
     text-align: center;
     color: #666;
+    cursor: pointer;
 }
 
 .comment-rightbox {
