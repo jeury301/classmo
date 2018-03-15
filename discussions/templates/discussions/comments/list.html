@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
+{% csrf_token %}
 
 {% block content %}
     <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
@@ -55,45 +55,87 @@
 
 {% block javascript %}
 <script>
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        }
+    });
+
+
     function vote_comment(commentId, val) {
         var scoreSpanId = "comment-score-" + commentId;
-
-
         var oldScore = document.getElementById(scoreSpanId).innerHTML
 
-        // Put this inside the success callback
-        var upvoteIconId = "comment-upvote-" + commentId
-        var novoteIconId = "comment-novote-" + commentId
-        var downvoteIconId = "comment-downvote-" + commentId
+        $.ajax({
+            url: "{% url 'discussions:cast_vote' %}",
+            type: "POST",
+            data: {
+                'commentId': commentId,
+                'type': 'comment',
+                'val': val
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log("Ajax worked");
+                console.log(data);
 
-        document.getElementById(scoreSpanId).innerHTML = val;
+                var upvoteIconId = "comment-upvote-" + commentId
+                var novoteIconId = "comment-novote-" + commentId
+                var downvoteIconId = "comment-downvote-" + commentId
 
+                /* Highlight the upvote/downvote/no-vote icon as appropriate */
+                if (val == 1) {
+                    document.getElementById(upvoteIconId).style.color = "DarkOrange";
+                } else {
+                    document.getElementById(upvoteIconId).style.color = "";
+                }
 
-        if (val == 1) {
-            document.getElementById(upvoteIconId).style.color = "DarkOrange";
-        } else {
-            document.getElementById(upvoteIconId).style.color = "";
-        }
+                if (val == 0) {
+                    document.getElementById(novoteIconId).style.color = "DarkOrange";
+                } else {
+                    document.getElementById(novoteIconId).style.color = "";
+                }
 
-        if (val == 0) {
-            document.getElementById(novoteIconId).style.color = "DarkOrange";
-        } else {
-            document.getElementById(novoteIconId).style.color = "";
-        }
+                if (val == -1) {
+                    document.getElementById(downvoteIconId).style.color = "DarkOrange";
+                } else {
+                    document.getElementById(downvoteIconId).style.color = "";
+                }
 
-        if (val == -1) {
-            document.getElementById(downvoteIconId).style.color = "DarkOrange";
-        } else {
-            document.getElementById(downvoteIconId).style.color = "";
-        }
+                /* If the score changed, update and highlight the score */
+                if (data.old_score != data.new_score) {
+                    document.getElementById(scoreSpanId).style.color = "DarkOrange";
+                    document.getElementById(scoreSpanId).innerHTML = data.new_score;
+                } else {
+                    document.getElementById(scoreSpanId).style.color = "";
+                }
 
-        if (val != oldScore) {
-            // Highlight the score text if the score has changed
-            document.getElementById(scoreSpanId).style.color = "DarkOrange";
-        } else {
-            document.getElementById(scoreSpanId).style.color = "";
-        }
-
+            },
+            error: function(data) {
+                console.log("Ajax failed");
+                console.log(data);
+            }
+        });
     }
 </script>
 {% endblock %}

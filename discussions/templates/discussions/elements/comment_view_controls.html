@@ -1,6 +1,8 @@
 <!-- This element expects a Comment object named post in context -->
 
 <div class="discuss-regmargin">
+    {% if user.is_authenticated %}
+    <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
         <div class="comment-votecontrol" id="comment-upvote-{{comment.comment.id}}" 
              onclick="vote_comment({{comment.comment.id}}, 1)">
@@ -15,6 +17,7 @@
             &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
         </div>
     </div>
+    {% endif %}
 
     <div class="comment-rightbox">
         <div class="comment-metabox">

@@ -306,9 +306,8 @@ class Vote(BaseModel):
         for key in expected_keys:
             if key not in set(kwargs.keys()):
                 raise TypeError("%s are required kwargs" % repr(expected_keys))
-        if (kwargs['value'] not in [-1, 1]):
-            raise ValueError("Value must be either 1 (for an upvote) or "
-                             "-1 for a downvote")
+        if (kwargs['value'] not in [-1, 0,  1]):
+            raise ValueError("Value must be either 1, 0, or -1")
 
         # Get user's previous vote on this comment/post, if it exists
         if 'comment' in kwargs:
