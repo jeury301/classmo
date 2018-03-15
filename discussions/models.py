@@ -29,8 +29,8 @@ class BaseComment(BaseModel):
                                blank=True, null=True)
     active = models.BooleanField(default=True)
     body = models.TextField(max_length=3000, default="")
-    score = models.IntegerField(default=1)
-    adjusted_score = models.FloatField(default=1.0)
+    score = models.IntegerField(default=0)
+    adjusted_score = models.FloatField(default=0.0)
 
 
 class Post(BaseComment):

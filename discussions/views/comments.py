@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from discussions.forms import CommentForm
-from discussions.models import Comment, Post
+from discussions.models import Comment, Post, Vote
 from schedules.models import Subject
 
 
@@ -38,6 +38,9 @@ def new_top_comment(request, post_id):
                                body=body,
                                author=request.user)
             comm.save()
+            # An upvote should automatically be cast by a user for 
+            # their own comment
+            Vote.create(voter=request.user, value=1, comment=comm)
             return HttpResponseRedirect(
                 reverse('discussions:list_comments', args=[comm.post.id]))
 
@@ -65,6 +68,9 @@ def new_child_comment(request, comment_id):
                                body=body,
                                author=request.user)
             comm.save()
+            # An upvote should automatically be cast by a user for 
+            # their own comment
+            Vote.create(voter=request.user, value=1, comment=comm)
             return HttpResponseRedirect(
                 reverse('discussions:list_comments', args=[comm.post.id]))
 

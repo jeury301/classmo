@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from discussions.forms import PostForm
-from discussions.models import Post
+from discussions.models import Post, Vote
 from schedules.models import Subject
 
 def index(request):
@@ -29,9 +29,9 @@ def list_posts(request, subject_id):
 @login_required
 def new_post(request, subject_id):
     subj = get_object_or_404(Subject, id=subject_id)
-    # if this is a POST request we need to process the form data
+    # If this is a POST request we need to process the form data
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
+        # Create a form instance and populate it with data from the request:
         form = PostForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data['title']
@@ -41,6 +41,9 @@ def new_post(request, subject_id):
                                body=body,
                                author=request.user)
             post.save()
+            # An upvote should automatically be cast by a user for 
+            # their own post
+            Vote.create(voter=request.user, value=1, post=post)
             return HttpResponseRedirect(reverse(
                 'discussions:list_posts', args=[subject_id]))
 
