@@ -86,6 +86,7 @@
                 &#47;<a href="{% url 'schedules:subjects' 'mine'%}">{% trans 'Courses' %}</a>
                 &#47;<a href="{% url 'schedules:homework' %}">{% trans 'Homeworks' %}</a>
                 {%endif%}
+                &#47;<a href="{% url 'discussions:discussion_index' %}">{% trans 'Discussions' %}</a>
             </div>
             {% endblock %} 
         {% endif %} 
@@ -126,5 +127,7 @@
         <div id="footer"></div>{% endblock %}
     </div>
     <!-- END Container -->
+
+    {% block javascript %}{% endblock %}
 </body>
 </html>

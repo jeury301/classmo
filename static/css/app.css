@@ -25,6 +25,11 @@
 .comment-votecontrol {
     text-align: center;
     color: #666;
+    cursor: pointer;
+}
+
+.highlighted {
+    color: DarkOrange;
 }
 
 .comment-rightbox {
