@@ -8,7 +8,7 @@
 
     {% for subject in subjects %}
         <br/>
-            <a href="{% url 'list_posts' subject.id %}">
+            <a href="{% url 'discussions:list_posts' subject.id %}">
             {% if subject.name %}
                 {{subject.name}}  
             {% else %} 

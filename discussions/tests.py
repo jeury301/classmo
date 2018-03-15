@@ -7,7 +7,7 @@ from django.test import TestCase
 from .models import Comment, Post, Vote
 from schedules.models import BaseModel, Subject
 
-DEFAULT_SCORE = 1 # Default score for comments and posts
+DEFAULT_SCORE = 0 # Default score for comments and posts
 
 def create_x_posts(x, subject):
     """Creates, saves, and returns a list of x posts"""

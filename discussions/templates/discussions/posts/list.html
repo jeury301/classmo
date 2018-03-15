@@ -5,7 +5,7 @@
     {% load tz%}
 
     <div class="discuss-topnav">
-        <a href="{% url 'discussion_index' %}">< Back to forum directory</a>
+        <a href="{% url 'discussions:discussion_index' %}">< Back to forum directory</a>
     </div>
 
     <div>
@@ -14,11 +14,11 @@
 
     {% if user.is_authenticated %}
         {% if posts %}
-             <a href="{% url 'new_post' subject.id %}">Add a new post</a>
+             <a href="{% url 'discussions:new_post' subject.id %}">Add a new post</a>
              <!-- TODO: style this correctly -->
         {% else %}
-            Looks like there's no posts here yet.  
-            <a href="{% url 'new_post' subject.id %}">Why not post the first?</a>
+            Looks like there's no posts here yet.
+            <a href="{% url 'discussions:new_post' subject.id %}">Why not post the first?</a>
         {% endif %}
     {% else %}
         <em>
@@ -29,13 +29,13 @@
 
     {% for post in posts %}
         <br/>
-            <a href="{% url 'list_comments' post.id %}">
-            {% if post.title %}
-                {{post.title}}  
-            {% else %} 
-                No title 
+            <a href="{% url 'discussions:list_comments' post.post.id %}">
+            {% if post.post.title %}
+                {{post.post.title}}
+            {% else %}
+                No title
             {% endif %}
-            ({{post.created_date|localtime}})
+            ({{post.post.created_date|localtime}})
         </a>
         <br/>
     {% endfor %}
