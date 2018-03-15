@@ -2,22 +2,31 @@
 
 <div class="discuss-regmargin">
     <div>
-        <h4>{{post.title}}</h4>
+        <h4>{{post.post.title}}</h4>
     </div>
 
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
-        <div class="comment-votecontrol" id="post-upvote-{{post.id}}" 
-             onclick="cast_vote({{post.id}}, 1, 'post')">
+        <div class="comment-votecontrol
+                   {% if post.existing_vote_val == 1 %}
+                       highlighted
+                   {% endif%}"
+             id="post-upvote-{{post.post.id}}"
+             onclick="cast_vote({{post.post.id}}, 1, 'post')">
             &#x25B4;<i class="fa fa-arrow-circle-o-up"></i>
         </div>
-        <div class="comment-votecontrol" id="post-novote-{{post.id}}" 
-             onclick="cast_vote({{post.id}}, 0, 'post')">
+        <div class="comment-votecontrol"
+             id="post-novote-{{post.post.id}}"
+             onclick="cast_vote({{post.post.id}}, 0, 'post')">
             &#x2715;
         </div>
-        <div class="comment-votecontrol" id="post-downvote-{{post.id}}" 
-             onclick="cast_vote({{post.id}}, -1, 'post')">
+        <div class="comment-votecontrol
+                   {% if post.existing_vote_val == -1 %}
+                       highlighted
+                   {% endif%}"
+             id="post-downvote-{{post.post.id}}"
+             onclick="cast_vote({{post.post.id}}, -1, 'post')">
             &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
         </div>
     </div>
@@ -27,23 +36,27 @@
         <div class="comment-metabox">
             <span>
                 <strong>
-                {% if post.author %}
-                    {{post.author}}
+                {% if post.post.author %}
+                    {{post.post.author}}
                 {% else %}
                     Anonymous
                 {% endif %}
                 </strong>
-                at {{post.created_date}} (Score: <span id="post-score-{{post.id}}">{{post.score}}</span>)
+                at {{post.post.created_date}} (Score:
+                <span {% if post.existing_vote_val == 1 or post.existing_vote_val == -1 %}
+                       class="highlighted"
+                      {% endif%}
+                      id="post-score-{{post.post.id}}">{{post.post.score}}</span>)
             </span>
         </div>
         <div>
-            {{post.body}}
+            {{post.post.body}}
         </div>
         {% if user.is_authenticated %}
         <div>
             <a href="#">Report</a>
             |
-            <a href="{% url 'discussions:new_top' post.id %}">Reply</a>
+            <a href="{% url 'discussions:new_top' post.post.id %}">Reply</a>
         </div>
         {% else %}
         <div>

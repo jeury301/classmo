@@ -7,7 +7,7 @@
     <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
 
     <div class="discuss-topnav">
-        <a href="{% url 'discussions:list_posts' post.subject.id %}">< Back to {{post.subject.name}} forum</a>
+        <a href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
     </div>
 
     {% if not user.is_authenticated %}
@@ -48,7 +48,7 @@
         </ul>
     {% else %}
         Looks like there's no comments here yet.
-        <a href="{% url 'discussions:new_top' post.id %}">Why not post the first?</a>
+        <a href="{% url 'discussions:new_top' post.post.id %}">Why not post the first?</a>
     {% endif %}
 
 {% endblock %}
@@ -75,25 +75,25 @@
 
                 /* Highlight the upvote/downvote/no-vote icon as appropriate */
                 if (val == 1) {
-                    document.getElementById(upvoteIconId).style.color = "DarkOrange";
+                    document.getElementById(upvoteIconId).classList.add('highlighted');
                 } else {
-                    document.getElementById(upvoteIconId).style.color = "";
+                    document.getElementById(upvoteIconId).classList.remove('highlighted');
                 }
 
                 if (val == 0) {
-                    document.getElementById(novoteIconId).style.color = "DarkOrange";
+                    document.getElementById(novoteIconId).classList.add('highlighted');
                 } else {
-                    document.getElementById(novoteIconId).style.color = "";
+                    document.getElementById(novoteIconId).classList.remove('highlighted');
                 }
 
                 if (val == -1) {
-                    document.getElementById(downvoteIconId).style.color = "DarkOrange";
+                    document.getElementById(downvoteIconId).classList.add('highlighted');
                 } else {
-                    document.getElementById(downvoteIconId).style.color = "";
+                    document.getElementById(downvoteIconId).classList.remove('highlighted');
                 }
 
-                /* Update and highlight the score */
-                document.getElementById(scoreSpanId).style.color = "DarkOrange";
+                /* Update the score */
+                document.getElementById(scoreSpanId).classList.add('highlighted');
                 document.getElementById(scoreSpanId).innerHTML = data.new_score;
 
             },

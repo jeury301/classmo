@@ -4,15 +4,24 @@
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
-        <div class="comment-votecontrol" id="comment-upvote-{{comment.comment.id}}" 
+        <div class="comment-votecontrol
+                   {% if comment.existing_vote_val == 1 %}
+                       highlighted
+                   {% endif%}"
+             id="comment-upvote-{{comment.comment.id}}"
              onclick="cast_vote({{comment.comment.id}}, 1, 'comment')">
             &#x25B4;<i class="fa fa-arrow-circle-o-up"></i>
         </div>
-        <div class="comment-votecontrol" id="comment-novote-{{comment.comment.id}}" 
+        <div class="comment-votecontrol"
+             id="comment-novote-{{comment.comment.id}}"
              onclick="cast_vote({{comment.comment.id}}, 0, 'comment')">
             &#x2715;
         </div>
-        <div class="comment-votecontrol" id="comment-downvote-{{comment.comment.id}}" 
+        <div class="comment-votecontrol
+                   {% if comment.existing_vote_val == -1 %}
+                       highlighted
+                   {% endif%}"
+             id="comment-downvote-{{comment.comment.id}}"
              onclick="cast_vote({{comment.comment.id}}, -1, 'comment')">
             &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
         </div>
@@ -21,21 +30,26 @@
 
     <div class="comment-rightbox">
         <div class="comment-metabox">
-            <span>  
+            <span>
                 <strong>
-                {% if comment.comment.author %} 
-                    {{comment.comment.author}} 
+                {% if comment.comment.author %}
+                    {{comment.comment.author}}
                 {% else %}
-                    Anonymous 
+                    Anonymous
                 {% endif %}
                 </strong>
-                at {{comment.comment.created_date}} (Score: <span id="comment-score-{{comment.comment.id}}">{{comment.comment.score}}</span>)
+                at {{comment.comment.created_date}} (Score:
+                <span {% if comment.existing_vote_val == 1 or comment.existing_vote_val == -1 %}
+                       class="highlighted"
+                      {% endif%}
+                      id="comment-score-{{comment.comment.id}}">
+                    {{comment.comment.score}}</span>)
             </span>
         </div>
         <div>
             {{comment.comment.body}}
         </div>
-            
+
         {% if user.is_authenticated%}
         <div>
             <a href="#">Report</a>

@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.highlighted {
+    color: DarkOrange;
+}
+
 .comment-rightbox {
     display: inline-block;
 }
