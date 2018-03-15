@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="discuss-topnav">
-    <a href="{% url 'list_comments' post.id %}">< Back to thread</a>
+    <a href="{% url 'discussions:list_comments' post.id %}">< Back to thread</a>
 </div>
 
 <div>
@@ -11,7 +11,7 @@
 
     {% include "discussions/elements/post_view.html" %}
      
-<form action="{% url 'new_top' post.id %}" method="post">
+<form action="{% url 'discussions:new_top' post.id %}" method="post">
     {% csrf_token %}
     <table>
     {{ form.as_table }}

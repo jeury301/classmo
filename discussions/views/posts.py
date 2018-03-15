@@ -41,7 +41,8 @@ def new_post(request, subject_id):
                                body=body,
                                author=request.user)
             post.save()
-            return HttpResponseRedirect(reverse('list_posts', args=[subject_id]))
+            return HttpResponseRedirect(reverse(
+                'discussions:list_posts', args=[subject_id]))
 
     # if a GET (or any other method) we'll create a blank form
     else:

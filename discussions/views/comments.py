@@ -39,7 +39,7 @@ def new_top_comment(request, post_id):
                                author=request.user)
             comm.save()
             return HttpResponseRedirect(
-                reverse('list_comments', args=[comm.post.id]))
+                reverse('discussions:list_comments', args=[comm.post.id]))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -66,7 +66,7 @@ def new_child_comment(request, comment_id):
                                author=request.user)
             comm.save()
             return HttpResponseRedirect(
-                reverse('list_comments', args=[comm.post.id]))
+                reverse('discussions:list_comments', args=[comm.post.id]))
 
     # if a GET (or any other method) we'll create a blank form
     else:

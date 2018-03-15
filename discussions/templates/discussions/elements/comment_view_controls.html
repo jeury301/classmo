@@ -28,7 +28,7 @@
         <div>
             <a href="#">Report</a>
             |
-            <a href="{% url 'new_child' comment.comment.id %}">Reply</a>
+            <a href="{% url 'discussions:new_child' comment.comment.id %}">Reply</a>
         </div>
         {% else %}
         <div>
