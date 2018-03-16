@@ -11,15 +11,15 @@ from schedules.models import Profile
 from ..forms import UserRegistrationForm, UserProfileForm, UserAccountForm
 import json
 
-@login_required
+
 def index(request):
-	"""
+	
 	if request.user.is_authenticated:
 		user=request.user
 		session_list=user.registration_set.all()
 		return render(request,'schedules/users/index.html',{"registrations":session_list})
-		"""
-	return render(request,'schedules/users/index.html')
+		
+	return render(request,'schedules/users/splash.html')
 	
 
 @login_required

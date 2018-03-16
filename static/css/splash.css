@@ -1,0 +1,48 @@
+*
+{
+	margin:0;
+	padding: 0;
+	box-sizing:border-box;
+}
+
+li a {
+    color: green;
+}
+
+
+#nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+}
+
+#nav li {
+	display:inline;
+
+}
+
+html,body{
+	height:100%;
+	
+
+#wrap{
+	min-height:100%;
+
+}
+
+#main{
+	overflow:auto;
+	padding-bottom:150px;
+	background-color:white;
+	outline:solid 1px red;
+}
+
+#footer{
+position:relative;
+margin-top:-150px;
+height:150px;
+clear:both;
+background-color:blue;
+outline:solid 1px red;	
+}
