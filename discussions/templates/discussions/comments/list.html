@@ -4,23 +4,18 @@
 {% csrf_token %}
 
 {% block content %}
-    <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
+<div class="container">
+    <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet" media="screen">
 
     <div class="discuss-topnav">
+        <small>
         <a href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
+        </small>
     </div>
-
-    {% if not user.is_authenticated %}
-    <div>
-        <em>
-        You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="#">create an account</a>.
-        </em>
-    </div>
-    <br/>
-    {% endif %}
 
     {% include "discussions/elements/post_view_controls.html" %}
 
+    <div class="comment-list-wrapper">
     {% if comments %}
         <ul class="no-bullets">
         {% for comment in comments %}
@@ -38,7 +33,7 @@
                 {% if comment.abs_depth < max_depth %}
                     {% include "discussions/elements/comment_view_controls.html" %}
                 {% else %}
-                    <div class="discuss-regmargin">
+                    <div class="comment-wrapper">
                         <a href="#">See more comments</a>
                     </div>
                 {% endif %}
@@ -50,58 +45,9 @@
         Looks like there's no comments here yet.
         <a href="{% url 'discussions:new_top' post.post.id %}">Why not post the first?</a>
     {% endif %}
-
+</div>
 {% endblock %}
 
 {% block javascript %}
-<script>
-    function cast_vote(id, val, type) {
-        var scoreSpanId = type + "-score-" + id;
-        var oldScore = document.getElementById(scoreSpanId).innerHTML
-
-        $.ajax({
-            url: "{% url 'discussions:cast_vote' %}",
-            type: "POST",
-            data: {
-                'id': id,
-                'type': type,
-                'val': val
-            },
-            dataType: 'json',
-            success: function (data) {
-                var upvoteIconId = type + "-upvote-" + id
-                var novoteIconId = type + "-novote-" + id
-                var downvoteIconId = type + "-downvote-" + id
-
-                /* Highlight the upvote/downvote/no-vote icon as appropriate */
-                if (val == 1) {
-                    document.getElementById(upvoteIconId).classList.add('highlighted');
-                } else {
-                    document.getElementById(upvoteIconId).classList.remove('highlighted');
-                }
-
-                if (val == 0) {
-                    document.getElementById(novoteIconId).classList.add('highlighted');
-                } else {
-                    document.getElementById(novoteIconId).classList.remove('highlighted');
-                }
-
-                if (val == -1) {
-                    document.getElementById(downvoteIconId).classList.add('highlighted');
-                } else {
-                    document.getElementById(downvoteIconId).classList.remove('highlighted');
-                }
-
-                /* Update the score */
-                document.getElementById(scoreSpanId).classList.add('highlighted');
-                document.getElementById(scoreSpanId).innerHTML = data.new_score;
-
-            },
-            error: function(data) {
-                console.log("Ajax failed");
-                console.log(data);
-            }
-        });
-    }
-</script>
+    <script src="{% static 'discussions/js/cast_vote.js' %}"></script>
 {% endblock %}

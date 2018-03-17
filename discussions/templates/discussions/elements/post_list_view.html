@@ -1,6 +1,6 @@
 <!-- This element expects a Post object named post in context -->
 
-<div class="comment-wrapper top-post jumbotron">
+<div class="comment-wrapper">
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
@@ -29,45 +29,36 @@
     {% endif %}
 
     <div class="comment-rightbox">
-      <div>
-          <h1 class="top-post-title">{{post.post.title}}</h1>
-      </div>
         <div>
-            {{post.post.body}}
+            <h2 class="post-title">
+              <a href="{% url 'discussions:list_comments' post.post.id %}">
+                {{post.post.title}}
+              </a>
+            </h2>
         </div>
         <div class="comment-metabox">
           <span>
               <small>
                 Posted by
-                <strong>
-                {% if post.post.author %}
-                    {{post.post.author}}
-                {% else %}
-                    Anonymous
-                {% endif %}
-                </strong>
-                at {{post.post.created_date}} (Score:
-                <span {% if post.existing_vote_val == 1 or post.existing_vote_val == -1 %}
-                       class="highlighted"
-                      {% endif%}
-                      id="post-score-{{post.post.id}}">{{post.post.score}}</span>)
-              </small>
+              <strong>
+              {% if post.post.author %}
+                  {{post.post.author}}
+              {% else %}
+                  Anonymous
+              {% endif %}
+              </strong>
+              at {{post.post.created_date}} (Score:
+              <span {% if post.existing_vote_val == 1 or post.existing_vote_val == -1 %}
+                     class="highlighted"
+                    {% endif%}
+                    id="post-score-{{post.post.id}}">{{post.post.score}}</span>)
           </span>
+          </small>
         </div>
-        {% if user.is_authenticated %}
         <div>
             <small>
-                <a href="#">Report</a>
-                |
-                <a href="{% url 'discussions:new_top' post.post.id %}">Reply</a>
+                <a href="{% url 'discussions:list_comments' post.post.id %}">{{post.comment_cnt}} comments</a>
             </small>
         </div>
-        {% else %}
-        <div>
-            <small>
-                <a href="{% url 'login' %}">Log in to reply</a>
-            </small>
-        </div>
-        {% endif %}
     </div>
 </div>
