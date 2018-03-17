@@ -3,7 +3,7 @@ function cast_vote(id, val, type) {
     var oldScore = document.getElementById(scoreSpanId).innerHTML
 
     $.ajax({
-        url: "{% url 'discussions:cast_vote' %}",
+        url: "/discussions/votes/cast_vote/",
         type: "POST",
         data: {
             'id': id,

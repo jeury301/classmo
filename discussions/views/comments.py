@@ -28,7 +28,7 @@ def list_comments(request, post_id):
 
     # Get the comments
     max_depth = 5
-    comments = Comment.get_ordered_comments(raw_post, max_depth, '-created_date')
+    comments = Comment.get_ordered_comments(raw_post, max_depth, 'score')
     for comment in comments:
         # Check if the current user has cast a vote
         # for a given comment. If no such vote,

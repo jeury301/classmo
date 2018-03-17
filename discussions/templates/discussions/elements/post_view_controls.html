@@ -1,9 +1,6 @@
 <!-- This element expects a Post object named post in context -->
 
 <div class="comment-wrapper top-post jumbotron">
-    <div>
-        <h1>{{post.post.title}}</h1>
-    </div>
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
@@ -32,24 +29,30 @@
     {% endif %}
 
     <div class="comment-rightbox">
-        <div class="comment-metabox">
-        <span>
-            <strong>
-            {% if post.post.author %}
-                {{post.post.author}}
-            {% else %}
-                Anonymous
-            {% endif %}
-            </strong>
-            at {{post.post.created_date}} (Score:
-            <span {% if post.existing_vote_val == 1 or post.existing_vote_val == -1 %}
-                   class="highlighted"
-                  {% endif%}
-                  id="post-score-{{post.post.id}}">{{post.post.score}}</span>)
-        </span>
-    </div>
+      <div>
+          <h1 class="top-post-title">{{post.post.title}}</h1>
+      </div>
         <div>
             {{post.post.body}}
+        </div>
+        <div class="comment-metabox">
+          <span>
+              <small>
+                Posted by
+                <strong>
+                {% if post.post.author %}
+                    {{post.post.author}}
+                {% else %}
+                    Anonymous
+                {% endif %}
+                </strong>
+                at {{post.post.created_date}} (Score:
+                <span {% if post.existing_vote_val == 1 or post.existing_vote_val == -1 %}
+                       class="highlighted"
+                      {% endif%}
+                      id="post-score-{{post.post.id}}">{{post.post.score}}</span>)
+              </small>
+          </span>
         </div>
         {% if user.is_authenticated %}
         <div>

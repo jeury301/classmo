@@ -14,7 +14,18 @@
     margin-bottom: 10px;
 }
 
+.top-post-title {
+    margin-bottom: 5px;
+    margin-left: 0px; /* Align with body text */
+}
+
 .post-listing {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #666;
+}
+
+.subject-listing {
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #666;

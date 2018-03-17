@@ -10,24 +10,26 @@
         </small>
     </div>
 
-    <div>
-        You're responding to:
-    </div>
+    <div class="jumbotron top-post">
+        <h1>
+            You're responding to:
+        </h1>
 
-    <div>
-        <span>  
-            <strong>
-            {% if parent.author %} 
-                {{parent.author}} 
-            {% else %}
-                Anonymous 
-            {% endif %}
-            </strong>
-            at {{parent.created_date}}
-        </span>
-    </div>
-    <div>
-        {{parent.body}}
+        <div>
+            <span>  
+                <strong>
+                {% if parent.author %} 
+                    {{parent.author}} 
+                {% else %}
+                    Anonymous 
+                {% endif %}
+                </strong>
+                at {{parent.created_date}}
+            </span>
+        </div>
+        <div>
+            {{parent.body}}
+        </div>
     </div>
      
     <form action="{% url 'discussions:new_child' parent.id %}" method="post">

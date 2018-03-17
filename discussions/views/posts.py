@@ -12,14 +12,27 @@ def index(request):
     """List all subjects and and link to corresponding
     discussion forums
     """
-    subjects = Subject.objects.all().order_by('name')
+    raw_subjects = Subject.objects.all().order_by('name')
+    # We want to pass a list of dictionaries to the context
+    # that not only contain subject objects, but also
+    # metadata, like the number of posts for each subject
+    subjects = []
+    for subject in raw_subjects:
+        # Get a count of how many posts have been
+        # made for a given subject
+        post_cnt = Post.objects.filter(subject=subject).count()
+        subject_dict = {
+            'subject': subject,
+            'post_cnt': post_cnt
+        }
+        subjects.append(subject_dict)
     context = {'subjects': subjects}
     return render(request, 'discussions/posts/index.html', context)
 
 def list_posts(request, subject_id):
     """List all posts in a given subject forum"""
     subj = get_object_or_404(Subject, id=subject_id)
-    raw_posts = Post.objects.filter(subject=subj).order_by('-created_date')
+    raw_posts = Post.objects.filter(subject=subj).order_by('-score')
 
     # Here, we construct a list of dictionaries that 
     # each contain as values the post object itself, as 
