@@ -1,6 +1,6 @@
 <!-- This element expects a Comment object named post in context -->
 
-<div class="discuss-regmargin">
+<div class="comment-wrapper">
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
@@ -47,7 +47,9 @@
             </span>
         </div>
         <div>
-            {{comment.comment.body}}
+            <p>
+                {{comment.comment.body}}
+            </p>
         </div>
 
         {% if user.is_authenticated%}

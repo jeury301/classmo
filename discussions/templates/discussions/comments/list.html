@@ -4,23 +4,27 @@
 {% csrf_token %}
 
 {% block content %}
+<div class="container">
     <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
 
     <div class="discuss-topnav">
+        <small>
         <a href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
+        </small>
     </div>
 
     {% if not user.is_authenticated %}
     <div>
-        <em>
+        <em><small>
         You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="#">create an account</a>.
-        </em>
+        </small></em>
     </div>
     <br/>
     {% endif %}
 
     {% include "discussions/elements/post_view_controls.html" %}
 
+    <div class="comment-list-wrapper">
     {% if comments %}
         <ul class="no-bullets">
         {% for comment in comments %}
@@ -38,7 +42,7 @@
                 {% if comment.abs_depth < max_depth %}
                     {% include "discussions/elements/comment_view_controls.html" %}
                 {% else %}
-                    <div class="discuss-regmargin">
+                    <div class="comment-wrapper">
                         <a href="#">See more comments</a>
                     </div>
                 {% endif %}
@@ -50,7 +54,8 @@
         Looks like there's no comments here yet.
         <a href="{% url 'discussions:new_top' post.post.id %}">Why not post the first?</a>
     {% endif %}
-
+    </div>
+</div>
 {% endblock %}
 
 {% block javascript %}

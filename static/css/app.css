@@ -8,18 +8,43 @@
     margin-bottom: 20px;
 }
 
-.discuss-regmargin {
+.top-post {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.post-listing {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #666;
+}
+
+.comment-list-wrapper {
+    margin-left: -10px; /* Match margin inside jumbotron / top-post div */
+}
+
+.comment-wrapper {
     margin-bottom: 10px;
     margin-top: 10px;
 }
 
 .comment-leftbox {
-    display: inline-block;
-    margin-right: 20px;
+    float: left;
+    width: 30px;
+}
+
+.comment-rightbox {
+    margin-left: 30px;
 }
 
 .comment-metabox {
     color: #666;
+}
+
+.post-title {
+    margin-top: 0px;
+    margin-bottom: 0px
 }
 
 .comment-votecontrol {
@@ -32,9 +57,7 @@
     color: DarkOrange;
 }
 
-.comment-rightbox {
-    display: inline-block;
-}
+
 
 .active-link {
     font-weight: bold;

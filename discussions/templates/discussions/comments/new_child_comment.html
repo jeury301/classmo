@@ -1,37 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="discuss-topnav">
-    <a href="{% url 'discussions:list_comments' parent.post.id %}">< Back to thread</a>
-</div>
+<div class="container">
+    <div class="discuss-topnav">
+        <small>
+            <a href="{% url 'discussions:list_comments' parent.post.id %}">
+                < Back to thread
+            </a>
+        </small>
+    </div>
 
-<div>
-    You're responding to:
-</div>
+    <div>
+        You're responding to:
+    </div>
 
-<div>
-    <span>  
-        <strong>
-        {% if parent.author %} 
-            {{parent.author}} 
-        {% else %}
-            Anonymous 
-        {% endif %}
-        </strong>
-        at {{parent.created_date}}
-    </span>
+    <div>
+        <span>  
+            <strong>
+            {% if parent.author %} 
+                {{parent.author}} 
+            {% else %}
+                Anonymous 
+            {% endif %}
+            </strong>
+            at {{parent.created_date}}
+        </span>
+    </div>
+    <div>
+        {{parent.body}}
+    </div>
+     
+    <form action="{% url 'discussions:new_child' parent.id %}" method="post">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <br/>
+        <input type="submit" value="Submit" />
+    </form>
 </div>
-<div>
-    {{parent.body}}
-</div>
- 
-<form action="{% url 'discussions:new_child' parent.id %}" method="post">
-    {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <br/>
-    <input type="submit" value="Submit" />
-</form>
-
 {% endblock %}

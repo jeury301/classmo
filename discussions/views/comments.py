@@ -15,12 +15,12 @@ def list_comments(request, post_id):
     # Check if the current user has cast a vote
     # for this post. If no such vote, existing_post_vote
     # is None
-    existing_post_vote = Vote.objects.filter(voter=request.user,
-                                             post=raw_post).first()
-    if existing_post_vote:
-        existing_vote_val = existing_post_vote.value
-    else:
-        existing_vote_val = None
+    existing_vote_val = None
+    if request.user.is_authenticated:
+        existing_post_vote = Vote.objects.filter(voter=request.user,
+                                                 post=raw_post).first()
+        if existing_post_vote:
+            existing_vote_val = existing_post_vote.value
     post = {
         'post': raw_post,
         'existing_vote_val': existing_vote_val
@@ -33,14 +33,13 @@ def list_comments(request, post_id):
         # Check if the current user has cast a vote
         # for a given comment. If no such vote,
         # existing_vote is set to None
-        existing_vote = Vote.objects.filter(voter=request.user,
-                                            comment=comment['comment']).first()
-        print("Value of existing vote: {}".format(existing_vote))
-        if existing_vote:
-            print(existing_vote.value)
-            comment['existing_vote_val'] = existing_vote.value
-        else:
-            comment['existing_vote_val'] = None
+        comment['existing_vote_val'] = None
+        if request.user.is_authenticated:
+            existing_vote = Vote.objects.filter(voter=request.user,
+                                                comment=comment['comment']).first()
+            if existing_vote:
+                print(existing_vote.value)
+                comment['existing_vote_val'] = existing_vote.value
     context = {
         'post': post,
         'comments': comments,

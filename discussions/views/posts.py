@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from discussions.forms import PostForm
-from discussions.models import Post, Vote
+from discussions.models import Post, Vote, Comment
 from schedules.models import Subject
 
 def index(request):
@@ -20,22 +20,31 @@ def list_posts(request, subject_id):
     """List all posts in a given subject forum"""
     subj = get_object_or_404(Subject, id=subject_id)
     raw_posts = Post.objects.filter(subject=subj).order_by('-created_date')
+
+    # Here, we construct a list of dictionaries that 
+    # each contain as values the post object itself, as 
+    # well as metadata about the post
     posts = []
     for post in raw_posts:
         # Check if the current user has cast a vote
         # for a given comment. If no such vote,
         # existing_vote is set to None
-        existing_vote = Vote.objects.filter(voter=request.user,
-                                            post=post).first()
-        if existing_vote:
-            existing_vote_val = existing_vote.value
-        else:
-            existing_vote_val = None
+        existing_vote_val = None
+        if request.user.is_authenticated:
+            existing_vote = Vote.objects.filter(voter=request.user,
+                                                post=post).first()
+            if existing_vote:
+                existing_vote_val = existing_vote.value
+        # Get a count of how many comments have been
+        # made in reply to the post
+        comment_cnt = Comment.objects.filter(post=post).count()
         post_dict = {
             'post': post,
-            'existing_vote_val': existing_vote_val
+            'existing_vote_val': existing_vote_val,
+            'comment_cnt': comment_cnt
         }
         posts.append(post_dict)
+        
     context = {
         'posts': posts,
         'subject': subj
