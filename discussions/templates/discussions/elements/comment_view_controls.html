@@ -1,6 +1,6 @@
 <!-- This element expects a Comment object named post in context -->
 
-<div class="discuss-regmargin">
+<div class="comment-wrapper">
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
     <div class="comment-leftbox">
@@ -46,20 +46,24 @@
                     {{comment.comment.score}}</span>)
             </span>
         </div>
+        
         <div>
-            {{comment.comment.body}}
+            <p>
+                {{comment.comment.body}}
+            </p>
         </div>
 
-        {% if user.is_authenticated%}
         <div>
-            <a href="#">Report</a>
-            |
-            <a href="{% url 'discussions:new_child' comment.comment.id %}">Reply</a>
+            <small>
+            {% if user.is_authenticated%}
+                <a href="#">Report</a>
+                |
+                <a href="{% url 'discussions:new_child' comment.comment.id %}">Reply</a>
+            {% else %}
+                <a href="{% url 'login' %}">Log in to reply</a>
+            {% endif %}
+            </small>
         </div>
-        {% else %}
-        <div>
-            <a href="{% url 'login' %}">Log in to reply</a>
-        </div>
-        {% endif %}
+
     </div>
 </div>

@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-<div class="discuss-topnav">
-    <a href="{% url 'discussions:list_comments' post.id %}">< Back to thread</a>
+<link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
+<div class="container">
+    <div class="discuss-topnav">
+        <small>
+            <a href="{% url 'discussions:list_comments' post.id %}">
+                < Back to thread
+            </a>
+        </small>
+    </div>
+
+    <div class="jumbotron top-post">
+        <h1>You're responding to:</h1>
+
+
+        {% include "discussions/elements/post_view.html" %}
+    </div>
+
+    <form action="{% url 'discussions:new_top' post.id %}" method="post">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <br/>
+        <input type="submit" value="Submit" />
+    </form>
 </div>
-
-<div>
-    You're responding to:
-</div>
-
-    {% include "discussions/elements/post_view.html" %}
-     
-<form action="{% url 'discussions:new_top' post.id %}" method="post">
-    {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <br/>
-    <input type="submit" value="Submit" />
-</form>
-
 {% endblock %}

@@ -1,43 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
+{% load tz%}
 
-    {% load tz%}
+<link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
+<div class="container">
 
     <div class="discuss-topnav">
-        <a href="{% url 'discussions:discussion_index' %}">< Back to forum directory</a>
+        <small>
+            <a href="{% url 'discussions:discussion_index' %}">
+                < Back to forum directory
+            </a>
+        </small>
     </div>
 
-    <div>
-        <h3>{{subject.name}}</h3>
-    </div>
-
-    {% if user.is_authenticated %}
-        {% if posts %}
-             <a href="{% url 'discussions:new_post' subject.id %}">Add a new post</a>
-             <!-- TODO: style this correctly -->
+    <div class="jumbotron top-post">
+        <h1>Welcome to the {{subject.name}} forum</h1>
+        <p>
+            This is the place to discuss and ask questions all about {{subject.name}}.
+        </p>
+        <p>
+        {% if user.is_authenticated %}
+            {% if posts %}
+                <a href="{% url 'discussions:new_post' subject.id %}">
+                    <strong>+ Add a new post</strong>
+                </a>
+                 <!-- TODO: style this correctly -->
+            {% else %}
+                Looks like there's no posts here yet.
+                <a href="{% url 'discussions:new_post' subject.id %}">
+                    <strong>
+                        Why not post the first?
+                    </strong>
+                </a>
+            {% endif %}
         {% else %}
-            Looks like there's no posts here yet.
-            <a href="{% url 'discussions:new_post' subject.id %}">Why not post the first?</a>
+            <em><small>
+            You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="{% url 'schedules:register' %}">create an account</a>.
+            </small></em>
         {% endif %}
-    {% else %}
-        <em>
-        You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="#">create an account</a>.
-        </em>
-    {% endif %}
-    <br/>
+        </p>
+
+    </div>
+
 
     {% for post in posts %}
-        <br/>
-            <a href="{% url 'discussions:list_comments' post.post.id %}">
-            {% if post.post.title %}
-                {{post.post.title}}
-            {% else %}
-                No title
-            {% endif %}
-            ({{post.post.created_date|localtime}})
-        </a>
-        <br/>
+        <div class="post-listing">
+            {% include "discussions/elements/post_list_view.html" %}
+        </div>
     {% endfor %}
 
+</div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'discussions/js/cast_vote.js' %}"></script>
 {% endblock %}

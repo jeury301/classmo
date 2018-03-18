@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="discuss-topnav">
-    <a href="{% url 'discussions:list_posts' subject.id %}">< Back to {{ subject.name }} forum</a>
-</div>
+{% load static %}
 
-<div>
-    <h3>New post - {{ subject.name }}</h3>
+{% block content %}
+<link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
+<div class="container">
+    <div class="discuss-topnav">
+        <small>
+            <a href="{% url 'discussions:list_posts' subject.id %}">
+                < Back to {{ subject.name }} forum
+            </a>
+        </small>
+    </div>
+
+    <div>
+        <h1>New post</h1>
+    </div>
+
+    <form action="{% url 'discussions:new_post' subject.id %}" method="post">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <br/>
+        <input type="submit" value="Submit" />
+    </form>
 </div>
- 
-<form action="{% url 'discussions:new_post' subject.id %}" method="post">
-    {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <br/>
-    <input type="submit" value="Submit" />
-</form>
 
 {% endblock %}

@@ -1,10 +1,24 @@
 <!-- This element expects a Post object named post in context -->
 
 <!--     TODO: Style this div and add bottom padding, get rid of br-->
-<div class="discuss-regmargin">
+<div class="comment-wrapper">
     <h3>{{post.title}}</h3>
     <div>
         {{post.body}}
     </div>
+    <div class="comment-metabox">
+        <span>
+            <small>
+                Posted by
+                <strong>
+                {% if post.author %}
+                    {{post.author}}
+                {% else %}
+                    Anonymous
+                {% endif %}
+                </strong>
+                at {{post.created_date}} (Score:{{post.score}}</span>)
+            </small>
+        </span>
+    </div>
 </div>
-<br/>
