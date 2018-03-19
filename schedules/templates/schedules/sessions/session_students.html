@@ -3,12 +3,22 @@
 
 {%block content%}
 <div class="container">
-    <h1>
-        <a href="{% url 'schedules:assignments' 'mine'%}"><i class="fas fa-angle-left"></i></a>&nbsp;
-        {{session.subject}}:{{session.name}} - Students
-    </h1>
+
+     <div class="general-topnav">
+        <small>
+            <a href="{% url 'schedules:assignments' 'mine'%}">
+                < Back to Sessions
+            </a>
+        </small>
+    </div>
+
+
     <div class="row">
         <div class="col-md-12">
+            <div class="jumbotron general-top">
+                    <h1>{{session.subject}}:{{session.name}} - Students</h1>
+                    <p>Here you can view all students for this session.</p>
+            </div>
             <table class="table dt-responsive table-hover" id="session_students">
                 <thead>
                     <tr>

@@ -3,8 +3,8 @@
     <div class="general-topnav">
         <small>
             {%if is_instructor%}
-            <a href="{% url 'schedules:assignments' 'mine'%}">< Back to {{session.subject.name}}
-            {%elif is_student%}</a>
+            <a href="{% url 'schedules:assignments' 'mine'%}">< Back to {{session.subject.name}}</a>
+            {%elif is_student%}
             <a href="{% url 'schedules:sessions' session.subject.id 'mine' %}">< Back to {{session.subject.name}}</a>
             {%endif%}
         </small>

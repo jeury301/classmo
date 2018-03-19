@@ -3,16 +3,23 @@
 
 {%block content%}
 <div class="container">
-
-    <h1>Sessions</h1>
+    <div class="general-topnav">
+        <small>
+            <a href="{% url 'index'%}">
+                < Back to home
+            </a>
+        </small>
+    </div>
 
     <div class="row">
         <div class="col-md-9">
-            
-            <table class="table dt-responsive table-hover" id="sessions">
+            <table class="table-responsive dt-responsive table-hover" id="sessions">
+                <div class="jumbotron general-top">
+                    <h1>Sessions</h1>
+                    <p>Here you can view all sessions and manage sessions you are assigned to.</p>
+                </div>
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Subject</th>
                         <th>Session Name</th>
                         <th>Location</th>
@@ -27,7 +34,6 @@
                 <tbody>
                     {%for session in sessions%}
                     <tr>
-                        <td>{{session.id}}</td>
                         <td>{{session.subject.name}}</td>
                         <td>{{session.name}}</td>
                         <td>{{session.location.name}}</td>
@@ -39,8 +45,8 @@
                         <td>{{session.registered_students}}/{{session.max_capacity}}</td>
                         <td>{{session.start_date|date}}</td>
                         <td>{{session.end_date|date}}</td>
-                        <td><input type="button" class="default-button" value="View Details" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
-                        <td><input type="button" class="success-button" value="View Students"/ OnClick="window.location.href='{%url 'schedules:session_setudents' session.pk%}'"></td>
+                        <td><input type="button" class="default-button" value="View" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
+                        <td><input type="button" class="success-button" value="Students"/ OnClick="window.location.href='{%url 'schedules:session_setudents' session.pk%}'"></td>
                     </tr>
                     {%endfor%}
                 </tbody>
