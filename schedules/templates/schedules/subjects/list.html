@@ -1,36 +1,51 @@
-{% extends 'base.html' %}
-{% load i18n static %}
+{% extends 'base.html' %} {% load i18n static %} {%block content%}
+<div class="container">
+    <div class="general-topnav">
+        <small>
+            <a href="{% url 'index' %}">
+                < Back to home
+            </a>
+        </small>
+    </div>
 
-{%block content%}
-<h1>Courses</h1>
-
-<div id="content-main">
     <div class="row">
         <div class="col-md-9">
-            <table class="table dt-responsive table-hover" id="subjects">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Subject</th>
-                        <th>Description</th>
-                        <th>Sessions</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="jumbotron general-top">
+                <h1>Courses</h1>
+                <p>Here you can view and manage your courses, as well as all open courses.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     {%for course in courses%}
-                    <tr>
-                        <td>{{course.id}}</td>
-                        <td>{{course.name}}</td>
-                        <td>{{course.description}}</td>
-                        <td><input type="button" class="default-button" value="View Sessions" OnClick="window.location.href='{%url 'schedules:sessions' course.pk 'mine'%}'"/></td>
-                    </tr>
-                    {%endfor%}
-                </tbody>
-            </table>
+                    <div class="card" id="changelist">
+                        <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                            <h2 class="card-title">{{course.name}}</h2>
+                            <div style="padding: 10px;">
+                                <p class="card-text">
+                                   {{course.description}}
+                                </p>
+                                <br/>
+                                <p class="card-text">
+                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'mine'%}" role="button">View Sessions</a>
+                                    &nbsp;&nbsp;
+                                    <a href="{%url 'discussions:list_posts' course.pk%}" style="text-decoration: underline;">Discussion forum</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    {% if not forloop.counter|divisibleby:2%}
+                        </div><div class="col-md-6">
+                    {% else %}
+                        </div></div><div class="row"><div class="col-md-6">
+                    {%endif%} 
+                {%endfor%}
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
             <div class="module filtered">
-                <div id="changelist-filter" style="width: 100%">
+                <div id="changelist-filter" style="width: 100%;">
                     <h2>Select View</h2>
                     <h3> Courses to view: </h3>
                     <ul>
@@ -42,7 +57,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
 $('#subjects').DataTable({
     "deferRender": true,

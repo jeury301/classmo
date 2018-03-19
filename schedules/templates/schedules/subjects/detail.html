@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
 {%block content%}
+<div class="container">
     <h1>
         {{subject.name}}
     </h1>
@@ -17,4 +18,5 @@
     {%else%}
     <h3>No sessions available</h3> 
     {%endif%} 
+</div>
 {%endblock%}
