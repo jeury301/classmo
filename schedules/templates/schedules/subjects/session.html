@@ -12,8 +12,9 @@
     <div id="info-container">
         <div class="row">
             <div class="col-md-3">
-                <div class="jumbotron general-top text-center align-middle" style="vertical-align: middle !important;">
-                    <h1 style="margin: 0;">{{session.subject.name}} - {{session.name}}</h1>
+                <div class="jumbotron general-top align-middle" style="vertical-align: middle !important;">
+                    <h1 style="margin: 0;">{{session.subject.name}} - {{session.name}} </h1>
+                    <p><a href="{%url 'discussions:list_posts' session.subject.pk%}" style="text-decoration: underline;">{{session.subject}} discussion forum</a></p>
                 </div>
                 {%if is_student%}
                 <div class="card" id="changelist">
