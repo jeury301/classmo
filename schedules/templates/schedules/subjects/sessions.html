@@ -2,14 +2,23 @@
 {% load i18n static %}
 
 {%block content%}
-<h1>
-    <a href="{% url 'schedules:subjects' 'mine'%}"><i class="fas fa-angle-left"></i></a>&nbsp;
-    {{subject}} - Sessions
-</h1>
+<div class="container">
 
-<div id="content-main">
+    <div class="general-topnav">
+        <small>
+            <a href="{% url 'schedules:subjects' 'mine'%}">
+                < Back to Courses
+            </a>
+        </small>
+    </div>
+
     <div class="row">
         <div class="col-md-9">
+            <div class="jumbotron general-top">
+                <h1>{{subject}} - Sessions</h1>
+                <p>Here you can view and manage sessions for this course.</p>
+                <p><a href="{%url 'discussions:list_posts' subject.pk%}" style="text-decoration: underline;">{{subject}} forum</a></p>
+            </div>
             <table class="table dt-responsive table-hover" id="subjects">
                 <thead>
                     <tr>
