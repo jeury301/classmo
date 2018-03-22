@@ -1,14 +1,14 @@
 #session-container
 {
-	outline:red solid 1px;background:linear-gradient(white,#79aec8,#417690);
+	/*background:linear-gradient(white,#79aec8,#417690);*/
 }
 
 #row2
 {
-	outline:red solid 1px;
-	background:linear-gradient(white,#79aec8,#417690);
+	
+	/*background:linear-gradient(white,#79aec8,#417690);*/
 	background-color:#e9ecef;
-	outline:1px solid red;
+	
 }
 
 .glyph-link

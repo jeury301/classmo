@@ -8,8 +8,8 @@
                     {{user.username}}, 
                 {%endif%}
             </h1> 
-   <div id="content-main" style="/*outline:green solid 1px;">
-    <div class="row" style="outline:blue solid 1px;background:linear-gradient(white,#79aec8,#417690);">
+   <div id="content-main" style="">
+    <div class="row" style="">
     <!-- Row 1 Start -->
     <div class="col-md-8" id="session-container">
         <!-- Col content -->
@@ -17,8 +17,8 @@
         <P>My registered Sections</P>
         <!-- Student start -->
         {% for reg in registrations %}
-        <div class="card" style="outline: 1px red solid;">
-            <div class="card-header" style="background-color:#e9ecef;">{{reg.session.name}}</div>
+        <div class="card" style="">
+            <div class="card-header" style="">{{reg.session.name}}</div>
                <div class="card-body">
                 <ul>
                     <li>Location: {{reg.session.location}}</li>
@@ -35,8 +35,8 @@
         {% if is_instructor %}
         <P>My Teaching Sessions</P>
         {% for reg in registrations %}
-         <div class="card" style="outline: 1px red solid;">
-            <div class="card-header" style="background-color:#e9ecef;">{{reg.name}}</div>
+         <div class="card" style="">
+            <div class="card-header" style="">{{reg.name}}</div>
                <div class="card-body">
                 <ul>
                     <li>Location: {{reg.location}}</li>
@@ -55,10 +55,10 @@
     <!--end teacher -->
 </div><!--Col 1 end-->
 
-<div class="col-md-1" style="outline:green solid 1px;" ;>
+<div class="col-md-1" style="" ;>
     <P>Gap</P>
 </div>
-<div class="col-md-3" style="outline:red solid 1px;">
+<div class="col-md-3" style="">
     <div class="module filtered">
         <div id="changelist-filter" style="width: 100%">
             {% if is_student %}
