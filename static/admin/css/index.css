@@ -1,0 +1,36 @@
+#session-container
+{
+	outline:red solid 1px;background:linear-gradient(white,#79aec8,#417690);
+}
+
+#row2
+{
+	outline:red solid 1px;
+	background:linear-gradient(white,#79aec8,#417690);
+	background-color:#e9ecef;
+	outline:1px solid red;
+}
+
+.glyph-link
+{
+float:right;
+}
+.comment-header
+{
+	background-color:#e9ecef;
+	padding:0;
+	padding-left:1rem;
+	padding-bottom:.5rem;
+}
+.card-header
+{
+	background-color:#e9ecef;
+}
+
+a.button
+{
+	float:right;
+	background-color:#417690;
+	border-color:#417690;
+	padding: 10px 15px;
+}

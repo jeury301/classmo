@@ -1,20 +1,130 @@
-{% extends 'base.html' %}
-{% block content %}
-    {% if user.is_authenticated %}
-        <div>
-            
-            <h1>
+{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
+<div>
+    <h1>
                 Hello 
                 {%if user.first_name%}
-                    {{user.first_name}} {{user.last_name}},
+                    {{user.first_name}} {{user.last_name}}
                 {%else%}
                     {{user.username}}, 
                 {%endif%}
-            </h1>
-            <h1>
-                This is Classmo's <strong>Home!</strong>
-            </h1>
-        </div>
+            </h1> 
+   <div id="content-main" style="/*outline:green solid 1px;">
+    <div class="row" style="outline:blue solid 1px;background:linear-gradient(white,#79aec8,#417690);">
+    <!-- Row 1 Start -->
+    <div class="col-md-8" id="session-container">
+        <!-- Col content -->
+        {% if is_student %}
+        <P>My registered Sections</P>
+        <!-- Student start -->
+        {% for reg in registrations %}
+        <div class="card" style="outline: 1px red solid;">
+            <div class="card-header" style="background-color:#e9ecef;">{{reg.session.name}}</div>
+               <div class="card-body">
+                <ul>
+                    <li>Location: {{reg.session.location}}</li>
+                    <li>Instructor: {{reg.session.instructor}}</li>
+                    <li>Capacity: {{reg.session.registered_students}}/{{reg.session.max_capacity}}</li>
+                </ul>
+                <a class="btn btn-primary button" href="{% url 'schedules:session' reg.session.id %}" role="button"><Span style="color:white;">Go to Page</Span></a>
+            </div>
+            </div>
+            <br>
+            {% endfor %}
+        {% endif %}
+        <!--end Student -->
+        {% if is_instructor %}
+        <P>My Teaching Sessions</P>
+        {% for reg in registrations %}
+         <div class="card" style="outline: 1px red solid;">
+            <div class="card-header" style="background-color:#e9ecef;">{{reg.name}}</div>
+               <div class="card-body">
+                <ul>
+                    <li>Location: {{reg.location}}</li>
+                    <li>Instructor: {{reg.instructor}}</li>
+                    <li>Capacity: {{reg.registered_students}}/{{reg.max_capacity}}</li>
+                </ul>
+                <a class="btn btn-primary button" href="{% url 'schedules:session' reg.id %}" role="button"><Span style="color:white;">Go to Page</Span></a>
+            </div>
+            </div>
+            <br>
+            {% endfor %}
+        
+   
+    <!-- end jumbo tron-->
     {% endif %}
+    <!--end teacher -->
+</div><!--Col 1 end-->
+
+<div class="col-md-1" style="outline:green solid 1px;" ;>
+    <P>Gap</P>
+</div>
+<div class="col-md-3" style="outline:red solid 1px;">
+    <div class="module filtered">
+        <div id="changelist-filter" style="width: 100%">
+            {% if is_student %}
+            <h2>Quick Actions</h2>
+            <h3>Things</h3>
+            <ul>
+                <li><a href="#" title="Thing 1">Your Instructors</a></li>
+                <li><a href="#" title="Thing 2">Thing 2</a></li>
+            </ul>
+            {% endif %}
+
+            {% if is_instructor %}
+            <h2>Home</h2>
+            <h3>Quick Actions</h3>
+            <ul>
+                <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1">Discussion Forum</a></li>
+                <li><a href="#" title="Thing 2">View Upcoming Sessions</a></li>
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+        <!--End of row 1-->
     <br>
-{% endblock %}
+   
+<div class="row" id="row2">
+    <div class="col-md-12">
+        <h1>Recent Comments</h1>
+    </div>
+    {% if post_list %} {% for post in post_list %}
+    <div class="col-md-1" style="padding-right:0">
+        <div class="thumbnail" >
+            <img class="img-responsive user-photo" style="max-width:90%;max-height:90%" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        </div>
+
+        <!-- /thumbnail -->
+    </div>
+    <!-- /col-sm-1 -->
+    <div style="padding-bottom:1rem;" class="col-md-3">
+        <i class="fas fa-caret-left" style="float:left;color:#e9ecef;margin-top:14px;"></i>
+        <div class="card">
+            <div class="card-header comment-header">
+                <h5><strong>{{post.author}}</strong> | <strong>{{post.subject}}</strong></h5>
+            </div>
+            <div class="card-body">
+                <span>
+                {% if post.body|length < 20 %}
+                {{post.body}}
+                {% else %}
+                {{ post.body|slice:":20" }}...
+                {% endif %}
+            </span>
+                <div class="glyph-link"><a href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-alt-circle-right"></i></a></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %} {% else %}
+    <p style="margin-left:1rem;">Nothing seems to be here</p>
+    {% endif %}
+</div>
+       
+    </div> <!--END of content main-->
+</div>
+{% endif %} 
+<!-- end if student -->
+<br> {% endblock %}
+<script>
+    </script>

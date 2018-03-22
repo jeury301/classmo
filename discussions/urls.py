@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import comments, posts
+app_name='discussions'
 
 urlpatterns = [
     # path('', views.index, name='index'),

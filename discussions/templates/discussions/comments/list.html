@@ -7,7 +7,7 @@
     <link href="{% static 'css/comment_list.css' %}" rel="stylesheet" media="screen">
 
     <div class="discuss-topnav">
-        <a href="{% url 'list_posts' post.subject.id %}">< Back to {{post.subject.name}} forum</a>
+        <a href="{% url 'discussions:list_posts' post.subject.id %}">< Back to {{post.subject.name}} forum</a>
     </div>
 
     {% if not user.is_authenticated %}
@@ -48,7 +48,7 @@
         </ul>
     {% else %}
         Looks like there's no comments here yet.  
-        <a href="{% url 'new_top' post.id %}">Why not post the first?</a>
+        <a href="{% url 'discussions:new_top' post.id %}">Why not post the first?</a>
     {% endif %}
 
 {% endblock %}

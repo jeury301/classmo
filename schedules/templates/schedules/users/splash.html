@@ -37,39 +37,68 @@
     <script type="text/javascript" src="{% static 'js/datatables.min.js'%}"></script>
 <style>
 #footer {
-    position: bottom;
-    height:12vh;
-    margin-top:-12vh;
-    clear: both;
+    /*margin-top:-12vh;*/
+    bottom:0;
+    height:7vh;
     background-color: #417690;
     outline: solid 1px red;
-    z-index:-1;
+    opacity:0;
+
 }
 
-#footer span {
-bottom:1vh;
-position:absolute;
-z-index:0;
+#footer p{
+display:inline-block;
 color:#f5dd5d;
+margin-top:1vh;
+border-bottom:solid 1px #f5dd5d;
+z-index:1;
 
 }
+#cover
+{
+  height:100vh;
+  width:100%;
+  background-color:#417690; 
+  position:absolute;
+  z-index:2;
+}
+
+#cover h1
+{
+  display:block;
+  height:20px; 
+  position:absolute;
+  bottom:50vh;top:50vh;left:45vw;
+  margin:auto;
+  color:white;
+}
+
 #header
 {
-  height:20vh;
-
+  height:7vh;
+  opacity:0;
 }
 
 #card
 {
 width:18rem;
 height:13rem;
-margin-top:-30rem;
+margin-top:-15rem;
 z-index:1;
-position:absolute;
+position: absolute;
+opacity:0;
+}
+
+#card-header
+{
+  background-color:#417690;
+ /* border:1px #f5dd5d solid;*/
+  color:white;
 }
 
 #container {
-min-height:100%;
+height:93vh;
+background-color:#417690;
 /*background-image: url({% static 'images/library2.jpg' %});
 background-size: 100% 100%;
 */
@@ -78,47 +107,79 @@ background-size: 100% 100%;
 #cf {
   position:relative;
   width:100%;
-  height:88vh;
+  height:86vh;
   margin:0 auto;
   z-index:1;
 }
+
+.blue-background {background-color:#417690;}
 
 #cf img {
   position:absolute;
   height:100%;
   width:100%;
   left:0;
+  /*
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
+  */
+  animation-name: cfFadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 30s;
 }
 
- @keyframes cfFadeInOut {
+/* n=number of images
+   a=image vissible duration in seconds a=8
+   b=image crossfade duration in seconds b=2
+   t=total animation duration =(a+b)*n =30
+*/
+
+@keyframes cfFadeInOut {
   0% {
-  opacity:1;
-}
-45% {
-opacity:1;
-}
-55% {
-opacity:0;
-}
-100% {
-opacity:0;
-}
+    opacity:1;  /* always 0 */
+  }
+  27% {
+    opacity:1; /* a/t   */
+  }
+  34% {
+    opacity:0;  /* (a+b)/t*100%  */
+  }
+  94% {
+    opacity:0;  /* 100%-(b/t*100%)    */
+  }
+  100% {
+    opacity:1;  /* always 100% */
+  }
 }
 
-#cf img.top {
-animation-name: cfFadeInOut;
-animation-timing-function: ease-in-out;
-animation-iteration-count: infinite;
-animation-duration: 5s;
-animation-direction: alternate;
+#cf img:nth-of-type(1) {
+  animation-delay: 20s;
 }
+#cf img:nth-of-type(2) {
+  animation-delay: 10s;
+}
+#cf img:nth-of-type(3) {
+  animation-delay: 0s;
+}
+
 </style>
  <script>
 function unfade(element) {
+    var op = 0.01;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 50);
+}
+function unfadefast(element) {
     var op = 0.09;  // initial opacity
     element.style.display = 'block';
     var timer = setInterval(function () {
@@ -162,61 +223,81 @@ console.log("Triggered "+card.style.left);
     
 };
 
+function centercard() {
+var card =document.getElementById('card');
+var bodyW = ($(document).width())/2;
+var cardW = ($(card).width())/2;
+var bodyH=($(document).height()/2)
+var cardH=($(card).height())/2;
+card.style.left=bodyW-cardW+"px";
+card.style.bottom=bodyH-cardH+"px";
+console.log("Centered");
+
+}
 
 
 
 </script>
 </head>
 {% load i18n %}
-<body style='min-height:100%'>
+
+<body style='min-height:100vh;background-color:#417690'>
     <!-- Container -->
-    <div id="container">
-        <!-- Header -->
-        
-        <div id="header" style="height: auto!important;">
-            <div id="branding">
-                <h1 id="site-name">
+    <div id="cover"><h1>Loading</h1></div>
+        <div id="container">
+            <!-- Header -->
+            <div id="header">
+                <div id="branding">
+                    <h1 id="site-name">
                     <a href="/">
                         Classmo
                     </a>
                     </h1>
+                </div>
             </div>
-        </div>
-<div id="cf">
-  <img class="bottom" src="{% static 'images/library.jpg' %}" />
-  <img class="top" src="{% static 'images/library2.jpg' %}"  />
-</div>
-      
-        <!-- END Header -->
-        <!-- Content -->
-        
+            <div id="cf">
+                <img src="{% static 'images/library.jpg' %}" />
+                <img src="{% static 'images/lib.jpg' %}" />
+                <img src="{% static 'images/library2.jpg' %}" />
+            </div>
+            <!-- END Header -->
+            <!-- Content -->
             <!-- Card -->
-            <div id="card" class="card" >
-                <div class="card-header">
-                    Weclome to Classmo
+            <div id="card" class="card" style="border:1px solid #f5dd5d;">
+                <div class="card-header" id="card-header">
+                    Welcome to Classmo
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Get ready to succeed</h5>
-                    <p class="card-text">Organize, schedule, meet, succeed</p>
-                    <a href="#" class="btn btn-primary"><span style='color:white;'>Go somewhere</span></a>
+                    <h5 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Get ready to succeed</h5>
+                    <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-text">Organize, schedule, meet, acheive</p>
+                    <br>
+                    <a style="display:block;width:45%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background"><span style='color:white;'>Signup</span></a>
+                    <br>
+                    <a style="display:block;text-align:center" href="{% url 'login' %}"><span>Already a member?</span> </a>
                 </div>
-            </div> 
+            </div>
             <!--end card -->
-     
-        <!-- END Content -->
+            </div>
+            <!-- END Container -->
+        
+    <div id="footer">
+        <p style="margin-left:20px;">About Us</p>
+        <p style="margin-left:100px;">Contact</p>
+        <p style="margin-left:100px">Legal Info</p>
     </div>
-        </div>
-        <div id="footer">
-          <Span>About Us</Span>
-          <Span style="margin-left:100px;">Contact</span>
-          <Span style="margin-left:200px">Legal Info</span>
-        </div>
-    
-    <!-- END Container -->
+   
+    <!--end cover -->
    <script>
-    //unfade(images);
-    myMove(card);
-    //setTimeout(transition,4000);
+  $(window).on('load', function () {
+      var cover=document.getElementById("cover");
+      cover.style.opacity=0;
+      cover.style.zIndex=0;
+ });
+    centercard();
+    unfadefast(card);
+   setTimeout(unfade(footer),50000);
+   setTimeout(unfade(header),50000);
+ 
     </script>
 </body>
 </html>
