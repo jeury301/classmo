@@ -89,6 +89,14 @@
 
 }
 
+/* Used in when displaying Gravatars ins post list view */
+.gravatar-med {
+    border-radius: 50%;
+    height: 50px; 
+    width: 50px;
+    margin-top: 7px;
+}
+
 .gravatar-small {
     border-radius: 50%;
     height: 30px; 
@@ -101,8 +109,3 @@
     padding-right: 5px
 }
 
-.gravatar-med {
-    border-radius: 50%;
-    height: 50px; 
-    width: 50px;
-}
