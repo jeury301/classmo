@@ -44,7 +44,7 @@
                         {%endif%}
                         <td>{{session.start_date|date}}</td>
                         <td>{{session.end_date|date}}</td>
-                        <td><input type="button" class="default-button" value="View Details" OnClick="window.location.href='{%url 'schedules:session' session.id %}'"/></td>
+                        <td><input type="button" class="default-button" value="View Details"/></td>
                     </tr>
                     {%endfor%}
                 </tbody>

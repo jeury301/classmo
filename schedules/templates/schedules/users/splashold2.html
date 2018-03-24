@@ -1,0 +1,180 @@
+{% load i18n static %}
+<!DOCTYPE html> 
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Loading Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+    <!-- Loading Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}"/>
+    <!-- Loading Datatables -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datatables.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}"/>
+    <!-- Loading Admin Base CSS -->
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}" /> 
+    {% block extrastyle %}
+    {% endblock %} 
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static " admin/css/rtl.css " %}{% endblock %}" />{% endif %} {% block extrahead %}{% endblock %} {% block responsive %}
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}" /> 
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive_rtl.css' %}" /> 
+    {% endif %} 
+    {% endblock %} 
+    {% block blockbots %}
+    <meta name="robots" content="NONE,NOARCHIVE" />
+    {% endblock %}
+    <!--Change Lists CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css'%}">
+    <!--Custom App CSS File-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css'%}">
+    <!-- Loading Scripts -->
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/datatables.min.js'%}"></script>
+<style>
+#footer {
+    position: relative;
+    margin-top: -30px;
+    height: 30px;
+    clear: both;
+    background-color: green;
+    outline: solid 1px red;
+}
+
+#container {
+min-height:100%;
+/*background-image: url({% static 'images/library2.jpg' %});
+background-size: 100% 100%;
+*/
+
+}
+#images {
+position: absolute;
+top: 0; right: 0; bottom: 0; left: 0;
+background-image:url({% static 'images/library.jpg' %});
+background-size:100% 100%;
+-webkit-transition: background-image 2s;
+-moz-transition: background-image 2s;
+-o-transition: background-image 2s;
+transition: background-image 2s;
+}
+
+
+
+
+</style>
+ <script>
+function unfade(element) {
+    var op = 0.09;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 50);
+}
+
+function changeimage() {
+   /* $('#images').fadeTo('slow', 0.5, function()
+{
+    $(this).css('background-image', 'url({% static 'images/library2.jpg' %})');
+}).fadeTo('slow', 1);
+*/
+   $('#images').css('background-image','url({% static 'images/library2.jpg' %})');
+    setTimeout(changeimage2, 7000); // Change image every 10 seconds
+}
+function changeimage2() {
+    //unfade('#images');
+    $('#images').css('background-image','url({% static 'images/library.jpg' %})');
+   /* $('#images').fadeTo('slow', 0.5, function()
+{
+    $(this).css('background-image', 'url({% static 'images/library.jpg' %})');
+}).fadeTo('slow', 1);
+*/
+    setTimeout(changeimage, 7000); // Change image every 10 seconds
+}
+
+function myMove(element) {
+  var pos = 0;
+  var bodyW = ($(document).width())/2;
+  var cardW = ($(element).width())/2;
+  var final=bodyW-cardW;
+  var id = setInterval(frame, 5);
+  element.style.visibility="visible";
+  function frame() {
+    if (pos >= final) {
+      clearInterval(id);
+    } else {
+      pos+=2; 
+      //element.style.top = pos + 'px'; 
+      element.style.left = pos + 'px'; 
+    }
+  }
+  setTimeout(changeimage,5000);
+}
+window.onresize = function(event) {
+
+var card=document.getElementById("card");
+var bodyW = ($(document).width())/2;
+var cardW = ($(card).width())/2;
+card.style.left=bodyW-cardW+"px";
+console.log("Triggered "+card.style.left);
+    
+};
+
+
+
+
+</script>
+</head>
+{% load i18n %}
+<body style='min-height:100%'>
+    <!-- Container -->
+    <div id="container">
+        <!-- Header -->
+          <div id="images">
+        <div id="header" style="height: auto!important;">
+            <div id="branding">
+                <h1 id="site-name">
+                    <a href="/">
+                        Classmo
+                    </a>
+                    </h1>
+            </div>
+        </div>
+      
+        <!-- END Header -->
+        <!-- Content -->
+        
+            <!-- Card -->
+            <div id="card" class="card" style="width:18rem;height:15rem;margin-top:10rem;">
+                <div class="card-header">
+                    Weclome to Classmo
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Get ready to succeed</h5>
+                    <p class="card-text">Organize, schedule, meet, succeed</p>
+                    <a href="#" class="btn btn-primary"><span style='color:white;'>Go somewhere</span></a>
+                </div>
+            </div> 
+            <!--end card -->
+     
+        <!-- END Content -->
+    </div>
+        </div>
+        <div id="footer"></div>
+    
+    <!-- END Container -->
+   <script>
+    unfade(images);
+    myMove(card);
+    </script>
+</body>
+</html>

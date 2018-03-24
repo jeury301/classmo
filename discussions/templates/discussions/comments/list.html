@@ -8,9 +8,11 @@
 <div class="container">
 
     <div class="discuss-topnav">
+
         <small>
         <a href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
         </small>
+        
     </div>
 
     {% include "discussions/elements/post_view_controls.html" %}
@@ -42,8 +44,11 @@
         {% endfor %}
         </ul>
     {% else %}
+
         Looks like there's no comments here yet.
         <a href="{% url 'discussions:new_top' post.post.id %}">Why not post the first?</a>
+
+       
     {% endif %}
 </div>
 {% endblock %}

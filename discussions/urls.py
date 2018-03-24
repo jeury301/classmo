@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import comments, posts, votes
 
+
 app_name='discussions'
 
 urlpatterns = [

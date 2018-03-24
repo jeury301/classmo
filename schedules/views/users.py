@@ -6,20 +6,53 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
-from schedules.models import Profile
+from schedules.services import portal_tools
+from schedules.services.portal_tools import instructors_only, students_only
+from schedules.models import Profile, Session
+from discussions.models import Post, Comment
+from datetime import date
 from ..forms import UserRegistrationForm, UserProfileForm, UserAccountForm
 import json
+from django.conf import settings
 
-@login_required
+
+
 def index(request):
-	"""
-	if request.user.is_authenticated:
-		user=request.user
-		session_list=user.registration_set.all()
-		return render(request,'schedules/users/index.html',{"registrations":session_list})
-		"""
-	return render(request,'schedules/users/index.html')
+    if request.user.is_authenticated:
+        current_user=request.user
+        post_list=[]
+        sesh_list=[]
+        is_instructor = portal_tools.is_member(current_user, settings.GROUPS["INSTRUCTORS"])
+        is_student = portal_tools.is_member(current_user, settings.GROUPS["STUDENTS"])
+        if is_student:
+            session_list=current_user.registration_set.all()
+            for sesh in session_list:
+                sesh_list.append(sesh.session)
+            temp=Session.order_by_upcoming(sesh_list)
+            for reg in session_list:
+                instructor=reg.session.instructor
+                l=Post.objects.filter(author=instructor).filter(subject=reg.session.subject).order_by('-created_date')[:5] 
+                post_list+=l
+            return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
+
+        if is_instructor:
+            temp=[]
+            session_list=current_user.session_set.all()
+            for sesh in session_list:
+                sesh_list.append(sesh)
+            temp=Session.order_by_upcoming(sesh_list)
+
+            for reg in session_list:
+                subject=reg.subject
+                l=Post.objects.filter(subject=subject).exclude(author=current_user).order_by('-created_date')[:5]
+                post_list+=l
+            session_list=temp
+            return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
+        else:
+            return render(request,'schedules/users/index.html',{"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
+            
+    else:
+        return render(request,'schedules/users/splash.html')
 	
 
 @login_required
