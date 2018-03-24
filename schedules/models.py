@@ -1,8 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import datetime, timedelta
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from operator import itemgetter 
+from collections import OrderedDict
 
 # Base model for others to inherit from
 class BaseModel(models.Model):
@@ -75,6 +78,34 @@ class Session(BaseModel):
             return True
         else:
             return False
+
+
+    @classmethod
+    def order_by_upcoming(self,list):
+        today=datetime.now().weekday()
+        print("todays day= ",today)
+        today_time=datetime.now()
+        h=(today_time.hour+today_time.minute/60)/24
+        print("hours converted to days ",h)
+        ordered_sessions=[]
+        times_list={}
+        for session in list:
+            day=session.start_date.weekday()
+            order=(today+day-1) ## this is the number of days between today and the session
+            day_hour=(session.start_date.hour+session.start_date.minute/60)/24
+            order+=day_hour
+            times_list[order]=session
+        times_list=OrderedDict(sorted(times_list.items(),key=itemgetter(0)))
+        print(times_list)
+
+
+
+        for key, value in times_list.items():
+            ordered_sessions.append(value)
+        return ordered_sessions
+
+
+                
 
     @classmethod    
     def instructor_assignments(self,instructor):

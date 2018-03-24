@@ -1,5 +1,6 @@
-{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
+{% extends 'base.html' %} {% load static %}{% block content %} {% if user.is_authenticated %}
 <div>
+    <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
     <h1>
                 Hello 
                 {%if user.first_name%}
@@ -54,7 +55,6 @@
     {% endif %}
     <!--end teacher -->
 </div><!--Col 1 end-->
-
 <div class="col-md-1" style="" ;>
     <P>Gap</P>
 </div>
@@ -68,9 +68,7 @@
                 <li><a href="#" title="Thing 1">Your Instructors</a></li>
                 <li><a href="#" title="Thing 2">Thing 2</a></li>
             </ul>
-            {% endif %}
-
-            {% if is_instructor %}
+            {% endif %} {% if is_instructor %}
             <h2>Home</h2>
             <h3>Quick Actions</h3>
             <ul>
@@ -78,50 +76,34 @@
                 <li><a href="#" title="Thing 2">View Upcoming Sessions</a></li>
             </ul>
             {% endif %}
-        </div>
-    </div>
-</div>
-</div>
-        <!--End of row 1-->
-    <br>
-   
-<div class="row" id="row2">
-    <div class="col-md-12">
-        <h1>Recent Comments</h1>
-    </div>
-    {% if post_list %} {% for post in post_list %}
-    <div class="col-md-1" style="padding-right:0">
-        <div class="thumbnail" >
-            <img class="img-responsive user-photo" style="max-width:90%;max-height:90%" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+
+            <h2>Recent Comments</h2>
+            {% for post in post_list %}
+            <div class="post-listing">
+                <h3 style="display:inline-block;padding-right:.2rem">{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
+                <div class="post-listing" style="padding-left:15px;">
+                    {% if post.body > 15 %}
+                    <span>{{post.body|slice:"0:20"}}</span>
+                    {% else %}
+                    <span>{{post.body}}</span>
+                    {% endif %}
+                    <a style="float:right;margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right"></i></a></div>
+                <br>
+            </div>
+
+            {% endfor %}
+            
         </div>
 
-        <!-- /thumbnail -->
     </div>
-    <!-- /col-sm-1 -->
-    <div style="padding-bottom:1rem;" class="col-md-3">
-        <i class="fas fa-caret-left" style="float:left;color:#e9ecef;margin-top:14px;"></i>
-        <div class="card">
-            <div class="card-header comment-header">
-                <h5><strong>{{post.author}}</strong> | <strong>{{post.subject}}</strong></h5>
-            </div>
-            <div class="card-body">
-                <span>
-                {% if post.body|length < 20 %}
-                {{post.body}}
-                {% else %}
-                {{ post.body|slice:":20" }}...
-                {% endif %}
-            </span>
-                <div class="glyph-link"><a href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-alt-circle-right"></i></a></div>
-            </div>
-        </div>
-    </div>
-    {% endfor %} {% else %}
-    <p style="margin-left:1rem;">Nothing seems to be here</p>
-    {% endif %}
+   
 </div>
-       
-    </div> <!--END of content main-->
+
+<!-- Col -->
+<!--End of row 1-->
+<br>
+</div>
+<!--END of content main-->
 </div>
 {% endif %} 
 <!-- end if student -->
