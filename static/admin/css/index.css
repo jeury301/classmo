@@ -4,11 +4,14 @@
 }
 
 #row2
-{
-	
+{	
 	/*background:linear-gradient(white,#79aec8,#417690);*/
-	background-color:#e9ecef;
-	
+	background-color:#e9ecef;	
+}
+
+.gravatar-header span
+{
+	padding-right:.5rem;
 }
 
 .glyph-link

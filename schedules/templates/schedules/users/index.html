@@ -1,8 +1,8 @@
- {% extends 'base.html' %} {% block content %} {% load group_checker %} {% if user.is_authenticated %} {% load static %} 
+ {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %} {% if user.is_authenticated %} {% load static %} 
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
-    <h1>
-                <span>Gravatar</span>Hello 
+    <h1 class="gravatar-header">
+                <span><img src="{{user.email|gravatar_url:150}}" class="gravatar-med"></span>Hello 
                 {%if user.first_name%}
                     {{user.first_name}} {{user.last_name}}
                 {%else%}
