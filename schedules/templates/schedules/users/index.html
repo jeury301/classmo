@@ -1,4 +1,4 @@
- {% extends 'base.html' %} {% block content %} {% extends 'base.html' %} {% load static %}{% block content %} {% if user.is_authenticated %}
+ {% extends 'base.html' %} {% block content %} {% if user.is_authenticated %} {% load static %}
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
     <h1>
@@ -50,12 +50,12 @@
                 {% endif %}
                 <br>
             </div>
-            {% endblock %} 
+           
             <!--end teacher -->
-        </div>
-        <!--Col 1 end-->
+        
+        
         <div class="col-md-1" style="" ;>
-            <P>Gap</P>
+           
         </div>
         <div class="col-md-3" style="">
             <div class="module filtered">
@@ -75,15 +75,18 @@
                         <li><a href="#" title="Thing 2">View Upcoming Sessions</a></li>
                     </ul>
                     {% endif %}
-                    <h2>Recent Comments</h2> {% for post in post_list %}
-                    <div class="post-listing">
+                    <h2>Recent Comments</h2> 
+                    {% for post in post_list %}
+                    <div >
                         <h3 style="display:inline-block;padding-right:.2rem">{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
                         <div class="post-listing" style="padding-left:15px;">
                             {% if post.body > 15 %}
-                            <span>{{post.body|slice:"0:20"}}</span> {% else %}
-                            <span>{{post.body}}</span> {% endif %}
+                            <span>{{post.body|slice:"0:20"}}</span> 
+                            {% else %}
+                            <span>{{post.body}}</span> 
+                            {% endif %}
                             <a style="float:right;margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right"></i></a></div>
-                        <br>
+                       
                     </div>
                     {% endfor %}
                 </div>

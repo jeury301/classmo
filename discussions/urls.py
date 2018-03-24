@@ -1,11 +1,8 @@
 from django.urls import path
 
-<<<<<<< HEAD
 from .views import comments, posts, votes
 
-=======
-from .views import comments, posts
->>>>>>> splash
+
 app_name='discussions'
 
 urlpatterns = [

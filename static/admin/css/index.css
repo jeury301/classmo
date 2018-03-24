@@ -34,3 +34,8 @@ a.button
 	border-color:#417690;
 	padding: 10px 15px;
 }
+
+#changelist-filter ul
+{
+	border-bottom:none;
+}
