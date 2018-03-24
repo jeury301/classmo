@@ -1,4 +1,5 @@
 <!-- This element expects a list of dictionaries named posts in context-->
+{% load gravatar %}
 
 <div class="comment-wrapper top-post jumbotron">
     {% if user.is_authenticated %}
@@ -28,7 +29,11 @@
     </div>
     {% endif %}
 
-    <div class="comment-rightbox">
+    <div class="post-midbox">
+      <img src="{{post.post.author.email|gravatar_url:150}}" class="gravatar-med">
+    </div>
+
+    <div class="post-rightbox-big">
       <div>
           <h1 class="top-post-title">{{post.post.title}}</h1>
       </div>

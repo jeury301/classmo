@@ -44,8 +44,23 @@
     width: 30px;
 }
 
+.post-midbox {
+    float: left;
+    margin-left: 3px;
+    margin-right: 3px;
+    width: 56px;
+}
+
 .comment-rightbox {
     margin-left: 30px;
+}
+
+.post-rightbox {
+    margin-left: 86px;
+}
+
+.post-rightbox-big {
+    margin-left: 96px;
 }
 
 .comment-metabox {

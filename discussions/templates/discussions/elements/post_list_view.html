@@ -1,4 +1,5 @@
 <!-- This element expects a list of dictionaries named posts in context-->
+{% load gravatar %}
 
 <div class="comment-wrapper">
     {% if user.is_authenticated %}
@@ -27,8 +28,11 @@
         </div>
     </div>
     {% endif %}
+    <div class="post-midbox">
+      <img src="{{post.post.author.email|gravatar_url:150}}" class="gravatar-med">
+    </div>
 
-    <div class="comment-rightbox">
+    <div class="post-rightbox">
         <div>
             <h2 class="post-title">
               <a href="{% url 'discussions:list_comments' post.post.id %}">
