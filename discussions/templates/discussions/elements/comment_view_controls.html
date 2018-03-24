@@ -1,5 +1,5 @@
 <!-- This element expects a list of dictionaries named comments in context-->
-
+{% load gravatar %}
 <div class="comment-wrapper">
     {% if user.is_authenticated %}
     <!-- Only registered users can upvote/downvote -->
@@ -30,6 +30,9 @@
 
     <div class="comment-rightbox">
         <div class="comment-metabox">
+            <span class="gravatar-wrap-disc">
+                <img src="{{comment.comment.author.email|gravatar_url:150}}" class="gravatar-small">
+            </span>
             <span>
                 <strong>
                 {% if comment.comment.author %}
