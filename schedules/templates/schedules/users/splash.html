@@ -1,0 +1,303 @@
+{% load i18n static %}
+<!DOCTYPE html> 
+<html>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Loading Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+    <!-- Loading Font Awesome -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}"/>
+    <!-- Loading Datatables -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datatables.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}"/>
+    <!-- Loading Admin Base CSS -->
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}" /> 
+    {% block extrastyle %}
+    {% endblock %} 
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static " admin/css/rtl.css " %}{% endblock %}" />{% endif %} {% block extrahead %}{% endblock %} {% block responsive %}
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}" /> 
+    {% if LANGUAGE_BIDI %}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive_rtl.css' %}" /> 
+    {% endif %} 
+    {% endblock %} 
+    {% block blockbots %}
+    <meta name="robots" content="NONE,NOARCHIVE" />
+    {% endblock %}
+    <!--Change Lists CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css'%}">
+    <!--Custom App CSS File-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css'%}">
+    <!-- Loading Scripts -->
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/datatables.min.js'%}"></script>
+<style>
+#footer {
+    /*margin-top:-12vh;*/
+    bottom:0;
+    height:7vh;
+    background-color: #417690;
+    outline: solid 1px red;
+    opacity:0;
+
+}
+
+#footer p{
+display:inline-block;
+color:#f5dd5d;
+margin-top:1vh;
+border-bottom:solid 1px #f5dd5d;
+z-index:1;
+
+}
+#cover
+{
+  height:100vh;
+  width:100%;
+  background-color:#417690; 
+  position:absolute;
+  z-index:2;
+}
+
+#cover h1
+{
+  display:block;
+  height:20px; 
+  position:absolute;
+  bottom:50vh;top:50vh;left:45vw;
+  margin:auto;
+  color:white;
+}
+
+#header
+{
+  height:7vh;
+  opacity:0;
+}
+
+#card
+{
+width:18rem;
+height:13rem;
+margin-top:-15rem;
+z-index:1;
+position: absolute;
+opacity:0;
+}
+
+#card-header
+{
+  background-color:#417690;
+ /* border:1px #f5dd5d solid;*/
+  color:white;
+}
+
+#container {
+height:93vh;
+background-color:#417690;
+/*background-image: url({% static 'images/library2.jpg' %});
+background-size: 100% 100%;
+*/
+
+}
+#cf {
+  position:relative;
+  width:100%;
+  height:86vh;
+  margin:0 auto;
+  z-index:1;
+}
+
+.blue-background {background-color:#417690;}
+
+#cf img {
+  position:absolute;
+  height:100%;
+  width:100%;
+  left:0;
+  /*
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  */
+  animation-name: cfFadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 30s;
+}
+
+/* n=number of images
+   a=image vissible duration in seconds a=8
+   b=image crossfade duration in seconds b=2
+   t=total animation duration =(a+b)*n =30
+*/
+
+@keyframes cfFadeInOut {
+  0% {
+    opacity:1;  /* always 0 */
+  }
+  27% {
+    opacity:1; /* a/t   */
+  }
+  34% {
+    opacity:0;  /* (a+b)/t*100%  */
+  }
+  94% {
+    opacity:0;  /* 100%-(b/t*100%)    */
+  }
+  100% {
+    opacity:1;  /* always 100% */
+  }
+}
+
+#cf img:nth-of-type(1) {
+  animation-delay: 20s;
+}
+#cf img:nth-of-type(2) {
+  animation-delay: 10s;
+}
+#cf img:nth-of-type(3) {
+  animation-delay: 0s;
+}
+
+</style>
+ <script>
+function unfade(element) {
+    var op = 0.01;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 50);
+}
+function unfadefast(element) {
+    var op = 0.09;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 50);
+}
+
+function myMove(element) {
+  var pos = 0;
+  var bodyW = ($(document).width())/2;
+  var cardW = ($(element).width())/2;
+  var final=bodyW-cardW;
+  var id = setInterval(frame, 5);
+  element.style.visibility="visible";
+  function frame() {
+    if (pos >= final) {
+      clearInterval(id);
+    } else {
+      pos+=2; 
+      //element.style.top = pos + 'px'; 
+      element.style.left = pos + 'px'; 
+    }
+  }
+  //setTimeout(changeimage,5000);
+}
+window.onresize = function(event) {
+
+var card=document.getElementById("card");
+var bodyW = ($(document).width())/2;
+var bodyH=($(document).height()/2)
+var cardW = ($(card).width())/2;
+var cardH=($(card).height())/2;
+card.style.left=bodyW-cardW+"px";
+card.style.bottom=bodyH-cardH+"px";
+console.log("Triggered "+card.style.left);
+    
+};
+
+function centercard() {
+var card =document.getElementById('card');
+var bodyW = ($(document).width())/2;
+var cardW = ($(card).width())/2;
+var bodyH=($(document).height()/2)
+var cardH=($(card).height())/2;
+card.style.left=bodyW-cardW+"px";
+card.style.bottom=bodyH-cardH+"px";
+console.log("Centered");
+
+}
+
+
+
+</script>
+</head>
+{% load i18n %}
+
+<body style='min-height:100vh;background-color:#417690'>
+    <!-- Container -->
+    <div id="cover"><h1>Loading</h1></div>
+        <div id="container">
+            <!-- Header -->
+            <div id="header">
+                <div id="branding">
+                    <h1 id="site-name">
+                    <a href="/">
+                        Classmo
+                    </a>
+                    </h1>
+                </div>
+            </div>
+            <div id="cf">
+                <img src="{% static 'images/library.jpg' %}" />
+                <img src="{% static 'images/lib.jpg' %}" />
+                <img src="{% static 'images/library2.jpg' %}" />
+            </div>
+            <!-- END Header -->
+            <!-- Content -->
+            <!-- Card -->
+            <div id="card" class="card" style="border:1px solid #f5dd5d;">
+                <div class="card-header" id="card-header">
+                    Welcome to Classmo
+                </div>
+                <div class="card-body">
+                    <h5 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Get ready to succeed</h5>
+                    <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-text">Organize, schedule, meet, acheive</p>
+                    <br>
+                    <a style="display:block;width:45%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background"><span style='color:white;'>Signup</span></a>
+                    <br>
+                    <a style="display:block;text-align:center" href="{% url 'login' %}"><span>Already a member?</span> </a>
+                </div>
+            </div>
+            <!--end card -->
+            </div>
+            <!-- END Container -->
+        
+    <div id="footer">
+        <p style="margin-left:20px;">About Us</p>
+        <p style="margin-left:100px;">Contact</p>
+        <p style="margin-left:100px">Legal Info</p>
+    </div>
+   
+    <!--end cover -->
+   <script>
+  $(window).on('load', function () {
+      var cover=document.getElementById("cover");
+      cover.style.opacity=0;
+      cover.style.zIndex=0;
+ });
+    centercard();
+    unfadefast(card);
+   setTimeout(unfade(footer),50000);
+   setTimeout(unfade(header),50000);
+ 
+    </script>
+</body>
+</html>
