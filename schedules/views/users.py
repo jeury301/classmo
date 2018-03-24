@@ -49,7 +49,11 @@ def index(request):
             session_list=temp
             return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
 
-    return render(request,'schedules/users/splash.html')
+        if current_user.is_superuser or current_user.is_staff:
+            return render(request,'schedules/users/index.html',{"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
+            
+    else:
+        return render(request,'schedules/users/splash.html')
 	
 
 @login_required
