@@ -269,7 +269,7 @@ console.log("Centered");
 
 <body style='min-height:100vh;background-color:#417690'>
     <!-- Container -->
-    <div id="cover"><h1>Loading Classmo <i class="fa fa-spinner fa-spin"></i></h1></div>
+    <div id="cover"><h1>Loading Classmo <i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
             <!-- Header -->
             <div id="header">
@@ -319,7 +319,7 @@ console.log("Centered");
    <script>
   $(window).on('load', function () {
     centercard();
-    $("#cover").fadeOut(4000);
+    $("#cover").fadeOut(3500);
     unfadefast(card);
    setTimeout(unfade(footer),50000);
    setTimeout(unfade(header),50000);
