@@ -2,7 +2,7 @@
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
     <h1>
-                Hello 
+                <span>Gravatar</span>Hello 
                 {%if user.first_name%}
                     {{user.first_name}} {{user.last_name}}
                 {%else%}
@@ -15,8 +15,9 @@
             <div class="col-md-8" id="session-container">
                 <!-- Col content -->
                 {% if is_student %}
-                <P>My registered Sections</P>
+                <h1>My registered Sections</h1>
                 <!-- Student start -->
+                {% if registrations %}
                 {% for reg in registrations %}
                 <div class="card" style="">
                     <div class="card-header" style="">{{reg.session.name}}</div>
@@ -29,9 +30,18 @@
                         <a class="btn btn-primary button" href="{% url 'schedules:session' reg.session.id %}" role="button"><Span style="color:white;">Go to Page</Span></a>
                     </div>
                 </div>
-                <br> {% endfor %} {% endif %}
-                <!--end Student -->
-                {% if is_instructor %}
+                <br> {% endfor %}
+                {% else %}
+                <!-- No sessions-->
+                <div class="card" style="">
+                    <div class="card-header" style="">Looks like nothing is here</div>
+                    <div class="card-body">
+                        <a  style="float:left" class="btn btn-primary button" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Why not register?</Span></a>
+                    </div>
+                </div>
+                {% endif %}
+                 {% elif is_instructor %}
+                {% if registrations %}
                 <P>My Teaching Sessions</P>
                 {% for reg in registrations %}
                 <div class="card" style="">
@@ -46,7 +56,22 @@
                     </div>
                 </div>
                 <br> {% endfor %}
-                <!-- end jumbo tron-->
+                {% else %}
+                <div class="card" style="">
+                    <div class="card-header" style="">Looks like nothing is here</div>
+                    <div class="card-body">
+                        <a  style="float:left" class="btn btn-primary button" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Why not register?</Span></a>
+                    </div>
+                {% endif %}
+            
+                {% else %}
+
+                <div class="card" style="">
+                    <div class="card-header" style="">You don't have a role</div>
+                    <div class="card-body">
+                        <p> Before using classmo features, please choose a role</p>
+                    </div>
+
                 {% endif %}
                 <br>
             </div>
@@ -75,7 +100,8 @@
                         <li><a href="#" title="Thing 2">View Upcoming Sessions</a></li>
                     </ul>
                     {% endif %}
-                    <h2>Recent Comments</h2> 
+                    <h2>Recent Comments</h2>
+                    {% if post_list %} 
                     {% for post in post_list %}
                     <div >
                         <h3 style="display:inline-block;padding-right:.2rem">{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
@@ -86,9 +112,12 @@
                             <span>{{post.body}}</span> 
                             {% endif %}
                             <a style="float:right;margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right"></i></a></div>
-                       
-                    </div>
-                    {% endfor %}
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <Span style="padding-left:15px;">Looks like nothing is here for you</Span>
+                        {% endif %}
+                    
                 </div>
             </div>
         </div>

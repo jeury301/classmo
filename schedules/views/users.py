@@ -48,8 +48,7 @@ def index(request):
                 post_list+=l
             session_list=temp
             return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
-
-        if current_user.is_superuser or current_user.is_staff:
+        else:
             return render(request,'schedules/users/index.html',{"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
             
     else:
