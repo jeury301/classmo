@@ -11,7 +11,7 @@
                    {% endif%}"
              id="post-upvote-{{post.post.id}}"
              onclick="cast_vote({{post.post.id}}, 1, 'post')">
-            &#x25B4;<i class="fa fa-arrow-circle-o-up"></i>
+            &#x25B2;
         </div>
         <div class="comment-votecontrol"
              id="post-novote-{{post.post.id}}"
@@ -24,7 +24,7 @@
                    {% endif%}"
              id="post-downvote-{{post.post.id}}"
              onclick="cast_vote({{post.post.id}}, -1, 'post')">
-            &#x25BE;<i class="fa fa-arrow-circle-o-down"></i>
+            &#x25BC;
         </div>
     </div>
     {% endif %}
