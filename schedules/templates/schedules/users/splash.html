@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}"/>
     <!-- Loading Datatables -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/datatables.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}"/>
+   
     <!-- Loading Admin Base CSS -->
     <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}" /> 
     {% block extrastyle %}
@@ -112,7 +112,21 @@ background-size: 100% 100%;
   z-index:1;
 }
 
+
 .blue-background {background-color:#417690;}
+
+#cf span
+{
+position:absolute;
+bottom:0;
+right:0;
+animation-name: cfFadeInOut;
+animation-timing-function: ease-in-out;
+animation-iteration-count: infinite;
+animation-duration: 30s;
+color:#c1c1c1;
+font-size:.5rem;
+}
 
 #cf img {
   position:absolute;
@@ -165,6 +179,16 @@ background-size: 100% 100%;
   animation-delay: 0s;
 }
 
+#cf span:nth-of-type(1) {
+  animation-delay: 20s;
+}
+#cf span:nth-of-type(2) {
+  animation-delay: 10s;
+}
+#cf span:nth-of-type(3) {
+  animation-delay: 0s;
+}
+
 </style>
  <script>
 function unfade(element) {
@@ -191,6 +215,8 @@ function unfadefast(element) {
         op += op * 0.1;
     }, 50);
 }
+
+
 
 function myMove(element) {
   var pos = 0;
@@ -243,7 +269,7 @@ console.log("Centered");
 
 <body style='min-height:100vh;background-color:#417690'>
     <!-- Container -->
-    <div id="cover"><h1>Loading Classmo <i class="fa fa-spinner fa-spin"></i></h1></div>
+    <div id="cover"><h1>Loading Classmo <i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
             <!-- Header -->
             <div id="header">
@@ -256,9 +282,12 @@ console.log("Centered");
                 </div>
             </div>
             <div id="cf">
-                <img src="{% static 'images/library.jpg' %}" />
-                <img src="{% static 'images/lib.jpg' %}" />
+                <img src="{% static 'images/lib4.jpg' %}"/>
+                <span>"Photo by Emgonzalez License: Public Domain"</span>
                 <img src="{% static 'images/library2.jpg' %}" />
+                <span>"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"</span>
+                <img src="{% static 'images/library.jpg' %}" />
+                <span>"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"</span>
             </div>
             <!-- END Header -->
             <!-- Content -->
@@ -289,14 +318,14 @@ console.log("Centered");
     <!--end cover -->
    <script>
   $(window).on('load', function () {
-      var cover=document.getElementById("cover");
-      cover.style.opacity=0;
-      cover.style.zIndex=0;
- });
     centercard();
+    $("#cover").fadeOut(3000);
     unfadefast(card);
    setTimeout(unfade(footer),50000);
    setTimeout(unfade(header),50000);
+
+ });
+    
  
     </script>
 </body>

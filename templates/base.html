@@ -91,7 +91,7 @@
                 {%endif%}
                 {%if is_student or user.is_staff%}
                 &#47;<a href="{% url 'schedules:subjects' 'mine'%}">{% trans 'Courses' %}</a>
-                &#47;<a href="{% url 'schedules:homework' %}">{% trans 'Homeworks' %}</a>
+                <!-- &#47;<a href="{% url 'schedules:homework' %}">{% trans 'Homeworks' %}</a> -->
                 {%endif%}
                 &#47;<a href="{% url 'discussions:discussion_index' %}">{% trans 'Discussions' %}</a>
             </div>
