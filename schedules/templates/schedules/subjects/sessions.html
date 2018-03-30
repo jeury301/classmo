@@ -44,7 +44,7 @@
                         {%endif%}
                         <td>{{session.start_date|date}}</td>
                         <td>{{session.end_date|date}}</td>
-                        <td><input type="button" class="default-button" value="View Details"/></td>
+                        <td><a class="btn default-button" href="{%url 'schedules:session' session.pk %}" role="button">View Details</a></td>
                     </tr>
                     {%endfor%}
                 </tbody>
