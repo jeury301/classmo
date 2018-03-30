@@ -20,4 +20,5 @@ RUN pip install -r requirements.txt
 
 ##CMD ["uwsgi", "--ini", "/uwsgi.ini"]
 ##CMD ["uwsgi", "--check-static", "/static"]
-CMD python manage.py makemigrations schedules;python manage.py makemigrations discussions; python manage.py migrate; gunicorn classmo.wsgi -b 0.0.0.0:8000
+##CMD python manage.py makemigrations schedules;python manage.py makemigrations discussions; python manage.py migrate; gunicorn classmo.wsgi -b 0.0.0.0:8000
+CMD python manage.py makemigrations; python manage.py migrate; gunicorn classmo.wsgi -b 0.0.0.0:8000
