@@ -46,6 +46,7 @@ sftp-config.json
 # Private #
 ###########
 settings.py
+settings_v2.py
 
 # Django stuff #
 ################
