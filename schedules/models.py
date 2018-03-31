@@ -107,17 +107,23 @@ class Session(BaseModel):
 
     @classmethod
     def order_by_upcoming(self,list):
-        today=datetime.now().weekday()
-        print("todays day= ",today)
+        today=(datetime.now().weekday())-1
         today_time=datetime.now()
         h=(today_time.hour+today_time.minute/60)/24
+        today+=h
         print("hours converted to days ",h)
+        print("todays day= ",today)
         ordered_sessions=[]
         times_list={}
         for session in list:
-            day=session.start_date.weekday()
-            order=(today+day-1) ## this is the number of days between today and the session
+            day=(session.start_date.weekday())-1
             day_hour=(session.start_date.hour+session.start_date.minute/60)/24
+            day+=day_hour
+            order=(day-today)
+            if order < 0: 
+                order+=6 
+            ## this is the number of days between today and the session
+            
             order+=day_hour
             times_list[order]=session
         times_list=OrderedDict(sorted(times_list.items(),key=itemgetter(0)))

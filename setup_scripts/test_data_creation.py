@@ -5,6 +5,7 @@ from django.conf import settings
 
 from schedules.models import Subject, Location, Session, Profile
 from setup_scripts.test_data import data
+from setup_scripts.create_disc_demo import create_demo
 
 from datetime import datetime, timedelta
 
@@ -83,8 +84,8 @@ def create_instructors(data, settings, User, Group, Profile):
             instructor_entity.save()
 
             # adding instructor to instructor group
-            student_group = Group.objects.get(name=settings.GROUPS["INSTRUCTORS"]) 
-            student_group.user_set.add(instructor_entity)
+            instructor_group = Group.objects.get(name=settings.GROUPS["INSTRUCTORS"]) 
+            instructor_group.user_set.add(instructor_entity)
 
     print("Instructor data loaded to db")
 
@@ -120,7 +121,21 @@ def create_sessions(data, settings, timezone, timedelta, Subject, Session, Locat
                 )
                 session_entity.save()
 
-    print("Loading data loaded to db")
+    print("Session data loaded to db")
+
+def create_forums(settings, create_demo, Subject, User):
+    """Creatin discussion data
+    """
+    print("Loading forum data to db")
+    # retrieving all subjects
+    subjects = Subject.fetch_all()
+    # retrieving all instructor
+    instructors = User.objects.filter(groups__name=settings.GROUPS["INSTRUCTORS"])
+    instructors = [ins for ins in instructors]
+    # calling Mike's super long function
+    create_demo(subjects, instructors)
+
+    print("Forum data loaded to db")
 
 # initializing subject data
 create_subjects(data, Subject)
@@ -130,5 +145,7 @@ create_locations(data, Location)
 create_instructors(data, settings, User, Group, Profile)
 # initializing session data
 create_sessions(data, settings, timezone, timedelta, Subject,Session,Location, User)
+# initializing forum data
+create_forums(settings, create_demo, Subject, User)
 
 exit()

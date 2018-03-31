@@ -251,7 +251,7 @@ function unfade(element) {
         }
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op += op * 0.1;
+        op += op * 0.2;
     }, 50);
 }
 function unfadefast(element) {
@@ -360,7 +360,7 @@ console.log("Centered");
                         <span style='color:white; font-size: 20px'>Signup</span>
                       </a>
                     <br>
-                    <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
+                    <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'schedules:account' %}" class="btn btn-primary blue-background signup-button">
                         <span style="color:white; font-size: 20px">Already a member?</span> 
                     </a>
                 </div>
@@ -379,10 +379,10 @@ console.log("Centered");
    <script>
   $(window).on('load', function () {
     centercard();
-    $("#cover").fadeOut(3000);
+    $("#cover").fadeOut(1000);
     unfadefast(card);
-   setTimeout(unfade(footer),50000);
-   setTimeout(unfade(header),50000);
+   setTimeout(unfade(footer),9000);
+   setTimeout(unfade(header),9000);
 
  });
     
