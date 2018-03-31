@@ -121,14 +121,14 @@ def create_demo(subjects, instructors):
 
         # Responses to comm1
         author = random.choice(users)
-        comm3 = Comment.create(post=post,
+        comm3 = Comment.create(parent=comm1,
                                body=random.choice(comment_content),
                                author=author)
         comm3.save()
         Vote.create(voter=author, value=1, comment=comm3)
 
         author = random.choice(users)
-        comm4 = Comment.create(post=post,
+        comm4 = Comment.create(parent=comm1,
                                body=random.choice(comment_content),
                                author=author)
         comm4.save()
@@ -136,14 +136,14 @@ def create_demo(subjects, instructors):
 
         # Responses to comm2
         author = random.choice(users)
-        comm5 = Comment.create(post=post,
+        comm5 = Comment.create(parent=comm2,
                                body=random.choice(comment_content),
                                author=author)
         comm5.save()
         Vote.create(voter=author, value=1, comment=comm5)
 
         author = random.choice(users)
-        comm6 = Comment.create(post=post,
+        comm6 = Comment.create(parent=comm2,
                                body=random.choice(comment_content),
                                author=author)
         comm6.save()
@@ -151,7 +151,7 @@ def create_demo(subjects, instructors):
 
         # Response to comm3
         author = random.choice(users)
-        comm7 = Comment.create(post=post,
+        comm7 = Comment.create(parent=comm3,
                                body=random.choice(comment_content),
                                author=author)
         comm7.save()
@@ -159,7 +159,7 @@ def create_demo(subjects, instructors):
 
         # Response to comm4
         author = random.choice(users)
-        comm8 = Comment.create(post=post,
+        comm8 = Comment.create(parent=comm4,
                                body=random.choice(comment_content),
                                author=author)
         comm8.save()
@@ -167,7 +167,7 @@ def create_demo(subjects, instructors):
 
         # Response to comm5
         author = random.choice(users)
-        comm9 = Comment.create(post=post,
+        comm9 = Comment.create(parent=comm5,
                                body=random.choice(comment_content),
                                author=author)
         comm9.save()
@@ -175,7 +175,7 @@ def create_demo(subjects, instructors):
 
         # Response to comm6
         author = random.choice(users)
-        comm10 = Comment.create(post=post,
+        comm10 = Comment.create(parent=comm6,
                                 body=random.choice(comment_content),
                                 author=author)
         comm10.save()
