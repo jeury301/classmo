@@ -107,8 +107,8 @@ def user_registration(request):
             if check is not None:
                 login(request,user)
                 messages.add_message(request, messages.SUCCESS, 
-                '<strong>Congrats!</strong> your account '
-                'have been successfully created.', 
+                '<strong>Congrats!</strong> Your account '
+                'has been successfully created.', 
                 extra_tags='safe')
 
                 # adding user to the student group
@@ -145,8 +145,7 @@ def user_profile(request):
                 **form.cleaned_data)
             if is_updated:
                 messages.add_message(request, messages.SUCCESS, 
-                '<strong>Congrats!</strong> your profile '
-                'have been successfully update!', extra_tags='safe')
+                'Your profile has been successfully updatd', extra_tags='safe')
                 return redirect('schedules:profile')
             else:
                 return HttpResponse("Something terrible happened")
@@ -202,13 +201,12 @@ def user_account(request):
 
                 # user has been authenticated, update it!
                 messages.add_message(request, messages.SUCCESS, 
-                '<strong>Congrats!</strong> your account '
-                'have been successfully update!', extra_tags='safe')
+                'Your account has been successfully updated', extra_tags='safe')
                 return redirect('schedules:account')
             else:
                 # user could not be authenticated
                 messages.add_message(request, messages.ERROR, 
-                '<strong>Error!</strong> your account '
+                '<strong>Error:</strong> Your account '
                 'could not be authentitaced!', extra_tags='safe')
                 messages.add_message(request, messages.ERROR, 
                 'To reset your password go to '

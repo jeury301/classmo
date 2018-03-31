@@ -13,7 +13,7 @@
     {% else %}
         <p>There are currently no registrations</p>
     {% endif %}
-    <p>Register for this section</p>
+    <p>Register for this session</p>
     <form action="{% url 'schedules:registration' session.id %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="user_id" value="{{user.id}}">

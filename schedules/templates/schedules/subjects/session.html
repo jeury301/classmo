@@ -29,7 +29,7 @@
                     </div>
                     {%else%}
                     <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
-                        <h2 class="card-title">Register for this section</h2>
+                        <h2 class="card-title">Register for this session</h2>
                         <div style="padding: 10px;">
                             <form action="{% url 'schedules:registration' session.id %}" method="post">
                                 {% csrf_token %}

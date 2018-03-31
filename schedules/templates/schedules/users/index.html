@@ -1,12 +1,12 @@
- {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %}{% load date_checker %} {% if user.is_authenticated %} {% load static %} 
+ {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %}{% load date_checker %} {% if user.is_authenticated %} {% load static %}
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
     <h1 class="gravatar-header">
-                <span><img src="{{user.email|gravatar_url:150}}" class="gravatar-med"></span>Hello 
+                <span><img src="{{user.email|gravatar_url:150}}" class="gravatar-med"></span>Hello
                 {%if user.first_name%}
-                    {{user.first_name}} {{user.last_name}}
+                    {{user.first_name}}
                 {%else%}
-                    {{user.username}}, 
+                    {{user.username}}
                 {%endif%}
             </h1>
     <div id="content-main" style="">
@@ -40,7 +40,7 @@
                     <div class="col-md-8">
                         <ul style="padding-right:40px;">
                             <li style="padding-top:0;"><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
-                            {% if reg.session.subject.description|length < 500 %}           
+                            {% if reg.session.subject.description|length < 500 %}
                             <li>{{reg.session.subject.description}}</li>
                             {% else %}
                             <li>{{reg.session.subject.description|slice:"0:500"}}...</li>
