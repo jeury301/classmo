@@ -13,10 +13,14 @@
             {{ form.as_table }}
         </table>
         <br>
-        <div class="submit-row">
-            <label>&nbsp;</label><input type="submit" value="{% trans 'Register' %}" />
+        <div>
+            <input type="submit" value="{% trans 'Register' %}" style="display:block;width:100%; font-size: 20px"/>
         </div>    
     </form>
-    <p> Already a user? <a href="{% url 'login' %}">Login</a></p>
+    <div style="padding-top: 20px; text-align: center;">
+        <span style="text-align: center;">
+            Already a user? <a href="{% url 'login' %}"><strong>Login here</strong></a>
+        </span>
+    </div>
 </div>
 {% endblock %}

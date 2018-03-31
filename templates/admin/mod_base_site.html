@@ -3,7 +3,11 @@
 {% block title %}{{ title }} | {{ site_title|default:_('Classmo') }}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'schedules:index' %}">{{ site_header|default:_('Classmo Login') }}</a></h1>
+<h1 id="site-name" style="color: #F5DD5C;">
+    <a href="{% url 'schedules:index' %}" style="color: #F5DD5C;">
+        {{ site_header|default:_('Classmo Login') }}
+    </a>
+</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

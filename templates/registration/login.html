@@ -38,12 +38,19 @@
                 <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
             </div>
         {% endif %}
-        <div class="password-reset-link">
-            {% trans "Don't have an account?" %} <a href="{% url 'schedules:register' %}">Register here!</a>
+        <div>
+            <small>&nbsp;</small>
         </div>
-        <div class="submit-row">
-            <label>&nbsp;</label><input type="submit" value="{% trans 'Log in' %}" />
+        <div>
+            <input type="submit" value="{% trans 'Log in' %}" style="display:block;width:100%; font-size: 20px;"/>
         </div>
     </form>
+    <div style="padding-top: 20px; text-align: center;">
+        <span style="text-align: center;">
+            {% trans "Don't have an account?" %} <a href="{% url 'schedules:register' %}">
+                <strong>Register here!</strong>
+            </a>
+        </span>
+    </div>
 </div>
 {% endblock %}
