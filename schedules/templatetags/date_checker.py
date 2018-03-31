@@ -23,11 +23,13 @@ def get_time_from_now(Session_pk):
 	if order < 0: 
 		order+=7
 	day_return=int(order)
-	hours=abs((day_hour-h)-4)
+	hours=(day_hour-h)-4
+	if hours < 0:
+		day_return=6
+		hours=24-abs(hours)
+
 	hours=round(hours,0)
-	
-	
-	hours = str(hours)[0]
+	hours = str(int(hours))
 	if day_return==0:
 		return "In {hours} hours".format(hours=hours)
 	else:

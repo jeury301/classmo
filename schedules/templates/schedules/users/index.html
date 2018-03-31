@@ -26,23 +26,29 @@
                 {% if request.user|has_group:"Students" %}
                 <!-- Student start -->
                 {% if registrations %} {% for reg in registrations %}
-                <div class="card" style="">
-                    <div class="card-header" style=""><h1 style="display:inline;">{{reg.session.name}}:</h1> <strong>{{ reg.session.pk|get_time_from_now }}</strong></div>
+                <div class="card">
+                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.session.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.session.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                         <ul>
-                            <li>Location: {{reg.session.location}}</li>
-                            <li>Instructor: {{reg.session.instructor}}</li>
-                            <li>{{ reg.session.pk|get_day_of_week }}</li>
+                            <li><strong>Location:</strong> {{reg.session.location}}</li>
+                            <li><strong>Instructor:</strong> {{reg.session.instructor}}</li>
+                            <li><strong>Date:</strong> {{ reg.session.pk|get_day_of_week }}</li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
-                        <ul>
-                            <li><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li><li>{{reg.session.subject.description}}</li>
+                    <div class="col-md-8">
+                        <ul style="padding-right:40px;">
+                            <li style="padding-top:0;"><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
+                            {% if reg.session.subject.description|length < 500 %}           
+                            <li>{{reg.session.subject.description}}</li>
+                            {% else %}
+                            <li>{{reg.session.subject.description|slice:"0:500"}}...</li>
+                            {% endif %}
                         </ul>
                     </div>
                         </div>
+                        <br>
                         <a class="btn btn-primary button" href="{% url 'schedules:session' reg.session.id %}" role="button"><Span style="color:white;">View Details</Span></a>
                     </div>
                 </div>
@@ -59,23 +65,29 @@
                 {% for reg in registrations %}
 
                 <div class="card" style="">
-                    <div class="card-header" style=""><h1 style="display:inline;">{{reg.name}}:</h1><strong style="float:right">{{ reg.pk|get_time_from_now }}</strong></div>
+                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                         <ul>
-                            <li>Location: {{reg.location}}</li>
-                            <li>Instructor: {{reg.instructor}}</li>
-                            <li>Capacity: {{reg.registered_students}}/{{reg.max_capacity}}</li>
-                            <li>{{ reg.pk|get_day_of_week }}</li>
+                            <li><strong>Location:</strong> {{reg.location}}</li>
+                            <li><strong>Instructor:</strong> {{reg.instructor}}</li>
+                            <li><strong>Capacity:</strong> {{reg.registered_students}}/{{reg.max_capacity}}</li>
+                            <li><strong>Date:</strong> {{ reg.pk|get_day_of_week }}</li>
                         </ul>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <ul>
-                            <li><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li><li>{{reg.subject.description}}</li>
+                            <li><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
+                             {% if reg.subject.description|length < 500 %}
+                            <li>{{reg.subject.description}}</li>
+                            {% else %}
+                            <li>{{reg.subject.description|slice:"0:500"}}...</li>
+                            {% endif %}
                         </ul>
                     </div>
                         </div>
+                        <br>
                         <a class="btn btn-primary button" href="{% url 'schedules:session' reg.id %}" role="button"><Span style="color:white;">View Details</Span></a>
                     </div>
                 </div>
