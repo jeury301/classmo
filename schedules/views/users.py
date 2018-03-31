@@ -112,8 +112,8 @@ def user_registration(request):
                 extra_tags='safe')
 
                 # adding user to the student group
-                stduent_group = Group.objects.get(name=settings.GROUPS["STUDENTS"]) 
-                stduent_group.user_set.add(user)
+                student_group = Group.objects.get(name=settings.GROUPS["STUDENTS"]) 
+                student_group.user_set.add(user)
 
                 # redirect to a prfile
                 return redirect('schedules:index')

@@ -223,7 +223,7 @@ class Comment(BaseComment):
         in reply to a post)
 
         rel_depth is the difference between the absolute depth
-        of the instant element in the and list the previous
+        of the instant element in the list and the previous
         indent. This is used when determining the indentation
         level of a commment when rendering a template.
 
