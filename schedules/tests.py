@@ -7,15 +7,20 @@ import datetime
 def create_shit():
     my_list = []
     time = timezone.now() + datetime.timedelta(days=30)
-    test_user=User.objects.create_user("Joe","poop@aol.com","fook").save()
+    test_user=User.objects.create_user("Joe","poop@aol.com","fook")
+    test_user = test_user.save()
     my_list.append(test_user)
-    test_user2=User.objects.create_user("Joe2","poop22@aol.com","fook22").save()
+    test_user2=User.objects.create_user("Joe2","poop22@aol.com","fook22")
+    test_user2 = test_user2.save()
     my_list.append(test_user2)
-    test_instructor=User.objects.create_user('Steve','poopy2@aol.com',"fook2").save()
+    test_instructor=User.objects.create_user('Steve','poopy2@aol.com',"fook2")
+    test_instructor=test_instructor.save()
     my_list.append(test_instructor)
-    test_subject=Subject(name='Math',description="Math sucks").save()
+    test_subject=Subject(name='Math',description="Math sucks")
+    test_subject=test_subject.save()
     my_list.append(test_subject)
-    test_location=Location(name="New Jersey").save()
+    test_location=Location(name="New Jersey")
+    test_location=test_location.save()
     my_list.append(test_location)
     test_session=Session(
         subject=test_subject,
@@ -24,9 +29,11 @@ def create_shit():
         name="test sesh",
         start_date=timezone.now(),
         end_date=timezone.now()
-    ).save()
+    )
+    test_session=test_session.save()
     my_list.append(test_session)
-    test_registration=Registration(session=test_session,user=test_user).save()
+    test_registration=Registration(session=test_session,user=test_user)
+    test_registration=test_registration.save()
     my_list.append(test_registration)
     return {'test_user':test_user,'test_user2':test_user2,'test_instructor':test_instructor,
     'test_subject':test_subject,'test_location':test_location,'test_registration':test_registration,
