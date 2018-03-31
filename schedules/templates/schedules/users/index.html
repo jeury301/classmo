@@ -27,7 +27,7 @@
                 <!-- Student start -->
                 {% if registrations %} {% for reg in registrations %}
                 <div class="card">
-                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.session.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.session.pk|get_time_from_now }}</strong></div>
+                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.session.subject.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.session.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -65,7 +65,7 @@
                 {% for reg in registrations %}
 
                 <div class="card" style="">
-                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
+                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
