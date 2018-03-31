@@ -3,7 +3,7 @@ import random
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 
-from .models import Comment, Post, Vote
+from discussions.models import Comment, Post, Vote
 
 
 def create_demo(subjects, instructors):
