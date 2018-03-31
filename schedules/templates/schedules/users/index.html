@@ -27,7 +27,7 @@
                 <!-- Student start -->
                 {% if registrations %} {% for reg in registrations %}
                 <div class="card">
-                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.session.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.session.pk|get_time_from_now }}</strong></div>
+                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.session.subject.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.session.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -65,7 +65,7 @@
                 {% for reg in registrations %}
 
                 <div class="card" style="">
-                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
+                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -110,9 +110,7 @@
                         <br>
                     </div>
                     <!--end teacher -->
-                    <div class="col-md-1" style="" ;>
-                    </div>
-                    <div class="col-md-3" style="">
+                    <div class="col-md-4" style="">
                         <div class="module filtered">
                             <div id="changelist-filter" style="width: 100%">
                                 {% if is_student %}
@@ -135,12 +133,12 @@
                                     <h3 style="display:inline-block;padding-right:.2rem">{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
                                     <div class="post-listing" style="padding-left:15px;">
                                         {% if post.body > 15 %}
-                                        <span>{{post.body|slice:"0:20"}}</span> {% else %}
-                                        <span>{{post.body}}</span> {% endif %}
+                                        <span style="padding-right:15px;">{{post.body|slice:"0:20"}}</span> {% else %}
+                                        <span style="padding-right:15px;">{{post.body}}</span> {% endif %}
                                         <a style="float:right;margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right"></i></a></div>
                                 </div>
                                 {% endfor %} {% else %}
-                                <Span style="padding-left:15px">Looks like nothing is here for you</Span> {% endif %}
+                                <Span style="padding-left:15px;padding-right:15px;">Looks like nothing is here for you</Span> {% endif %}
                             </div>
                         </div>
                     </div>
