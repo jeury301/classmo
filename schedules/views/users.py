@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
@@ -107,11 +108,15 @@ def user_registration(request):
                 login(request,user)
                 messages.add_message(request, messages.SUCCESS, 
                 '<strong>Congrats!</strong> your account '
-                'have been successfully created. Complete your profile!', 
+                'have been successfully created.', 
                 extra_tags='safe')
 
+                # adding user to the student group
+                student_group = Group.objects.get(name=settings.GROUPS["STUDENTS"]) 
+                student_group.user_set.add(user)
+
                 # redirect to a prfile
-                return redirect('schedules:profile')
+                return redirect('schedules:index')
             else:
                 return HttpResponse("Something terrible happened")
 
@@ -194,6 +199,7 @@ def user_account(request):
                 # user has been authenticated
                 is_updated = Profile.update_account(request.user, 
                 **form.cleaned_data)
+
                 # user has been authenticated, update it!
                 messages.add_message(request, messages.SUCCESS, 
                 '<strong>Congrats!</strong> your account '

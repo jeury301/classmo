@@ -31,10 +31,19 @@ class Subject(BaseModel):
     system supports
     """
     name = models.CharField(max_length=200)
-    description = models.CharField(max_length=200, default="")
+    description = models.CharField(max_length=1000, default="")
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def fetch_all(cls):
+        """Fetches list of objects
+        """
+        final_fetch = []
+        for d_object in cls.objects.all():
+            final_fetch.append(d_object)
+        return final_fetch
 
 
 class Location(BaseModel):
@@ -52,6 +61,14 @@ class Location(BaseModel):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def fetch_all(cls):
+        """Fetches list of objects
+        """
+        final_fetch = []
+        for d_object in cls.objects.all():
+            final_fetch.append(d_object)
+        return final_fetch
 
 class Session(BaseModel):
     """Session is the main entity for the scheduling app, which creates a rela-
@@ -79,6 +96,14 @@ class Session(BaseModel):
         else:
             return False
 
+    @classmethod
+    def fetch_all(cls):
+        """Fetches list of objects
+        """
+        final_fetch = []
+        for d_object in cls.objects.all():
+            final_fetch.append(d_object)
+        return final_fetch
 
     @classmethod
     def order_by_upcoming(self,list):
@@ -103,8 +128,6 @@ class Session(BaseModel):
             times_list[order]=session
         times_list=OrderedDict(sorted(times_list.items(),key=itemgetter(0)))
         print(times_list)
-
-
 
         for key, value in times_list.items():
             ordered_sessions.append(value)
@@ -211,7 +234,16 @@ class Registration(BaseModel):
             # session is full
             violations.append(1)
         return bool(violations)
-        
+    
+    @classmethod
+    def fetch_all(cls):
+        """Fetches list of objects
+        """
+        final_fetch = []
+        for d_object in cls.objects.all():
+            final_fetch.append(d_object)
+        return final_fetch
+
     @classmethod    
     def student_registrations(cls,student):
         """Returns list of registrations for given students
@@ -300,7 +332,14 @@ class Profile(models.Model):
         user.save()
         return True
 
-
+    @classmethod
+    def fetch_all(cls):
+        """Fetches list of objects
+        """
+        final_fetch = []
+        for d_object in cls.objects.all():
+            final_fetch.append(d_object)
+        return final_fetch
         
 
 

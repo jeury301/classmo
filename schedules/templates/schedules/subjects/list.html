@@ -15,7 +15,7 @@
                 <p>Here you can view and manage your courses, as well as all open courses.</p>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     {%for course in courses%}
                     <div class="card" id="changelist">
                         <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
@@ -34,10 +34,10 @@
                         </div>
                     </div>
                     <br/>
-                    {% if not forloop.counter|divisibleby:2%}
-                        </div><div class="col-md-6">
+                    {% if not forloop.counter|divisibleby:1%}
+                        </div><div class="col-md-12">
                     {% else %}
-                        </div></div><div class="row"><div class="col-md-6">
+                        </div></div><div class="row"><div class="col-md-12">
                     {%endif%} 
                 {%endfor%}
                 </div>

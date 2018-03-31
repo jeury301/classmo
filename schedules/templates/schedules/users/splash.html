@@ -63,6 +63,30 @@ z-index:1;
   z-index:2;
 }
 
+.signup-button {
+  color: #417690;
+  background-color: #417690;
+  border-color: #417690;
+}
+
+.signup-button:hover {
+  color: #79aec8;
+  background-color: #79aec8;
+  border-color: #79aec8;
+}
+
+.signup-button:active {
+  color: #79aec8;
+  background-color: #79aec8;
+  border-color: #79aec8;
+}
+
+.signup-button:target {
+  color: #79aec8;
+  background-color: #79aec8;
+  border-color: #79aec8;
+}
+
 #cover h1
 {
   display:block;
@@ -81,29 +105,51 @@ z-index:1;
 
 #card
 {
-width:18rem;
-height:13rem;
-margin-top:-15rem;
-z-index:1;
-position: absolute;
-opacity:0;
+  width:23rem;
+  height:16rem;
+  margin-top:-15rem;
+  z-index:1;
+  position: absolute;
+  opacity:0;
+  background: transparent;
+  color:white;
+  margin-top: 0px
+  padding-to;: 0px;
+  border: none;
 }
 
-#card-header
+#card h1 {
+  color:white;
+  font-size: 40px;
+  font-weight: bolder;
+  padding-bottom: 25px
+}
+
+#card-header-classmo
 {
-  background-color:#417690;
+  background-color:transparent;
  /* border:1px #f5dd5d solid;*/
   color:white;
+  border-color: transparent;
+  text-align:center;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#card-header-classmo h1
+{
+  color:white;
+  font-size: 70px;
+  font-weight: bolder;
+  margin-bottom: 0px
+  padding-bottom: 0px;
 }
 
 #container {
-height:93vh;
-background-color:#417690;
-/*background-image: url({% static 'images/library2.jpg' %});
-background-size: 100% 100%;
-*/
-
+  height:93vh;
+  background-color:#417690;
 }
+
 #cf {
   position:relative;
   width:100%;
@@ -132,6 +178,7 @@ font-size:.5rem;
   position:absolute;
   height:100%;
   width:100%;
+  object-fit: cover;
   left:0;
   /*
   -webkit-transition: opacity 1s ease-in-out;
@@ -187,6 +234,10 @@ font-size:.5rem;
 }
 #cf span:nth-of-type(3) {
   animation-delay: 0s;
+}
+
+#classmo-logo-big {
+  color:white;
 }
 
 </style>
@@ -282,27 +333,36 @@ console.log("Centered");
                 </div>
             </div>
             <div id="cf">
-                <img src="{% static 'images/lib4.jpg' %}"/>
+                <img src="{% static 'images/splash_background1.jpg' %}"/>
                 <span>"Photo by Emgonzalez License: Public Domain"</span>
-                <img src="{% static 'images/library2.jpg' %}" />
+                <img src="{% static 'images/splash_background2.jpg' %}" />
                 <span>"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"</span>
-                <img src="{% static 'images/library.jpg' %}" />
+                <img src="{% static 'images/splash_background3.jpg' %}" />
                 <span>"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"</span>
             </div>
             <!-- END Header -->
             <!-- Content -->
             <!-- Card -->
             <div id="card" class="card" >
-                <div class="card-header" id="card-header">
-                    Welcome to Classmo
+                <div class="card-header" id="card-header-classmo">
+                  <span id="classmo-logo-big">
+                    <h1>
+                      Classmo
+                    </h1>
+                  </span>
                 </div>
-                <div class="card-body">
-                    <h5 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Get ready to succeed</h5>
-                    <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center; margin-top: 10px" class="card-text">Organize, schedule, meet, achieve</p>
+                <div class="card-body" style="margin-top: 0px; padding-top: 0px">
+<!--                     <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Get ready to succeed</h1> -->
+                    <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Organize. Connect. Achieve.</h1>
+<!--                     <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center; margin-top: 0px" class="card-text">Organize, schedule, meet, achieve</p>
+                    <br> -->
+                    <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
+                        <span style='color:white; font-size: 20px'>Signup</span>
+                      </a>
                     <br>
-                    <a style="display:block;width:45%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background"><span style='color:white;'>Signup</span></a>
-                    <br>
-                    <a style="display:block;text-align:center" href="{% url 'login' %}"><span>Already a member?</span> </a>
+                    <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
+                        <span style="color:white; font-size: 20px">Already a member?</span> 
+                    </a>
                 </div>
             </div>
             <!--end card -->
@@ -310,9 +370,9 @@ console.log("Centered");
             <!-- END Container -->
         
     <div id="footer">
-        <p style="margin-left:20px;">About Us</p>
-        <p style="margin-left:100px;">Contact</p>
-        <p style="margin-left:100px">Legal Info</p>
+        <p style="margin-left:20px;">About</p>
+        <p style="margin-left:100px;">Get Classmo</p>
+        <p style="margin-left:100px">Legal</p>
     </div>
    
     <!--end cover -->
