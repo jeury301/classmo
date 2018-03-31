@@ -251,7 +251,7 @@ function unfade(element) {
         }
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op += op * 0.1;
+        op += op * 0.2;
     }, 50);
 }
 function unfadefast(element) {
@@ -379,10 +379,10 @@ console.log("Centered");
    <script>
   $(window).on('load', function () {
     centercard();
-    $("#cover").fadeOut(3000);
+    $("#cover").fadeOut(1000);
     unfadefast(card);
-   setTimeout(unfade(footer),50000);
-   setTimeout(unfade(header),50000);
+   setTimeout(unfade(footer),9000);
+   setTimeout(unfade(header),9000);
 
  });
     

@@ -1,4 +1,4 @@
- {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %} {% if user.is_authenticated %} {% load static %} 
+ {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %}{% load date_checker %} {% if user.is_authenticated %} {% load static %} 
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
     <h1 class="gravatar-header">
@@ -13,9 +13,9 @@
         <div class="row" style="">
             <!-- Row 1 Start -->
             <div class="col-md-12">
-                {% if is_student %}
+                {% if is_student and registrations %}
             <h1><strong>My registered Sections</strong></h1>
-            {% elif is_instructor %}
+            {% elif is_instructor  and registrations %}
             <h1><strong>My Teaching Sections</strong></h1>
             {% endif %}
         </div>
@@ -26,44 +26,79 @@
                 {% if request.user|has_group:"Students" %}
                 <!-- Student start -->
                 {% if registrations %} {% for reg in registrations %}
-                <div class="card" style="">
-                    <div class="card-header" style="">{{reg.session.name}}</div>
+                <div class="card">
+                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.session.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.session.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
                         <ul>
-                            <li>Location: {{reg.session.location}}</li>
-                            <li>Instructor: {{reg.session.instructor}}</li>
-                            <li>Capacity: {{reg.session.registered_students}}/{{reg.session.max_capacity}}</li>
+                            <li><strong>Location:</strong> {{reg.session.location}}</li>
+                            <li><strong>Instructor:</strong> {{reg.session.instructor}}</li>
+                            <li><strong>Date:</strong> {{ reg.session.pk|get_day_of_week }}</li>
                         </ul>
-                        <a class="btn btn-primary button" href="{% url 'schedules:session' reg.session.id %}" role="button"><Span style="color:white;">Go to Page</Span></a>
+                    </div>
+                    <div class="col-md-8">
+                        <ul style="padding-right:40px;">
+                            <li style="padding-top:0;"><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
+                            {% if reg.session.subject.description|length < 500 %}           
+                            <li>{{reg.session.subject.description}}</li>
+                            {% else %}
+                            <li>{{reg.session.subject.description|slice:"0:500"}}...</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                        </div>
+                        <br>
+                        <a class="btn btn-primary button" href="{% url 'schedules:session' reg.session.id %}" role="button"><Span style="color:white;">View Details</Span></a>
                     </div>
                 </div>
                 <br> {% endfor %} {% else %}
                 <!-- No sessions-->
-                <div class="card" style="">
-                    <div class="card-header" style="">Looks like nothing is here</div>
-                    <div class="card-body">
-                        <a style="float:left" class="btn btn-primary button" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Why not register?</Span></a>
-                    </div>
+                <div class="jumbotron">
+    <h1 class="display-4">Welcome to Classmo</h1>
+                <p class="lead">Organize, schedule, meet, achieve</p>
+            <!-- <hr class="my-4">-->
+            <p class="lead">Classmo is the place to succeed, click below to get registered!</p><br>
+                 <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Let's Get Started!</Span></a>
                 </div>
                 {% endif %} {% elif is_instructor %} {% if registrations %}
                 {% for reg in registrations %}
+
                 <div class="card" style="">
-                    <div class="card-header" style="">{{reg.name}}</div>
+                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
                         <ul>
-                            <li>Location: {{reg.location}}</li>
-                            <li>Instructor: {{reg.instructor}}</li>
-                            <li>Capacity: {{reg.registered_students}}/{{reg.max_capacity}}</li>
+                            <li><strong>Location:</strong> {{reg.location}}</li>
+                            <li><strong>Instructor:</strong> {{reg.instructor}}</li>
+                            <li><strong>Capacity:</strong> {{reg.registered_students}}/{{reg.max_capacity}}</li>
+                            <li><strong>Date:</strong> {{ reg.pk|get_day_of_week }}</li>
                         </ul>
-                        <a class="btn btn-primary button" href="{% url 'schedules:session' reg.id %}" role="button"><Span style="color:white;">Go to Page</Span></a>
+                    </div>
+                    <div class="col-md-8">
+                        <ul>
+                            <li><h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
+                             {% if reg.subject.description|length < 500 %}
+                            <li>{{reg.subject.description}}</li>
+                            {% else %}
+                            <li>{{reg.subject.description|slice:"0:500"}}...</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                        </div>
+                        <br>
+                        <a class="btn btn-primary button" href="{% url 'schedules:session' reg.id %}" role="button"><Span style="color:white;">View Details</Span></a>
                     </div>
                 </div>
                 <br> {% endfor %} {% else %}
-                <div class="card" style="">
-                    <div class="card-header" style="">Looks like nothing is here</div>
-                    <div class="card-body">
-                        <a style="float:left" class="btn btn-primary button" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Why not register?</Span></a>
-                    </div>
+                 <div class="jumbotron">
+    <h1 class="display-4">Welcome to Classmo</h1>
+                <p class="lead">Organize, schedule, meet, achieve</p>
+            <!-- <hr class="my-4">-->
+            <p class="lead">Hello instructor, looks like you're not assigned to any sessions, click to browse available sessions</p><br>
+                 <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Browse</Span></a>
+                </div>
                     {% endif %} {% else %}
                     <div class="card" style="">
                         <div class="card-header" style="">You don't have a role</div>
