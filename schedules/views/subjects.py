@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
-
 from schedules.models import Subject, Session, Registration
 from schedules.services import portal_tools
 from schedules.services.portal_tools import instructors_only, students_only
@@ -21,12 +20,20 @@ def subjects(request, request_type):
     my_courses = ""
     all_courses = ""
     
+    # check type of request
     if request_type == "all":
+        # activating view for all subjects
         all_courses = "active-link-blue"
         subjects = Subject.objects.all()
     else:
+        # activating view for user csubjects
         my_courses = "active-link-blue"
         subjects = Registration.subjects_for_student(user.id)
+
+        # checking if user has no subjects
+        if not bool(subjects):
+            # redirecting to all subjects
+            return redirect("schedules:subjects", "all")
 
     context = {
         "courses": subjects,
@@ -72,7 +79,12 @@ def sessions(request, subject_id, request_type):
         else:
             my_sessions = "active-link-blue"
             sessions = Session.my_sessions(subject_id, student.id)
-        
+            
+            # checking if user has no sessions
+            if not bool(sessions):
+                # redirecting to all subjects
+                return redirect("schedules:sessions", subject_id, "all")
+
         context = {
             "sessions":sessions,
             "subject":subject,
