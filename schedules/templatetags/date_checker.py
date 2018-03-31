@@ -2,7 +2,6 @@ from django import template
 from schedules.models import Session 
 from datetime import datetime, timedelta, timezone
 import calendar
-from dateutil import tz
 
 register = template.Library() 
 
