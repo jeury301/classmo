@@ -132,7 +132,7 @@ def create_forums(settings, Subject, User):
     # retrieving all instructor
     instructors = User.objects.filter(groups__name=settings.GROUPS["INSTRUCTORS"])
     instructors = [ins for ins in instructors]
-    print(instructors)
+    #print(instructors)
     print("Forum data loaded to db")
 
 # initializing subject data
