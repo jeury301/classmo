@@ -133,12 +133,12 @@
                                     <h3 style="display:inline-block;padding-right:.2rem">{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
                                     <div class="post-listing" style="padding-left:15px;">
                                         {% if post.body > 15 %}
-                                        <span>{{post.body|slice:"0:20"}}</span> {% else %}
-                                        <span>{{post.body}}</span> {% endif %}
+                                        <span style="padding-right:15px;">{{post.body|slice:"0:20"}}</span> {% else %}
+                                        <span style="padding-right:15px;">{{post.body}}</span> {% endif %}
                                         <a style="float:right;margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right"></i></a></div>
                                 </div>
                                 {% endfor %} {% else %}
-                                <Span style="padding-left:15px">Looks like nothing is here for you</Span> {% endif %}
+                                <Span style="padding-left:15px;padding-right:15px;">Looks like nothing is here for you</Span> {% endif %}
                             </div>
                         </div>
                     </div>
