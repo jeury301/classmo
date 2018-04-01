@@ -111,6 +111,7 @@ def create_sessions(data, settings, timezone, timedelta, Subject, Session, Locat
                 # avoiding duplicate sessions for subject
                 session_check = Session.objects.get(subject=subject, name=sessions[index]['name'])
             except Session.DoesNotExist:
+                start_date = timezone.now() + timedelta(days=randint(1,90))
                 # session with name for subject doesn't exist, lets create it
                 session_entity = Session(
                     subject = subject,
@@ -118,8 +119,8 @@ def create_sessions(data, settings, timezone, timedelta, Subject, Session, Locat
                     instructor = User.objects.get(username=sessions[index]['instructor']),
                     name = sessions[index]['name'],
                     max_capacity = locations[index].max_capacity,
-                    start_date = timezone.now(),
-                    end_date = timezone.now() + timedelta(hours=randint(1, 4))
+                    start_date = start_date,
+                    end_date = start_date + timedelta(hours=randint(1, 4))
                 )
                 session_entity.save()
 

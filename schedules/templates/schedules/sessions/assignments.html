@@ -43,8 +43,8 @@
                         <td>{{session.instructor}}</td>
                         {%endif%}
                         <td>{{session.registered_students}}/{{session.max_capacity}}</td>
-                        <td>{{session.start_date|date}}</td>
-                        <td>{{session.end_date|date}}</td>
+                        <td>{{session.start_date|date}} {{session.start_date|time}}</td>
+                        <td>{{session.end_date|date}} {{session.end_date|time}}</td>
                         <td><input type="button" class="default-button" value="View" OnClick="window.location.href='{%url 'schedules:session' session.pk%}'"/></td>
                         <td><input type="button" class="success-button" value="Students"/ OnClick="window.location.href='{%url 'schedules:session_setudents' session.pk%}'"></td>
                     </tr>
