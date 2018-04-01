@@ -145,7 +145,7 @@ def user_profile(request):
                 **form.cleaned_data)
             if is_updated:
                 messages.add_message(request, messages.SUCCESS, 
-                'Your profile has been successfully updatd', extra_tags='safe')
+                'Your profile has been successfully updated', extra_tags='safe')
                 return redirect('schedules:profile')
             else:
                 return HttpResponse("Something terrible happened")

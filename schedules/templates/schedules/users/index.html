@@ -1,14 +1,21 @@
  {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %}{% load date_checker %} {% if user.is_authenticated %} {% load static %}
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
-    <h1 class="gravatar-header">
-                <span><img src="{{user.email|gravatar_url:150}}" class="gravatar-med"></span>Hello
-                {%if user.first_name%}
-                    {{user.first_name}}
-                {%else%}
-                    {{user.username}}
-                {%endif%}
-            </h1>
+    <h1 class="gravatar-header" style="font-size: 2.0rem;">
+        <div>
+            <span>
+                <img src="{{user.email|gravatar_url:150}}" class="gravatar-med">
+            </span>
+            <span style="vertical-align:middle;">
+            Hello
+            {%if user.first_name%}
+                {{user.first_name}}
+            {%else%}
+                {{user.username}}
+            {%endif%}
+            </span>
+        </div>
+    </h1>
     <div id="content-main" style="">
         <div class="row" style="">
             <!-- Row 1 Start -->
