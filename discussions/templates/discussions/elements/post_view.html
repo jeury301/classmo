@@ -1,0 +1,28 @@
+<!-- This element expects a Post object named post in context -->
+
+{% load gravatar %}
+
+<div class="comment-wrapper">
+    <h3>{{post.title}}</h3>
+    <div>
+        {{post.body}}
+    </div>
+    <div class="comment-metabox">
+        <span>
+            <span class="gravatar-wrap-disc">
+                <img src="{{post.author.email|gravatar_url:150}}" class="gravatar-small">
+            </span>
+            <small>
+                Posted by
+                <strong>
+                {% if post.author %}
+                    {{post.author}}
+                {% else %}
+                    Anonymous
+                {% endif %}
+                </strong>
+                at {{post.created_date}} (Score:{{post.score}}</span>)
+            </small>
+        </span>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+#session-container
+{
+	/*background:linear-gradient(white,#79aec8,#417690);*/
+}
+
+#row2
+{	
+	/*background:linear-gradient(white,#79aec8,#417690);*/
+	background-color:#e9ecef;	
+}
+
+.gravatar-header span
+{
+	padding-right:.5rem;
+}
+
+.glyph-link
+{
+float:right;
+}
+.comment-header
+{
+	background-color:#e9ecef;
+	padding:0;
+	padding-left:1rem;
+	padding-bottom:.5rem;
+}
+.card-header
+{
+	background-color:#e9ecef;
+}
+
+a.button
+{
+	float:right;
+	background-color:#417690;
+	border-color:#417690;
+	padding: 10px 15px;
+}
+
+#changelist-filter ul
+{
+	border-bottom:none;
+}
+

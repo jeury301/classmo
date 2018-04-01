@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{%block content%}
+<div class="container">
+
+     <div class="general-topnav">
+        <small>
+            <a href="{% url 'schedules:assignments' 'mine'%}">
+                < Back to Sessions
+            </a>
+        </small>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron general-top">
+                    <h1>{{session.subject}}:{{session.name}} - Students</h1>
+                    <p>Here you can view all students for this session.</p>
+            </div>
+            <table class="table dt-responsive table-hover" id="session_students">
+                <thead>
+                    <tr>
+                        <th>Registration Date</th>
+                        <th>Student Name</th>
+                        <th>Student Email</th>
+                        {%if is_session_instructor%}
+                        <th>Drop Student</th>
+                        {%endif%}
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for student in students%}
+                    <tr>
+                        <td>{{student.created_date|date}}</td>
+                        {%if student.user.first_name%}
+                        <td>{{student.user.first_name}} {{student.user.last_name}}</td>
+                        {%else%}
+                        <td>{{student.name}}</td>
+                        {%endif%}
+                        {%if student.user.email%}
+                        <td>{{student.user.email}}</td>
+                        {%else%}
+                        <td>N/A</td>
+                        {%endif%}
+                        {%if is_session_instructor %}
+                        <td><input type="button" class="delete-button" value="Drop" data-toggle="modal" data-target="#confirm_student_drop_{{student.id}}"/></td>
+                        <!-- BEGIN: Drop Student Modal -->
+                        {% include "schedules/sessions/elements/drop_student_confirmation.html"%}
+                        <!-- END: Drop Student Model -->
+                        {%endif%}
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#session_students').DataTable({
+    "deferRender": true,
+    "iDisplayLength": 25,
+    "lengthMenu": [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"]
+    ],
+    select: true,
+    "oLanguage": {
+        "sSearch": "Filter Students:"
+    },
+    order: [
+        [0, "asc"]
+    ],
+    dom: "lfr<'row'<'col-sm-6'>>Btip",
+    buttons: [
+        'colvis',
+        {
+            extend: 'excel',
+            text: 'Export to Excel',
+            "oSelectorOpts": {
+                "filter": "applied"
+            }
+        }
+    ]
+});
+</script>
+{% endblock %}

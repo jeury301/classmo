@@ -1,0 +1,94 @@
+/* Styles for discussion app */
+
+/* Div for breadcrumb / backwards link displayed
+ * at the top of all discussion-app pages
+ */
+.discuss-topnav {
+    margin-bottom: 20px;
+}
+
+.top-post {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.top-post-title {
+    margin-bottom: 5px;
+    margin-left: 0px; /* Align with body text */
+}
+
+.post-listing {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #666;
+}
+
+.subject-listing {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #666;
+}
+
+.comment-list-wrapper {
+    margin-left: -10px; /* Match margin inside jumbotron / top-post div */
+}
+
+.comment-wrapper {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.comment-leftbox {
+    float: left;
+    width: 30px;
+}
+
+.post-midbox {
+    float: left;
+    margin-left: 3px;
+    margin-right: 3px;
+    width: 56px;
+}
+
+.comment-rightbox {
+    margin-left: 30px;
+}
+
+.post-rightbox {
+    margin-left: 86px;
+}
+
+.post-rightbox-big {
+    margin-left: 96px;
+}
+
+.comment-metabox {
+    color: #666;
+}
+
+.post-title {
+    margin-top: 0px;
+    margin-bottom: 0px
+}
+
+.comment-votecontrol {
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+}
+
+.highlighted {
+    color: DarkOrange;
+}
+
+/* ul class for hiding bullets when
+ * displaying list of comments
+ */
+.no-bullets {
+  list-style-type: none !important;
+}
+
+ul li {
+  list-style-type: none;
+}

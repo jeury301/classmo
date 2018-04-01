@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    {% if registrations %}
+        <div id="info-container">
+            <div class="card">
+                <div class="card-block" style="padding: 20px;">
+                    <h4 class="card-title">Registered Sessions</h4>
+                    <div style="padding-top: 5px">
+                        <table class="table table-hover">
+                            <thead style="background-color:#e6e6e6">
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Subject</th>
+                                    <th>Instructor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reg in registrations %}
+                                    <tr>
+                                        <th>{{reg.session.location}}</th>
+                                        <th>{{reg.session.subject}}</th>
+                                        <th>{{reg.session.instructor}}
+                                        </th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

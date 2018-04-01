@@ -3,3 +3,109 @@
     padding: 0;
     list-style: none;
 }
+
+.active-link {
+    font-weight: bold;
+}
+
+.active-link-blue {
+    font-weight: bold;
+    color: #447e9b;
+    text-decoration: underline;
+}
+
+.submit-button, .default-button {
+    background: #417690 !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important;
+}
+
+.success-button {
+    background: #5cb85c !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important;
+}
+
+.delete-button {
+    background: #ba2121 !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important; 
+}
+
+.vertical-alignment-helper {
+    display: table !important;
+    height: 100% !important;
+    width: 40% !important;
+    pointer-events: none !important;
+    margin: 0 auto !important;
+
+    /* This makes sure that we can still click outside of the modal to close it */
+}
+
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell !important;
+    vertical-align: middle !important;
+    pointer-events: none !important;
+}
+
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width: inherit !important;
+    height: inherit !important;
+    /* To center horizontally */
+    pointer-events: all !important;
+}
+
+.general-topnav {
+    margin-bottom: 20px !important;
+}
+
+.general-top {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    margin-bottom: 10px !important;
+}
+
+/* Used for displaying Gravatar avatars in top nav */
+
+.gravatar-wrap-small {
+    margin-left: 5px
+}
+
+/* Used in when displaying Gravatars in comments/posts */
+.gravatar-wrap-disc {
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
+
+/* Used in when displaying Gravatars ins post list view */
+.gravatar-med {
+    border-radius: 50%;
+    height: 50px; 
+    width: 50px;
+    margin-top: 7px;
+}
+
+.gravatar-small {
+    border-radius: 50%;
+    height: 30px; 
+    width: 30px;
+}
+
+.gravatar-wrap-med {
+    padding-top: 5px
+    padding-left: 5px
+    padding-right: 5px
+}
+

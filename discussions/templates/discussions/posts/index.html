@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
+<div class="container">
+
+    <div class="discuss-topnav">
+        <small>
+            <a href="{% url 'index' %}">
+                < Back to home
+            </a>
+        </small>
+    </div>
+
+    <div class="jumbotron top-post">
+        <h1>Discussion Forums</h1>
+        <p>Here you can ask questions and get answers for a variety of subjects</p>
+        <p>
+        {% if not user.is_authenticated %}
+            <em><small>
+            You need to be logged in to post or comment.  Click <a href="{% url 'login' %}">here to login</a> or <a href="{% url 'schedules:register' %}">create an account</a>.
+            </small></em>
+        {% endif %}
+        </p>
+    </div>
+
+    {% for subject in subjects %}
+
+
+    <div class="subject-listing">
+    <div class="comment-wrapper">
+        <div class="comment-rightbox">
+                <div>
+                    <h2 class="post-title">
+                      <a href="{% url 'discussions:list_posts' subject.subject.id %}">
+                        {% if subject.subject.name %}
+                            {{subject.subject.name}}  
+                        {% else %} 
+                            No name subject 
+                        {% endif %}
+                      </a>
+                    </h2>
+                </div>
+                {% if subject.subject.description %}
+                <div>
+                    {{subject.subject.description}}
+                </div>
+                {% endif %}
+                <div class="comment-metabox">
+                    <small>
+                        <a href="{% url 'discussions:list_posts' subject.subject.id %}">
+                            {{subject.post_cnt}} posts
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+
+    </div>
+{% endblock %}

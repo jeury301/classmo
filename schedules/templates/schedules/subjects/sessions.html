@@ -1,16 +1,96 @@
-{% extends 'base.html' %} {%block content%}
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'schedules:subjects' %}">Subjects</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'schedules:detail' subject.id %}">{{subject.name}}</a></li>
-    <li class="breadcrumb-item active">Sessions</li>
-</ol>
-{%if sessions|length%}
-<h2>Available Sessions: </h2>
-<ul>
-    {%for session in sessions%}
-    <li><a href="{% url 'schedules:session' session.id %}">{{session.name}}</a></li>
-    {%endfor%}
-</ul>
-{%else%}
-<h3>No sessions available</h3> {%endif%} {%endblock content%}
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{%block content%}
+<div class="container">
+
+    <div class="general-topnav">
+        <small>
+            <a href="{% url 'schedules:subjects' 'mine'%}">
+                < Back to Courses
+            </a>
+        </small>
+    </div>
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="jumbotron general-top">
+                <h1>{{subject}} - Sessions</h1>
+                <p>Here you can view and manage sessions for this course.</p>
+                <p><a href="{%url 'discussions:list_posts' subject.pk%}" style="text-decoration: underline;">{{subject}} forum</a></p>
+            </div>
+            <table class="table dt-responsive table-hover" id="subjects">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Session Name</th>
+                        <th>Location</th>
+                        <th>Instructor</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for session in sessions%}
+                    <tr>
+                        <td>{{session.id}}</td>
+                        <td>{{session.name}}</td>
+                        <td>{{session.location.name}}</td>
+                        {%if session.instructor.first_name%}
+                        <td>{{session.instructor.first_name}} {{session.instructor.last_name}}</td>
+                        {%else%}
+                        <td>{{session.instructor}}</td>
+                        {%endif%}
+                        <td>{{session.start_date|date}}</td>
+                        <td>{{session.end_date|date}}</td>
+                        <td><a class="btn default-button" href="{%url 'schedules:session' session.pk %}" role="button">View Details</a></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <div class="module filtered">
+                <div id="changelist-filter" style="width: 100%">
+                    <h2>Select View</h2>
+                    <h3> Sessions to view: </h3>
+                    <ul>
+                        <li class="{{my_sessions}}"><a href="{%url 'schedules:sessions' subject.id 'mine'%}" title="My Sessions">Registered Sessions</a></li>
+                        <li class="{{all_sessions}}"><a href="{%url 'schedules:sessions' subject.id 'all'%}" title="All Sessions">Other Sessions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$('#subjects').DataTable({
+    "deferRender": true,
+    "iDisplayLength": 25,
+    "lengthMenu": [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"]
+    ],
+    select: true,
+    "oLanguage": {
+        "sSearch": "Filter Courses:"
+    },
+    order: [
+        [0, "asc"]
+    ],
+    dom: "lfr<'row'<'col-sm-6'>>Btip",
+    buttons: [
+        'colvis',
+        {
+            extend: 'excel',
+            text: 'Export to Excel',
+            "oSelectorOpts": {
+                "filter": "applied"
+            }
+        }
+    ]
+});
+</script>
+{% endblock %}

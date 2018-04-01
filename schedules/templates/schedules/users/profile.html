@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+<!-- BEGIN: The following group of lines keep content-related in place -->
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+{% block coltype %}colMS{% endblock %}
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+<!-- END: The following group of lines keep content-related in place-->
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+    <p class="errornote">
+        {% if form.errors.items|length == 1 %}
+        {% trans "Please correct the error below:" %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+    </p>
+{% endif %}
+
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <p class="errornote">
+            {{ error }}
+        </p>
+    {% endfor %}
+{% endif %}
+{% for field in form %}
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <p class="errornote">
+                {{ error|escape }}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+<h1>Update Profile</h1>
+<div id="content-main">
+    <form action="{% url 'schedules:profile' %}" method="post">
+        {% csrf_token %}
+        <table>
+            {% for field in form %}
+                {%if forloop.counter|divisibleby:"2"%}
+                    <th>{{field.label}}:</th> 
+                    <td>{{field}}</td>
+                </tr> 
+                {%else%}
+                <tr>
+                    <th>{{field.label}}:</th> 
+                    <td>{{field}}</td>
+                {%endif%}
+            {%endfor%}
+        </table>
+        <br>
+        <div class="submit-row">
+            <label>&nbsp;</label><input type="submit" value="{% trans 'Update' %}" />
+        </div>    
+    </form>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'Account Management' %}</h2>
+        <p><a href="{%url 'schedules:profile'%}" class="changelink active-link">Update Profile</a></p>
+        <p><a href="{%url 'schedules:account'%}" class="changelink">Update Account</a></p>
+    </div>
+</div>
+{% endblock %}

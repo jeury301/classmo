@@ -1,16 +1,88 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load i18n static %} {%block content%}
+<div class="container">
+    <div class="general-topnav">
+        <small>
+            <a href="{% url 'index' %}">
+                < Back to home
+            </a>
+        </small>
+    </div>
 
-{%block content%}
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="{% url 'schedules:index' %}">Home</a></li>
-  <li class="breadcrumb-item active">Subjects</li>
-</ol>
-<h1> Subjects</h1>
-<ul>
-    {%for subject in subjects%}
-    <li>
-        <a href="{% url 'schedules:detail' subject.id %}">{{subject.name}}</a>
-    </li>
-    {%endfor%}
-</ul>
-{%endblock%}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="jumbotron general-top">
+                <h1>Courses</h1>
+                <p>Here you can view and manage your courses, as well as all open courses.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {%for course in courses%}
+                    <div class="card" id="changelist">
+                        <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                            <h2 class="card-title">{{course.name}}</h2>
+                            <div style="padding: 10px;">
+                                <p class="card-text">
+                                   {{course.description}}
+                                </p>
+                                <br/>
+                                <p class="card-text">
+                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'mine'%}" role="button">View Sessions</a>
+                                    &nbsp;&nbsp;
+                                    <a href="{%url 'discussions:list_posts' course.pk%}" style="text-decoration: underline;">Discussion forum</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    {% if not forloop.counter|divisibleby:1%}
+                        </div><div class="col-md-12">
+                    {% else %}
+                        </div></div><div class="row"><div class="col-md-12">
+                    {%endif%} 
+                {%endfor%}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="module filtered">
+                <div id="changelist-filter" style="width: 100%;">
+                    <h2>Select View</h2>
+                    <h3> Courses to view: </h3>
+                    <ul>
+                        <li class="{{my_courses}}"><a href="{%url 'schedules:subjects' 'mine'%}" title="My Sessions">My Courses</a></li>
+                        <li class="{{all_courses}}"><a href="{%url 'schedules:subjects' 'all'%}" title="All Sessions">All Courses</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#subjects').DataTable({
+    "deferRender": true,
+    "iDisplayLength": 25,
+    "lengthMenu": [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"]
+    ],
+    select: true,
+    "oLanguage": {
+        "sSearch": "Filter Courses:"
+    },
+    order: [
+        [0, "asc"]
+    ],
+    dom: "lfr<'row'<'col-sm-6'>>Btip",
+    buttons: [
+        'colvis',
+        {
+            extend: 'excel',
+            text: 'Export to Excel',
+            "oSelectorOpts": {
+                "filter": "applied"
+            }
+        }
+    ]
+});
+</script>
+{% endblock %}

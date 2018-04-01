@@ -1,12 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% csrf_token %}
 
 {% block content %}
-    <h3>{{post.body}}</h3>
-    {% load tz %}
-    {% for comment in comments %}
-        <li>
-            {{comment.body}} ({{comment.created_date|localtime}})
-        </li>
-    {% endfor %}
+<link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
+<div class="container">
+
+    <div class="discuss-topnav">
+
+        <small>
+        <a href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
+        </small>
+        
+    </div>
+
+    {% include "discussions/elements/post_view_controls.html" %}
+
+    <div class="comment-list-wrapper">
+    {% if comments %}
+        <ul class="no-bullets">
+        {% for comment in comments %}
+            {% if comment.rel_depth > 0 %}
+                {% for i in comment.depth_counter %}
+                <ul class="no-bullets">
+                {% endfor %}
+            {% endif %}
+            {% if comment.rel_depth < 0 %}
+                {% for i in comment.depth_counter %}
+                </ul>
+                {% endfor %}
+            {% endif %}
+            <li>
+                {% if comment.abs_depth < max_depth %}
+                    {% include "discussions/elements/comment_view_controls.html" %}
+                {% else %}
+                    <div class="comment-wrapper">
+                        <a href="#">See more comments</a>
+                    </div>
+                {% endif %}
+            </li>
+
+        {% endfor %}
+        </ul>
+    {% else %}
+
+        Looks like there's no comments here yet.
+        <a href="{% url 'discussions:new_top' post.post.id %}">Why not post the first?</a>
+
+       
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'discussions/js/cast_vote.js' %}"></script>
 {% endblock %}
