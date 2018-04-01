@@ -92,6 +92,8 @@ def create_instructors(data, settings, User, Group, Profile):
 def create_sessions(data, settings, timezone, timedelta, Subject, Session, Location, User):
     """Creating sessions using current data in the database
     """
+    from random import randint
+
     print("Loading session data to db")
 
     # retrieving sessions from data
@@ -117,7 +119,7 @@ def create_sessions(data, settings, timezone, timedelta, Subject, Session, Locat
                     name = sessions[index]['name'],
                     max_capacity = locations[index].max_capacity,
                     start_date = timezone.now(),
-                    end_date = timezone.now() + timedelta(days=30)
+                    end_date = timezone.now() + timedelta(hours=randint(1, 4))
                 )
                 session_entity.save()
 
