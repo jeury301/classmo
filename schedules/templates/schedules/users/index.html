@@ -72,7 +72,7 @@
                 {% for reg in registrations %}
 
                 <div class="card" style="">
-                    <div class="card-header" style=""><h1 style="display:inline;color:white;"><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
+                    <div class="card-header" style="background-color:#79aec8"><h1 style="display:inline;color:white;"><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -121,11 +121,11 @@
                         <div class="module filtered">
                             <div id="changelist-filter" style="width: 100%">
                                 {% if is_student %}
-                                <h2>Quick Actions</h2>
-                                <h3>Things</h3>
+                                <h2>Home</h2>
+                                <h3>Quick Actions</h3>
                                 <ul>
-                                    <li><a href="#" title="Thing 1">Your Instructors</a></li>
-                                    <li><a href="#" title="Thing 2">Thing 2</a></li>
+                                    <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1">Discussion Forum</a></li>
+                                    <li><a href="#" title="Thing 2">View Upcoming Sessions</a></li>
                                 </ul>
                                 {% endif %} {% if is_instructor %}
                                 <h2>Home</h2>
@@ -145,7 +145,10 @@
                                         <a style="float:right;margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right"></i></a></div>
                                 </div>
                                 {% endfor %} {% else %}
-                                <Span style="padding-left:15px;padding-right:15px;">Looks like nothing is here for you</Span> {% endif %}
+                                <div style="padding-bottom: 15px">
+                                <Span style="padding-left:15px;padding-right:15px; margin-bottom: 15px">Looks like nothing is here for you</Span> 
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
