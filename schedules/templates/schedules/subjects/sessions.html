@@ -42,8 +42,8 @@
                         {%else%}
                         <td>{{session.instructor}}</td>
                         {%endif%}
-                        <td>{{session.start_date|date}}</td>
-                        <td>{{session.end_date|date}}</td>
+                        <td>{{session.start_date|date}} {{session.start_date|time}}</td>
+                        <td>{{session.end_date|date}} {{session.end_date|time}}</td>
                         <td><a class="btn default-button" href="{%url 'schedules:session' session.pk %}" role="button">View Details</a></td>
                     </tr>
                     {%endfor%}

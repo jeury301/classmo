@@ -20,16 +20,20 @@ def get_time_from_now(Session_pk):
 	day=(session.start_date.weekday())
 	day_hour=(session.start_date.hour+session.start_date.minute/60)
 	order=(day-today)
+	
+
 	if order < 0: 
 		order+=7
-	day_return=int(order)
+		print(order)
+	day_return=order
 	hours=(day_hour-h)-4
 	if hours < 0:
-		day_return=6
+		day_return=day_return-1
 		hours=24-abs(hours)
 
+
 	hours=round(hours,0)
-	hours = str(int(hours))
+	
 	if day_return==0:
 		return "In {hours} hours".format(hours=hours)
 	elif hours==24:
