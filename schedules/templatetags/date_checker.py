@@ -21,13 +21,15 @@ def get_time_from_now(Session_pk):
 	day_hour=(session.start_date.hour+session.start_date.minute/60)
 	order=(day-today)
 	
+	print(order)
 
 	if order < 0: 
 		order+=7
 		print(order)
 	day_return=order
 	hours=(day_hour-h)-4
-	if hours < 0:
+	print(hours)
+	if hours < -.5:
 		day_return=day_return-1
 		hours=24-abs(hours)
 
@@ -38,8 +40,10 @@ def get_time_from_now(Session_pk):
 		return "In {hours} hours".format(hours=hours)
 	elif hours==24:
 		day_return+1
+		hours=str(int(hours))
 		return "In {day_return} days ".format(day_return=day_return)
 	else:
+		hours=str(int(hours))
 		return "In {day_return} days and {hours} hours".format(day_return=day_return,hours=hours)
 		
 
