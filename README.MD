@@ -1,1 +1,1 @@
-Capstone project fo CS491.
+Capstone project for CS491.
