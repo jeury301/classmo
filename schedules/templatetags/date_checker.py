@@ -1,6 +1,7 @@
 from django import template
 from schedules.models import Session 
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
+from django.utils import timezone
 import calendar
 
 
@@ -11,45 +12,32 @@ register = template.Library()
 ##{{ user|has_group:"group_name" }}
 @register.filter(name='get_time_from_now') 
 def get_time_from_now(Session_pk):
-	print("this is my session_pk",Session_pk)
-	session_pk=int(Session_pk)
+	##print("this is my session_pk",Session_pk)
+	print(Session_pk,"SESSION_PK")
+	
+	session_pk=Session_pk
 	session=Session.objects.get(pk=session_pk)
-	today=(datetime.now().weekday())
-	today_time=datetime.now()
-	h=(today_time.hour+today_time.minute/60)
-	day=(session.start_date.weekday())
-	day_hour=(session.start_date.hour+session.start_date.minute/60)
-	order=(day-today)
+	today=(timezone.now())
+	##today_time=datetime.now()
+	##h=(today_time.hour+today_time.minute/60)
+	session_start=session.start_date
+	difference=session_start-today
+
+	days=difference/(timedelta(days=1))
 	
-	print(order)
 
-	if order < 0: 
-		order+=7
-		print(order)
-	day_return=order
-	hours=(day_hour-h)-4
-	print(hours)
-	if hours < -.5:
-		day_return=day_return-1
-		hours=24-abs(hours)
-
-
-	hours=round(hours,0)
 	
-	if day_return==0:
-		return "In {hours} hours".format(hours=hours)
-	elif hours==24:
-		day_return+1
-		hours=str(int(hours))
-		return "In {day_return} days ".format(day_return=day_return)
+	if days < 0:
+		return ""
 	else:
-		hours=str(int(hours))
-		return "In {day_return} days and {hours} hours".format(day_return=day_return,hours=hours)
-		
+		days=round(days,0)
+		days=str(int(days))
+		return "In {days} days ".format(days=days)
+	
 
 @register.filter(name='get_day_of_week') 
 def get_day_of_week(Session_pk):
-	session_pk=int(Session_pk)
+	session_pk=Session_pk
 	session=Session.objects.get(pk=session_pk)
 	day=session.start_date.weekday()
 	day_name=calendar.day_name[day]
