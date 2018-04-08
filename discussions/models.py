@@ -180,7 +180,9 @@ class Comment(BaseComment):
                         other_comments.append(comment)
             return (children, other_comments)
 
-        comment_list = list(Comment.objects.filter(post=post).order_by(order_by))
+        # If two comments are equal in terms of order_by, put the
+        # more recent one first
+        comment_list = list(Comment.objects.filter(post=post).order_by(order_by, 'created_date'))
         depth = 0
         big_tuple = (None, None, [])
 

@@ -45,8 +45,6 @@ def create_demo(subjects, instructors):
 
     post_content = [('Is everyone doing their homework? I hope so',
                      '...cause some of those quiz scores I saw were pretty NOT SO GOOD.'),
-                    ('Attn class: Hackathon at NJIT next week',
-                     "If you're interested, check out yoaf.org to register."),
                     ('NJIT CS department in the news.',
                      "It's true - check out the ACM's Journal of Good Stuff, April issue."),
                     ("Big time BBQ champion coming to Newark",
@@ -121,7 +119,17 @@ def create_demo(subjects, instructors):
     # Create three posts for each subject
     posts = []
     for subj in subjects:
-        for x in range(3):
+        # First post is hardcoded to be about hackathon
+        content = ('Attn students: Hackathon at NJIT next week',
+                     "If you're interested, check out yoaf.org to register.")
+        author = random.choice(instructors)
+        post = Post.create(subject=subj,
+                           title=content[0],
+                           body=content[1],
+                           author=author)
+        post.save()
+        posts.append(post)
+        for x in range(2):
             content = random.choice(post_content)
             author = random.choice(instructors)
             post = Post.create(subject=subj,
