@@ -30,10 +30,13 @@ def index(request):
             for sesh in session_list:
                 sesh_list.append(sesh.session)
             temp=Session.order_by_upcoming(sesh_list)
+            ###print(temp,"THIS IS TEMP")
             for reg in session_list:
                 instructor=reg.session.instructor
-                l=Post.objects.filter(author=instructor).filter(subject=reg.session.subject).order_by('-created_date')[:5] 
+                l=Post.objects.filter(author=instructor).filter(subject=reg.session.subject).order_by('-created_date')
                 post_list+=l
+            session_list=temp
+            post_list=post_list[:4]
             return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
 
         if is_instructor:
@@ -48,6 +51,7 @@ def index(request):
                 l=Post.objects.filter(subject=subject).exclude(author=current_user).order_by('-created_date')[:5]
                 post_list+=l
             session_list=temp
+            post_list=post_list[:4]
             return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
         else:
             return render(request,'schedules/users/index.html',{"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
