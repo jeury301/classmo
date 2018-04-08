@@ -50,7 +50,11 @@
                 <div id="branding" style="vertical-align: middle; margin-top: 6px">
                     <h1 id="site-name" style="vertical-align: middle">
                         <a href="/">
-                            Classmo
+                        {%if config.logo %}
+                      <span>{{config.logo}}</span>
+                      {% else %}
+                      {% firstof config.company default_config.company %}
+                      {% endif %}
                         </a>
                     </h1>
                 </div>

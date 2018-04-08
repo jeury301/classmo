@@ -320,14 +320,18 @@ console.log("Centered");
 
 <body style='min-height:100vh;background-color:#417690'>
     <!-- Container -->
-    <div id="cover"><h1>Loading Classmo <i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
+    <div id="cover"><h1>Loading Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
             <!-- Header -->
             <div id="header">
                 <div id="branding">
                     <h1 id="site-name">
                     <a href="/">
-                        Classmo
+                      {%if config.logo %}
+                      <span>{{config.logo}}</span>
+                      {% else %}
+                      {% firstof config.company default_config.company %}
+                      {% endif %}
                     </a>
                     </h1>
                 </div>
@@ -347,13 +351,17 @@ console.log("Centered");
                 <div class="card-header" id="card-header-classmo">
                   <span id="classmo-logo-big">
                     <h1>
-                      Classmo
+                      {%if config.logo %}
+                      <span>{{config.logo}}</span>
+                      {% else %}
+                      {% firstof config.company default_config.company %}
+                      {% endif %}
                     </h1>
                   </span>
                 </div>
                 <div class="card-body" style="margin-top: 0px; padding-top: 0px">
 <!--                     <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Get ready to succeed</h1> -->
-                    <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Organize. Connect. Achieve.</h1>
+                    <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">{%firstof config.slogan default_config.slogan %}</h1>
 <!--                     <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center; margin-top: 0px" class="card-text">Organize, schedule, meet, achieve</p>
                     <br> -->
                     <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">

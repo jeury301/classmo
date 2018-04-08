@@ -1,11 +1,11 @@
 {% extends "admin/base.html" %}
 
-{% block title %}{{ site_title|default:_('Classmo') }}{% endblock %}
+{% block title %}{%firstof config.company default_config.company%}{% endblock %}
 
 {% block branding %}
 <h1 id="site-name" style="color: #F5DD5C;">
     <a href="{% url 'schedules:index' %}" style="color: #F5DD5C;">
-        {{ site_header|default:_('Classmo Login') }}
+       {%firstof config.company default_config.company%} Login
     </a>
 </h1>
 {% endblock %}
