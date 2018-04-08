@@ -16,7 +16,7 @@
 
     <div class="jumbotron top-post">
         <h1>Discussion Forums</h1>
-        <p>Here you can ask questions and get answers for a variety of subjects</p>
+        <p>{%firstof config.discussion_body default_config.discussion_body%}</p>
         <p>
         {% if not user.is_authenticated %}
             <em><small>
