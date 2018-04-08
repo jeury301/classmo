@@ -19,10 +19,14 @@ def global_context(request):
     elif current_user.is_staff:
         role = "staff"
 
+    # global configuration object
+    config = {"register_body":"My custom message"}
+
     global_context = {
         "current_user":current_user,
         "is_instructor":is_instructor,
         "is_student":is_student,
-        "role":role
+        "role":role,
+        "config":config
     }           
     return global_context

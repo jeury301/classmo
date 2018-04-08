@@ -23,6 +23,15 @@
     cursor: pointer !important;
 }
 
+.info-button {
+    background: #5bc0de !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: #fff !important; 
+    cursor: pointer !important;
+}
+
 .success-button {
     background: #5cb85c !important;
     padding: 10px 15px !important;

@@ -62,10 +62,10 @@
                 <br> {% endfor %} {% else %}
                 <!-- No sessions-->
                 <div class="jumbotron">
-    <h1 class="display-4">Welcome to Classmo</h1>
-                <p class="lead">Organize, schedule, meet, achieve</p>
+    <h1 class="display-4">{%firstof config.welcome_title default.welcome_title%}</h1>
+                <p class="lead">{%firstof config.slogan default.slogan%}</p>
             <!-- <hr class="my-4">-->
-            <p class="lead">Classmo is the place to succeed, click below to get registered!</p><br>
+            <p class="lead">{%firstof config.welcome_body default.welcome_body%}</p><br>
                  <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Let's Get Started!</Span></a>
                 </div>
                 {% endif %} {% elif is_instructor %} {% if registrations %}
@@ -100,8 +100,8 @@
                 </div>
                 <br> {% endfor %} {% else %}
                  <div class="jumbotron">
-    <h1 class="display-4">Welcome to Classmo</h1>
-                <p class="lead">Organize, schedule, meet, achieve</p>
+    <h1 class="display-4">{%firstof config.welcome_title default.welcome_title%}</h1>
+                <p class="lead">{%firstof config.slogan default.slogan%}</p>
             <!-- <hr class="my-4">-->
             <p class="lead">Hello instructor, looks like you're not assigned to any sessions, click to browse available sessions</p><br>
                  <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Browse</Span></a>
