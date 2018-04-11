@@ -15,11 +15,6 @@ body {
 
 /* LINKS */
 
-a:link, a:visited {
-    color: #447e9b;
-    text-decoration: none;
-}
-
 a:focus, a:hover {
     color: #036;
 }
@@ -445,6 +440,10 @@ select[multiple] {
 }
 
 /* FORM BUTTONS */
+a.button { 
+    float:right; 
+    padding: 10px 15px; 
+} 
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: #79aec8;
@@ -453,10 +452,6 @@ select[multiple] {
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
-}
-
-a.button {
-    padding: 4px 5px;
 }
 
 .button:active, input[type=submit]:active, input[type=button]:active,
@@ -789,6 +784,7 @@ table#change-history tbody th {
     margin-right: -300px;
 }
 
+
 #footer {
     clear: both;
     padding: 10px;
@@ -847,10 +843,6 @@ table#change-history tbody th {
     margin: 0 20px 0 0;
     font-weight: 300;
     font-size: 24px;
-    color: #f5dd5d;
-}
-
-#branding h1, #branding h1 a:link, #branding h1 a:visited {
     color: #f5dd5d;
 }
 

@@ -1,12 +1,13 @@
- {% extends 'base.html' %} {% block content %} {% load gravatar %}{% load group_checker %}{% load date_checker %} {% if user.is_authenticated %} {% load static %}
+ {% extends 'base.html' %} {% block content %}
+  {% load gravatar %}{% load group_checker %}{% load date_checker %} {% if user.is_authenticated %} {% load static %}
 <div class="container">
     <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
-    <h1 class="gravatar-header" style="font-size: 2.0rem;">
+    <h1 class="gravatar-header">
         <div>
             <span>
                 <img src="{{user.email|gravatar_url:150}}" class="gravatar-med">
             </span>
-            <span style="vertical-align:middle;">
+            <span id="gravatar-span">
             Hello
             {%if user.first_name%}
                 {{user.first_name}}
@@ -32,8 +33,8 @@
                 <!-- Student start -->
                 {% if registrations %} {% for reg in registrations %}
                 <div class="card">
-                    <div class="card-header" style="background-color:#79aec8">
-                        <h1 style="display:inline;color:white;"><strong>{{reg.subject.name}}</strong></h1> <strong style="float:right;color:white">{{ reg.pk | get_time_from_now }}</strong></div>
+                    <div class="card-header">
+                        <h1><strong>{{reg.subject.name}}</strong></h1> <strong id="time">{{ reg.pk | get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -44,9 +45,9 @@
                                 </ul>
                             </div>
                             <div class="col-md-8">
-                                <ul style="padding-right:40px;">
-                                    <li style="padding-top:0;">
-                                        <h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
+                                <ul id="info-list">
+                                    <li id="top-element">
+                                        <h3>Details:</h3></li>
                                     {% if reg.subject.description|length < 500 %} 
                                     <li>{{reg.subject.description}}</li>
                                         {% else %}
@@ -56,7 +57,7 @@
                             </div>
                         </div>
                         <br>
-                        <a class="btn btn-primary button" href="{% url 'schedules:session' reg.id %}" role="button"><Span style="color:white;">View Details</Span></a>
+                        <a class="btn btn-primary button" id="detail-button" href="{% url 'schedules:session' reg.id %}" role="button"><Span>View Details</Span></a>
                     </div>
                 </div>
                 <br> {% endfor %} {% else %}
@@ -67,12 +68,12 @@
                     <!-- <hr class="my-4">-->
                     <p class="lead">{%firstof config.welcome_body default_config.welcome_body%}</p>
                     <br>
-                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Let's Get Started!</Span></a>
+                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span>Let's Get Started!</Span></a>
                 </div>
                 {% endif %} {% elif is_instructor %} {% if registrations %} {% for reg in registrations %}
-                <div class="card" style="">
-                    <div class="card-header" style="">
-                        <h1 style="display:inline;color:white;"><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;color:white;">{{ reg.pk|get_time_from_now }}</strong></div>
+                <div class="card">
+                    <div class="card-header">
+                        <h1><strong>{{reg.subject.name}}</strong></h1><strong>{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
@@ -84,8 +85,8 @@
                                 </ul>
                             </div>
                             <div class="col-md-8">
-                                <ul>
-                                    <li>
+                                <ul id="info-list">
+                                    <li id="top-element">
                                         <h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
                                     {% if reg.subject.description|length < 500 %} 
                                     <li>{{reg.subject.description}}</li>
@@ -96,7 +97,7 @@
                             </div>
                         </div>
                         <br>
-                        <a class="btn btn-primary button" href="{% url 'schedules:session' reg.id %}" role="button"><Span style="color:white;">View Details</Span></a>
+                        <a class="btn btn-primary button" id="detail-button" href="{% url 'schedules:session' reg.id %}" role="button"><Span>View Details</Span></a>
                     </div>
                 </div>
                 <br> {% endfor %} {% else %}
@@ -106,7 +107,7 @@
                     <!-- <hr class="my-4">-->
                     <p class="lead">Hello instructor, looks like you're not assigned to any sessions, click to browse available sessions</p>
                     <br>
-                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span style="color:white;">Browse</Span></a>
+                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span>Browse</Span></a>
                 </div>
                 {% endif %} {% else %}
                 <div class="card" style="">
@@ -138,13 +139,13 @@
                         </ul>
                         {% endif %}
                         <h2>Recent Comments</h2> {% if post_list %} {% for post in post_list %}
-                        <div>
-                            <h3 style="display:inline-block;padding-right:.2rem">{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
-                            <div class="post-listing" style="padding-left:15px;">
+                        <div id="comment-section">
+                            <h3>{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
+                            <div class="post-listing">
                                 {% if post.body > 15 %}
                                 <span style="padding-right:15px;">{{post.body|slice:"0:20"}}</span> {% else %}
                                 <span style="padding-right:15px;clear:right;">{{post.body}}</span> {% endif %}
-                                <a style="margin-right:.5rem;color:#417690;" href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right" style="float:right"></i></a></div>
+                                <a href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right" style="float:right"></i></a></div>
                         </div>
                         {% endfor %} {% else %}
                         <Span style="padding-left:15px;padding-right:15px;">Looks like nothing is here for you</Span> {% endif %}

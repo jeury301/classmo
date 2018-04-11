@@ -21,27 +21,21 @@ def global_context(request):
         role = "staff"
 
     # custom configurations
-    config = {
-    "company": "Yoga boga",
-        "primary_color": "417690",
-        "secondary_color": "79aec8",
-        "logo": "",
-        "slogan": "Strech",
-        "font-family": '"Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif',
-        "welcome_title": "Welcome to Classmo",
-        "welcome_body": "Classmo is the place to succeed, click below to get registered!",
-        "all_courses_body": "Here you can find all the courses available for regisration.  Click \"More Info\" to see sessions available for registration",
-        "my_courses_body": "These are courses that you've registered for.  You can check your existing and past registrations, and register for new sessions.",
-        "discussion_body": "Here you can ask questions and get answers for a variety of subjects"
-    }
+    
+    config = { 
+        }
+    """"
+    
+    """
+    
 
     # These are the default colors / language rendedred
     # by Django's template engine when there isn't a
     # corresponding value in the 'config' dictionary
     default_config = {
         "company": "Classmo",
-        "primary_color": "417690",
-        "secondary_color": "79aec8",
+        "primary_color": "#417690",
+        "secondary_color": "#79aec8",
         "logo": "",
         "slogan": "Organize. Connect. Achieve.",
         "font-family": '"Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif',
@@ -49,7 +43,14 @@ def global_context(request):
         "welcome_body": "Classmo is the place to succeed, click below to get registered!",
         "all_courses_body": "Here you can find all the courses available for regisration.  Click \"More Info\" to see sessions available for registration",
         "my_courses_body": "These are courses that you've registered for.  You can check your existing and past registrations, and register for new sessions.",
-        "discussion_body": "Here you can ask questions and get answers for a variety of subjects"
+        "discussion_body": "Here you can ask questions and get answers for a variety of subjects",
+        "footer_text_color": "#f5dd5d",
+        "header_text_color": "#ffffff",
+        "splash_images": {
+        "images/splash_background1.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0",
+        "images/splash_background3.jpg":"Photo by Emgonzalez License: Public Domain",
+        "images/splash_background2.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"
+        }
     }
 
     global_context = {

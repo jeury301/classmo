@@ -1,4 +1,4 @@
-{% extends "admin/mod_base_site.html" %}
+{% extends "admin/mod_base_register.html" %}
 {% load i18n static %}
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}" />
 {{ form.media }}
@@ -42,7 +42,7 @@
             <small>&nbsp;</small>
         </div>
         <div>
-            <input type="submit" value="{% trans 'Log in' %}" style="display:block;width:100%; font-size: 20px;"/>
+            <input id="login-button" type="submit" value="{% trans 'Log in' %}" style="display:block;width:100%; font-size: 20px;"/>
         </div>
     </form>
     <div style="padding-top: 20px; text-align: center;">

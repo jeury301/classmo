@@ -1,4 +1,5 @@
 {% load i18n static %}
+{% load splash_images %}
 <!DOCTYPE html> 
 <html>
 
@@ -36,43 +37,50 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/datatables.min.js'%}"></script>
 <style>
+
+body
+{
+  min-height:100vh;
+  background-color:{% firstof config.primary_color default_config.primary_color %};
+}
 #footer {
     /*margin-top:-12vh;*/
     bottom:0;
     height:7vh;
-    background-color: #417690;
     outline: solid 1px red;
     opacity:0;
-
+    background-color:{% firstof config.primary_color default_config.primary_color %}; 
 }
 
 #footer p{
 display:inline-block;
-color:#f5dd5d;
 margin-top:1vh;
 border-bottom:solid 1px #f5dd5d;
 z-index:1;
-
+margin-left:100px;
+color:{% firstof config.footer_text_color default_config.footer_text_color %};
 }
 #cover
 {
   height:100vh;
   width:100%;
-  background-color:#417690; 
   position:absolute;
   z-index:2;
+  background-color:{% firstof config.primary_color default_config.primary_color %}; 
 }
 
 .signup-button {
   color: #417690;
-  background-color: #417690;
   border-color: #417690;
+  background-color:{% firstof config.primary_color default_config.primary_color %};
+  border-color:{% firstof config.primary_color default_config.primary_color %};
 }
 
 .signup-button:hover {
   color: #79aec8;
-  background-color: #79aec8;
   border-color: #79aec8;
+  background-color:{% firstof config.secondary_color default_config.secondary_color %};
+  border-color:{% firstof config.secondary_color default_config.secondary_color %};
 }
 
 .signup-button:active {
@@ -101,8 +109,17 @@ z-index:1;
 {
   height:7vh;
   opacity:0;
+  background:{% firstof config.primary_color default_config.primary_color %};
 }
 
+#branding h1 a:link
+{
+  color:{% firstof config.footer_text_color default_config.footer_text_color %};
+}
+#branding h1 a:visited
+{
+  color:{% firstof config.footer_text_color default_config.footer_text_color %};
+}
 #card
 {
   width:23rem;
@@ -116,6 +133,33 @@ z-index:1;
   margin-top: 0px
   padding-to;: 0px;
   border: none;
+}
+#card-body
+{
+  margin-top: 0px; 
+  padding-top: 0px;
+}
+#card-title
+{
+  display:block;
+  width:100%;
+  align-items:center;
+  margin:auto;
+  text-align:center;
+}
+
+#card-body a
+{
+  display:block;
+  width:95%;
+  align-items:center;
+  margin:auto;
+}
+
+#card-body span
+{
+  color:white; 
+  font-size: 20px;
 }
 
 #card h1 {
@@ -147,7 +191,7 @@ z-index:1;
 
 #container {
   height:93vh;
-  background-color:#417690;
+  background-color:{% firstof config.primary_color default_config.primary_color %};
 }
 
 #cf {
@@ -159,7 +203,7 @@ z-index:1;
 }
 
 
-.blue-background {background-color:#417690;}
+/*.blue-background {background-color:#417690;}*/
 
 #cf span
 {
@@ -169,7 +213,6 @@ right:0;
 animation-name: cfFadeInOut;
 animation-timing-function: ease-in-out;
 animation-iteration-count: infinite;
-animation-duration: 30s;
 color:#c1c1c1;
 font-size:.5rem;
 }
@@ -189,26 +232,36 @@ font-size:.5rem;
   animation-name: cfFadeInOut;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
-  animation-duration: 30s;
+  
+  
+}
+
+#classmo-logo-big {
+  color:white;
 }
 
 /* n=number of images
    a=image vissible duration in seconds a=8
    b=image crossfade duration in seconds b=2
    t=total animation duration =(a+b)*n =30
+  START OF TRANSITION SECTION
 */
-
+{% if default_config.splash_images %}
+{% with trans_info=default_config.splash_images|get_transition_info %}
+#cf img
+{animation-duration: {{trans_info.t}}s;}
 @keyframes cfFadeInOut {
   0% {
     opacity:1;  /* always 0 */
   }
-  27% {
+  {{ trans_info.oplist.0 }}% 
+  {
     opacity:1; /* a/t   */
   }
-  34% {
+  {{ trans_info.oplist.1 }}% {
     opacity:0;  /* (a+b)/t*100%  */
   }
-  94% {
+  {{ trans_info.oplist.2 }}% {
     opacity:0;  /* 100%-(b/t*100%)    */
   }
   100% {
@@ -216,29 +269,43 @@ font-size:.5rem;
   }
 }
 
-#cf img:nth-of-type(1) {
-  animation-delay: 20s;
+{% for key in trans_info.image_of_nth %}
+#cf img:nth-of-type({{forloop.counter}}) {
+  animation-delay: {{key}}s;
 }
-#cf img:nth-of-type(2) {
-  animation-delay: 10s;
-}
-#cf img:nth-of-type(3) {
-  animation-delay: 0s;
+{% endfor %}
+{% endwith %}
+{% else %}
+{% with trans_info=config.splash_images|get_transition_info %}
+#cf img
+{animation-duration: {{trans_info.t}}s;}
+@keyframes cfFadeInOut {
+  0% {
+    opacity:1;  /* always 0 */
+  }
+  {{ trans_info.oplist.0 }}% {
+    opacity:1; /* a/t   */
+  }
+  {{ trans_info.oplist.1 }}% {
+    opacity:0;  /* (a+b)/t*100%  */
+  }
+  {{ trans_info.oplist.2 }}% {
+    opacity:0;  /* 100%-(b/t*100%)    */
+  }
+  100% {
+    opacity:1;  /* always 100% */
+  }
 }
 
-#cf span:nth-of-type(1) {
-  animation-delay: 20s;
+{% for key in trans_info.image_of_nth %}
+{{ forloop.counter0 }}
+#cf img:nth-of-type({{forloop.counter}}s) {
+  animation-delay: {{key}}s;
 }
-#cf span:nth-of-type(2) {
-  animation-delay: 10s;
-}
-#cf span:nth-of-type(3) {
-  animation-delay: 0s;
-}
-
-#classmo-logo-big {
-  color:white;
-}
+{% endfor %}
+{% endwith %}
+{% endif %}
+/* END OF TRANSISTION SECTION */
 
 </style>
  <script>
@@ -318,7 +385,7 @@ console.log("Centered");
 </head>
 {% load i18n %}
 
-<body style='min-height:100vh;background-color:#417690'>
+<body>
     <!-- Container -->
     <div id="cover"><h1>Loading Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
@@ -327,8 +394,8 @@ console.log("Centered");
                 <div id="branding">
                     <h1 id="site-name">
                     <a href="/">
-                      {%if config.logo %}
-                      <span>{{config.logo}}</span>
+                       {%if config.logo %}
+                      <span id="brand">{{config.logo}}</span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
@@ -337,12 +404,18 @@ console.log("Centered");
                 </div>
             </div>
             <div id="cf">
-                <img src="{% static 'images/splash_background1.jpg' %}"/>
-                <span>"Photo by Emgonzalez License: Public Domain"</span>
-                <img src="{% static 'images/splash_background2.jpg' %}" />
-                <span>"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"</span>
-                <img src="{% static 'images/splash_background3.jpg' %}" />
-                <span>"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"</span>
+                      {% if config %} 
+                      {% for image in config.splash_images %} 
+                      {% with credit=config.splash_images|get_credit:image %}
+                      <img src="{% static image %}" />
+                      <span>{{credit}}</span> 
+                      {% endwith %} {% endfor %} 
+                      {% else %} 
+                      {% for image in default_config.splash_images %} 
+                      {% with credit=default_config.splash_images|get_credit:image %}
+                      <img src="{% static image %}" />
+                      <span>{{credit}}</span> 
+                      {% endwith %} {% endfor %} {% endif %}
             </div>
             <!-- END Header -->
             <!-- Content -->
@@ -359,17 +432,17 @@ console.log("Centered");
                     </h1>
                   </span>
                 </div>
-                <div class="card-body" style="margin-top: 0px; padding-top: 0px">
+                <div class="card-body" id="card-body">
 <!--                     <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">Get ready to succeed</h1> -->
-                    <h1 style="display:block;width:100%;align-items:center;margin:auto;text-align:center;" class="card-title">{%firstof config.slogan default_config.slogan %}</h1>
+                    <h1 class="card-title" id="card-title">{%firstof config.slogan default_config.slogan %}</h1>
 <!--                     <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center; margin-top: 0px" class="card-text">Organize, schedule, meet, achieve</p>
                     <br> -->
-                    <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
-                        <span style='color:white; font-size: 20px'>Signup</span>
+                    <a href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
+                        <span>Signup</span>
                       </a>
                     <br>
-                    <a style="display:block;width:95%;align-items:center;margin:auto;" href="{% url 'login' %}" class="btn btn-primary blue-background signup-button">
-                        <span style="color:white; font-size: 20px">Already a member?</span> 
+                    <a href="{% url 'login' %}" class="btn btn-primary blue-background signup-button">
+                        <span>Already a member?</span> 
                     </a>
                 </div>
             </div>
@@ -378,9 +451,9 @@ console.log("Centered");
             <!-- END Container -->
         
     <div id="footer">
-        <p style="margin-left:20px;">About</p>
-        <p style="margin-left:100px;">Get Classmo</p>
-        <p style="margin-left:100px">Legal</p>
+        <p>About</p>
+        <p>Get Classmo</p>
+        <p>Legal</p>
     </div>
    
     <!--end cover -->
