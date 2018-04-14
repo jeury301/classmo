@@ -96,7 +96,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
                         {%if config.logo %}
-                      <span>{{config.logo}}</span>
+                      <span><img src="{{config.logo}}" width="40%" height="40%"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}

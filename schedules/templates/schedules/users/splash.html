@@ -402,7 +402,6 @@ console.log("Centered");
 </script>
 </head>
 {% load i18n %}
-
 <body>
     <!-- Container -->
     <div id="cover"><h1>Loading Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
@@ -412,7 +411,7 @@ console.log("Centered");
                 <div id="branding">
                     <h1 id="site-name">
                     <a href="/">
-                       {%if config.logo %}
+                      {%if config.logo == 'disabled' %}
                       <span id="brand">{{config.logo}}</span>
                       {% else %}
                       {% firstof config.company default_config.company %}
@@ -422,10 +421,10 @@ console.log("Centered");
                 </div>
             </div>
             <div id="cf">
-                      {% if config %} 
+                      {% if config.splash_images %} 
                       {% for image in config.splash_images %} 
                       {% with credit=config.splash_images|get_credit:image %}
-                      <img src="{% static image %}" />
+                      <img src="{{image}}" />
                       <span>{{credit}}</span> 
                       {% endwith %} {% endfor %} 
                       {% else %} 
@@ -443,7 +442,7 @@ console.log("Centered");
                   <span id="classmo-logo-big">
                     <h1>
                       {%if config.logo %}
-                      <span>{{config.logo}}</span>
+                      <span><img src="{{config.logo}}" width="100%" height="100%"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
