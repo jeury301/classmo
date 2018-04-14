@@ -47,9 +47,9 @@ def global_context(request):
         "secondary_text_color": "#ffffff",
         "jumbotron_color":"#eceeef",
         "splash_images": {
-        "images/splash_background1.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0",
-        "images/splash_background3.jpg":"Photo by Emgonzalez License: Public Domain",
-        "images/splash_background2.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"
+            "images/splash_background1.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0",
+            "images/splash_background3.jpg":"Photo by Emgonzalez License: Public Domain",
+            "images/splash_background2.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"
         }
     }
     
