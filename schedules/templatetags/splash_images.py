@@ -19,7 +19,8 @@ def get_transition_info(dictionary):
 	n=0
 	for image in dictionary:
 		n+=1
-	print(a,b,n)
+	if n==1:
+		return False
 	t=(a+b)*n
 	l=t
 	"""

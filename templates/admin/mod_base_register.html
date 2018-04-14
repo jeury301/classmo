@@ -5,7 +5,7 @@
 <style>
 #header {
     background:{% firstof config.primary_color default_config.primary_color %};
-    color:{% firstof config.footer_text_color default_config.footer_text_color %};
+    color:{% firstof config.secondary_text_color default_config.secondary_text_color %};
 }
 #header a:link, #header a:visited {color:{% firstof config.secondary_color default_config.secondary_color %};}
 #reg-button {background:{% firstof config.secondary_color default_config.secondary_color %};}

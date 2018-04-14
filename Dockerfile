@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 ENV C_FORCE_ROOT true
 
-RUN mkdir /static
+##RUN mkdir /static
 
 WORKDIR /
 

@@ -8,7 +8,7 @@
 
     <div class="discuss-topnav">
         <small>
-            <a href="{% url 'index' %}">
+            <a id="post-title" href="{% url 'index' %}">
                 < Back to home
             </a>
         </small>
@@ -34,7 +34,7 @@
         <div class="comment-rightbox">
                 <div>
                     <h2 class="post-title">
-                      <a href="{% url 'discussions:list_posts' subject.subject.id %}">
+                      <a id="post-title" href="{% url 'discussions:list_posts' subject.subject.id %}">
                         {% if subject.subject.name %}
                             {{subject.subject.name}}  
                         {% else %} 
@@ -50,7 +50,7 @@
                 {% endif %}
                 <div class="comment-metabox">
                     <small>
-                        <a href="{% url 'discussions:list_posts' subject.subject.id %}">
+                        <a id="post-title" href="{% url 'discussions:list_posts' subject.subject.id %}">
                             {{subject.post_cnt}} posts
                         </a>
                     </small>

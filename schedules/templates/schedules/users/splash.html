@@ -58,7 +58,7 @@ margin-top:1vh;
 border-bottom:solid 1px #f5dd5d;
 z-index:1;
 margin-left:100px;
-color:{% firstof config.footer_text_color default_config.footer_text_color %};
+color:{% firstof config.primary_text_color default_config.primary_text_color %};
 }
 #cover
 {
@@ -114,11 +114,11 @@ color:{% firstof config.footer_text_color default_config.footer_text_color %};
 
 #branding h1 a:link
 {
-  color:{% firstof config.footer_text_color default_config.footer_text_color %};
+  color:{% firstof config.primary_text_color default_config.primary_text_color %};
 }
 #branding h1 a:visited
 {
-  color:{% firstof config.footer_text_color default_config.footer_text_color %};
+  color:{% firstof config.primary_text_color default_config.primary_text_color %};
 }
 #card
 {
@@ -248,8 +248,11 @@ font-size:.5rem;
 */
 {% if default_config.splash_images %}
 {% with trans_info=default_config.splash_images|get_transition_info %}
-#cf img
-{animation-duration: {{trans_info.t}}s;}
+{% if trans_info %}
+#cf img, #cf span
+{
+  animation-duration: {{trans_info.t}}s;
+}
 @keyframes cfFadeInOut {
   0% {
     opacity:1;  /* always 0 */
@@ -270,15 +273,25 @@ font-size:.5rem;
 }
 
 {% for key in trans_info.image_of_nth %}
-#cf img:nth-of-type({{forloop.counter}}) {
+#cf img:nth-of-type({{forloop.counter}}) 
+{
   animation-delay: {{key}}s;
 }
+#cf span:nth-of-type({{forloop.counter}}) 
+{
+  animation-delay: {{key}}s;
+}
+
 {% endfor %}
+{% endif %}
 {% endwith %}
 {% else %}
 {% with trans_info=config.splash_images|get_transition_info %}
-#cf img
-{animation-duration: {{trans_info.t}}s;}
+{% if trans_info %}
+#cf img, #cf span
+{
+  animation-duration: {{trans_info.t}}s;
+}
 @keyframes cfFadeInOut {
   0% {
     opacity:1;  /* always 0 */
@@ -302,7 +315,12 @@ font-size:.5rem;
 #cf img:nth-of-type({{forloop.counter}}s) {
   animation-delay: {{key}}s;
 }
+#cf span:nth-of-type({{forloop.counter}}) 
+{
+  animation-delay: {{key}}s;
+}
 {% endfor %}
+{% endif %}
 {% endwith %}
 {% endif %}
 /* END OF TRANSISTION SECTION */
