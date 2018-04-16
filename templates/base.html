@@ -43,6 +43,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
     background:{% firstof config.primary_color default_config.primary_color %};
     color:{% firstof config.secondary_text_color default_config.secondary_text_color %};
 }
+    .card-header {color:{% firstof config.secondary_text_color default_config.secondary_text_color %};}
 
 /* Company branding text color */
 /*2*/#branding a:link, #branding a:visited { color:{% firstof config.primary_text_color default_config.primary_text_color %}; }
@@ -79,7 +80,8 @@ does not effect Change Password/Acccount Managements/... see #3 */
 
 #post-title { color: {% firstof config.primary_color default_config.primary_color %}; }
 
-.jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color %}; }
+.jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color
+ %}; }
 
 
 </style>

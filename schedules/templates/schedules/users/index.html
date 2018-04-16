@@ -29,58 +29,21 @@
         <div class="row">
             <div class="col-md-8" id="session-container">
                 <!-- Col content -->
-                {% if request.user|has_group:"Students" %}
                 <!-- Student start -->
+                {% if user.is_authenticated %}
                 {% if registrations %} {% for reg in registrations %}
                 <div class="card">
                     <div class="card-header">
-                        <h1><strong>{{reg.subject.name}}</strong></h1> <strong id="time">{{ reg.pk | get_time_from_now }}</strong></div>
+                        <h1><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;">{{ reg.pk|get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <ul>
                                     <li><strong>Location:</strong> {{reg.location}}</li>
                                     <li><strong>Instructor:</strong> {{reg.instructor}}</li>
-                                    <li><strong>Date:</strong> {{ reg.pk|get_day_of_week }}</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-8">
-                                <ul id="info-list">
-                                    <li id="top-element">
-                                        <h3>Details:</h3></li>
-                                    {% if reg.subject.description|length < 500 %} 
-                                    <li>{{reg.subject.description}}</li>
-                                        {% else %}
-                                        <li>{{reg.subject.description|slice:"0:500"}}...</li>
-                                        {% endif %}
-                                </ul>
-                            </div>
-                        </div>
-                        <br>
-                        <a class="btn btn-primary button" id="detail-button" href="{% url 'schedules:session' reg.id %}" role="button"><Span>View Details</Span></a>
-                    </div>
-                </div>
-                <br> {% endfor %} {% else %}
-                <!-- No sessions-->
-                <div class="jumbotron">
-                    <h1 class="display-4">{%firstof config.welcome_title default_config.welcome_title%}</h1>
-                    <p class="lead">{%firstof config.slogan default_config.slogan%}</p>
-                    <!-- <hr class="my-4">-->
-                    <p class="lead">{%firstof config.welcome_body default_config.welcome_body%}</p>
-                    <br>
-                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span>Let's Get Started!</Span></a>
-                </div>
-                {% endif %} {% elif is_instructor %} {% if registrations %} {% for reg in registrations %}
-                <div class="card">
-                    <div class="card-header">
-                        <h1><strong>{{reg.subject.name}}</strong></h1><strong>{{ reg.pk|get_time_from_now }}</strong></div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <ul>
-                                    <li><strong>Location:</strong> {{reg.location}}</li>
-                                    <li><strong>Instructor:</strong> {{reg.instructor}}</li>
+                                    {% if request.user|has_group:"Instructors" %}
                                     <li><strong>Capacity:</strong> {{reg.registered_students}}/{{reg.max_capacity}}</li>
+                                    {% endif %}
                                     <li><strong>Date:</strong> {{ reg.pk|get_day_of_week }}</li>
                                 </ul>
                             </div>
@@ -142,7 +105,7 @@
                         <div id="comment-section">
                             <h3>{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
                             <div class="post-listing">
-                                {% if post.body > 15 %}
+                                {% if post.body|length > 15 %}
                                 <span style="padding-right:15px;">{{post.body|slice:"0:20"}}</span> {% else %}
                                 <span style="padding-right:15px;clear:right;">{{post.body}}</span> {% endif %}
                                 <a href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right" style="float:right"></i></a></div>
