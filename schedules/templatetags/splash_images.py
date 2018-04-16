@@ -34,6 +34,8 @@ def get_transition_info(dictionary):
 
 	
 	trans_info={"a":a,"b":b,"n":n,"t":t,"oplist":oplist,"image_of_nth":image_of_nth}
+	print("FUCKING TRANS_INFO")
+	print(trans_info)
 	return trans_info
 
 
