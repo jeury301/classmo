@@ -5,6 +5,8 @@ services:
     image: nginx:latest
     ports:
       - "8000:8000"
+      #- "80:80"
+
     volumes:
       - ./:/src
       - ./config/nginx:/etc/nginx/conf.d
@@ -25,6 +27,7 @@ services:
       #- POSTGRES_USER:classmouser
       #- POSTGRES_PASSWORD:classmopassword
   web:
+    image: sidhumehtab/classmo_web
     build: .
     ##ports:
       ##- "8000:8000"
@@ -32,6 +35,7 @@ services:
       - db
     expose:
       - "8000"
+      #- "80"
 
 volumes:
   pg_data: {}
