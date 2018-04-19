@@ -50,7 +50,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
 
      
 /* Text color for User account options at top-right of header */
-/*3*/#user-tools a:link, #user-tools a:visited {color:{% firstof config.secondary_text_color default_config.secondary_text_color %};}
+/*3*/#user-tools a:link, #user-tools a:visited {color:{% firstof config.secondary_color default_config.secondary_color %};}
 
 
 /* card header colors, for anything using bootstrap cards */
@@ -78,16 +78,15 @@ does not effect Change Password/Acccount Managements/... see #3 */
 /*9*/.info-button { background: {% firstof config.secondary_color default_config.secondary_color %} 
 !important; color: #fff !important; }
 
-/* Discussion forum text/link color */
-.post-title { color: {% firstof config.primary_color default_config.primary_color %}; }
-
-/* Default site-wide link color */
-a { color: {% firstof config.primary_color default_config.primary_color %}; }
+#post-title { color: {% firstof config.primary_color default_config.primary_color %}; }
 
 .jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color
  %}; }
 
-.header-welcome-msg { color: {% firstof config.primary_text_color default_config.primary_text_color %}; }
+ .btn-primary {
+    background: {% firstof config.primary_color default_config.primary_color %};
+    color: {% firstof config.primary_text_color default_config.primary_text_color %};
+}
 
 
 </style>
@@ -104,7 +103,7 @@ a { color: {% firstof config.primary_color default_config.primary_color %}; }
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
                         {%if config.logo %}
-                      <span><img src="{{config.logo}}" width="40%" height="40%"></span>
+                      <span>{{config.logo}}</span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
@@ -114,9 +113,7 @@ a { color: {% firstof config.primary_color default_config.primary_color %}; }
                 {% if user.is_authenticated %}
                 <div id="user-tools">
                     Welcome,
-                    <strong>
-                            {% firstof user.get_short_name user.get_username %} ({{role}})
-                    </strong>. 
+                    <strong>{% firstof user.get_short_name user.get_username %} ({{role}})</strong>. 
                     {% block userlinks %} 
                         {% if user.is_staff %}
                         <a href="/admin/login?next=/admin/">{% trans 'Admin Site' %}</a> / 
