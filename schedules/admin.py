@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.forms.widgets import TextInput
 from django import forms
 from .models import Subject, Location, Session, Registration, Homework, Profile
+from .models import Config
 
 class SessionForm(forms.ModelForm):
     """A form model for Session
@@ -30,6 +32,26 @@ class SessionAdmin(admin.ModelAdmin):
     form = SessionForm
     list_display = ('name', 'max_capacity', 'start_date', 'end_date')
 
+
+class ConfigForm(forms.ModelForm):
+    """A form model for Config
+    """
+    class Meta:
+        model = Config
+        fields = '__all__'
+        widgets = {
+            'primary_color': TextInput(attrs={'type': 'color'}),
+            'secondary_color': TextInput(attrs={'type': 'color'}),
+            'primary_text_color': TextInput(attrs={'type': 'color'}),
+            'secondary_text_color': TextInput(attrs={'type': 'color'}),
+            'jumbotron_color': TextInput(attrs={'type': 'color'})
+        }
+
+class ConfigAdmin(admin.ModelAdmin):
+    form = ConfigForm
+
+
+
 # Register your models here.
 admin.site.register(Subject)
 admin.site.register(Location)
@@ -37,6 +59,7 @@ admin.site.register(Session, SessionAdmin)
 admin.site.register(Registration)
 admin.site.register(Homework)
 admin.site.register(Profile)
+admin.site.register(Config, ConfigAdmin)
 admin.site.site_header = 'Classmo Admin'
 
 

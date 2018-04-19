@@ -48,6 +48,7 @@ sftp-config.json
 settings.py
 settings_v2.py
 settingsDOCKER.py
+settingsLOCALHOST.py
 
 # Django stuff #
 ################

@@ -15,7 +15,16 @@
 }
 
 .submit-button, .default-button {
-    background: #417690 !important;
+    background: #417690 ;
+    padding: 10px 15px ;
+    border: none ;
+    border-radius: 4px;
+    color: #fff; 
+    cursor: pointer;
+}
+
+.info-button {
+    background: #5bc0de !important;
     padding: 10px 15px !important;
     border: none !important;
     border-radius: 4px !important;

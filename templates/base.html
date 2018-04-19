@@ -13,10 +13,7 @@
     <!-- Loading Datatables -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/datatables.min.css' %}"/>
    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-    <!-- Loading Admin Base CSS -->
-    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}" /> 
-    {% block extrastyle %}
-    {% endblock %} 
+    <!-- Loading Admin Base CSS --> 
     {% if LANGUAGE_BIDI %}
     <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static " admin/css/rtl.css " %}{% endblock %}" />{% endif %} {% block extrahead %}{% endblock %} {% block responsive %}
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -28,6 +25,7 @@
     {% block blockbots %}
     <meta name="robots" content="NONE,NOARCHIVE" />
     {% endblock %}
+     <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'admin/css/base.css' %}{% endblock %}"/>
     <!--Change Lists CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css'%}">
     <!--Custom App CSS File-->
@@ -38,6 +36,59 @@
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/datatables.min.js'%}"></script>
+<style>
+/* Top header background color as well as text color for welcome message,
+does not effect Change Password/Acccount Managements/... see #3 */
+/*1*/#header {
+    background:{% firstof config.primary_color default_config.primary_color %};
+    color:{% firstof config.secondary_text_color default_config.secondary_text_color %};
+}
+
+/* Company branding text color */
+/*2*/#branding a:link, #branding a:visited { color:{% firstof config.primary_text_color default_config.primary_text_color %}; }
+
+     
+/* Text color for User account options at top-right of header */
+/*3*/#user-tools a:link, #user-tools a:visited {color:{% firstof config.secondary_text_color default_config.secondary_text_color %};}
+
+
+/* card header colors, for anything using bootstrap cards */
+/*4*/.card-header {background-color:{% firstof config.secondary_color default_config.secondary_color %};}
+
+ /* Quick actions header */
+/*5*/.module h2 {background:{% firstof config.secondary_color default_config.secondary_color %};}
+
+/* index buttons "View Details", color and hover color */
+/*6*/a.button
+ { background-color:{% firstof config.primary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %}; } 
+
+ a.button:hover
+ { background-color:{% firstof config.secondary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %};} 
+
+/* Breadcrumbs background color and | color */
+/*7*/#breadcrumbs { background: {% firstof config.secondary_color default_config.secondary_color %}; 
+    color:{% firstof config.primary_text_color default_config.primary_text_color %}; }
+
+/* #breadcrumbs a { color:{% firstof config.primary_text_color default_config.primary_text_color %}; } */
+
+/* session-list view buttons , left button #8, right button #9, use !important to ovveride boostrap*/
+/*8*/.submit-button, .default-button { background: {% firstof config.primary_color default_config.primary_color %} !important; color: #fff !important; } 
+
+/*9*/.info-button { background: {% firstof config.secondary_color default_config.secondary_color %} 
+!important; color: #fff !important; }
+
+/* Discussion forum text/link color */
+.post-title { color: {% firstof config.primary_color default_config.primary_color %}; }
+
+/* Default site-wide link color */
+a { color: {% firstof config.primary_color default_config.primary_color %}; }
+
+.jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color %}; }
+
+.header-welcome-msg { color: {% firstof config.primary_text_color default_config.primary_text_color %}; }
+
+
+</style>
 </head>
 {% load i18n %}
 
@@ -49,15 +100,21 @@
             <div id="header" style="height: auto!important; line-height: 40px;">
                 <div id="branding" style="vertical-align: middle; margin-top: 6px">
                     <h1 id="site-name" style="vertical-align: middle">
-                        <a href="/">
-                            Classmo
+                        <a id="name" href="/">
+                        {%if config.logo %}
+                      <span><img src="{{config.logo}}" width="40%" height="40%"></span>
+                      {% else %}
+                      {% firstof config.company default_config.company %}
+                      {% endif %}
                         </a>
                     </h1>
                 </div>
                 {% if user.is_authenticated %}
                 <div id="user-tools">
                     Welcome,
-                    <strong>{% firstof user.get_short_name user.get_username %} ({{role}})</strong>. 
+                    <strong>
+                            {% firstof user.get_short_name user.get_username %} ({{role}})
+                    </strong>. 
                     {% block userlinks %} 
                         {% if user.is_staff %}
                         <a href="/admin/login?next=/admin/">{% trans 'Admin Site' %}</a> / 
@@ -69,10 +126,12 @@
                             {% endif %} 
                         {% endif %} 
                         {% if user.has_usable_password %}
+                        <span id=user-tools2>
                         <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>/ 
                         {% endif %}
                         <a href="{% url 'schedules:profile' %}">{% trans 'Account Management' %}</a>/ 
                         <a href="{% url 'logout' %}?next=/">{% trans 'Log out' %}</a> 
+                    </span>
                     {% endblock %}
                     <span class="gravatar-wrap-small">
                         <img src="{{user.email|gravatar_url:150}}" class="gravatar-small">
@@ -84,14 +143,14 @@
             </div>
             <!-- END Header -->
             {% block breadcrumbs %}
-            <div class="breadcrumbs">
+            <div id="breadcrumbs" class="breadcrumbs">
                 <a href="{% url 'schedules:index' %}">{% trans 'Home' %}</a>
                 {%if is_instructor or user.is_staff%}
                 | <a href="{% url 'schedules:assignments' 'mine' %}">{% trans 'Sessions' %}</a>
                 {%endif%}
                 {%if is_student or user.is_staff%}
-                | <a href="{% url 'schedules:subjects' 'mine'%}">{% trans 'Courses' %}</a>
-                <!-- &#47;<a href="{% url 'schedules:homework' %}">{% trans 'Homeworks' %}</a> -->
+                | <a href="{% url 'schedules:subjects' 'all'%}">{% trans 'Register' %}</a>
+                | <a href="{% url 'schedules:subjects' 'mine'%}">{% trans 'My Courses' %}</a>
                 {%endif%}
                 | <a href="{% url 'discussions:discussion_index' %}">{% trans 'Discussions' %}</a>
             </div>

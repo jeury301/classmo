@@ -2,7 +2,7 @@
 
 {% block content %}
 {% load static %}
-{% load tz%}
+{% load tz %}
 
 <link href="{% static '/discussions/css/discussions.css' %}" rel="stylesheet">
 <div class="container">
@@ -10,7 +10,7 @@
     <div class="discuss-topnav">
 
         <small>
-            <a href="{% url 'discussions:discussion_index' %}">
+            <a id="post-title" href="{% url 'discussions:discussion_index' %}">
                 < Back to forum directory
             </a>
         </small>
@@ -25,7 +25,7 @@
         {% if user.is_authenticated %}
             {% if posts %}
                 <a href="{% url 'discussions:new_post' subject.id %}">
-                    <strong>+ Add a new post</strong>
+                    <strong id="post-title">+ Add a new post</strong>
                 </a>
                  <!-- TODO: style this correctly -->
             {% else %}

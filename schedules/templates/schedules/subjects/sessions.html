@@ -19,6 +19,7 @@
                 <p>Here you can view and manage sessions for this course.</p>
                 <p><a href="{%url 'discussions:list_posts' subject.pk%}" style="text-decoration: underline;">{{subject}} forum</a></p>
             </div>
+            {%if sessions|length%}
             <table class="table dt-responsive table-hover" id="subjects">
                 <thead>
                     <tr>
@@ -49,6 +50,14 @@
                     {%endfor%}
                 </tbody>
             </table>
+            {%else%}
+            <div class="jumbotron general-top">
+                <h3><i class="fa fa-exclamation-triangle"></i> 
+                    You don't have any sessions registered</h3>
+                <br/>
+                <p>Why not view <a class="btn success-button" href="{%url 'schedules:sessions' subject.id 'all'%}">available sessions</a> for this course?</p>
+            </div>
+            {%endif%}
         </div>
         <div class="col-md-3">
             <div class="module filtered">

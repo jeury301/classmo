@@ -1,5 +1,4 @@
 /* LOGIN FORM */
-
 body.login {
     background: #f8f8f8;
 }
@@ -13,9 +12,6 @@ body.login {
     font-size: 18px;
 }
 
-.login #header h1 a {
-    color: #fff;
-}
 
 .login #content {
     padding: 20px 20px 0;

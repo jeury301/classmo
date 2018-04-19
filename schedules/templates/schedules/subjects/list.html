@@ -11,11 +11,18 @@
     <div class="row">
         <div class="col-md-9">
             <div class="jumbotron general-top">
+                
+                {%if is_mine%}
+                <h1>My Courses</h1>
+                <p>{% firstof config.my_courses_body default_config.my_courses_body%}</p>
+                {%else%}
                 <h1>Courses</h1>
-                <p>Here you can view and manage your courses, as well as all open courses.</p>
+                <p>{% firstof config.all_courses_body default_config.all_courses_body%}</p>
+                {%endif%}
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    {%if courses|length%}
                     {%for course in courses%}
                     <div class="card" id="changelist">
                         <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
@@ -26,7 +33,13 @@
                                 </p>
                                 <br/>
                                 <p class="card-text">
-                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'mine'%}" role="button">View Sessions</a>
+                                    {%if is_mine%}
+                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'mine'%}" role="button">My Registrations</a>
+                                    &nbsp;&nbsp;
+                                    <a class="info-button btn-lg" href="{%url 'schedules:sessions' course.pk 'all'%}" role="button">Other Available Sessions</a>
+                                    {%else%}
+                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'all'%}" role="button">More Info</a>
+                                    {%endif%}
                                     &nbsp;&nbsp;
                                     <a href="{%url 'discussions:list_posts' course.pk%}" style="text-decoration: underline;">Discussion forum</a>
                                 </p>
@@ -40,6 +53,14 @@
                         </div></div><div class="row"><div class="col-md-12">
                     {%endif%} 
                 {%endfor%}
+                {%else%}
+                <div class="jumbotron general-top">
+                
+                <h3><i class="fa fa-exclamation-triangle"></i> You are not registered to any courses!</h3>
+                    <br/>
+                    <p>Why not view <a class="btn success-button" href="{%url 'schedules:subjects' 'all'%}">all available courses</a> to register?</p>
+                </div>
+                {%endif%}
                 </div>
             </div>
         </div>
@@ -50,7 +71,7 @@
                     <h3> Courses to view: </h3>
                     <ul>
                         <li class="{{my_courses}}"><a href="{%url 'schedules:subjects' 'mine'%}" title="My Sessions">My Courses</a></li>
-                        <li class="{{all_courses}}"><a href="{%url 'schedules:subjects' 'all'%}" title="All Sessions">All Courses</a></li>
+                        <li class="{{all_courses}}"><a href="{%url 'schedules:subjects' 'all'%}" title="All Sessions">All Available Courses</a></li>
                     </ul>
                 </div>
             </div>
