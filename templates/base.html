@@ -64,7 +64,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
  { background-color:{% firstof config.primary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %}; } 
 
  a.button:hover
- { background-color:{% firstof config.secondary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %};} 
+ { background-color:{% firstof config.secondary_color default_config.secondary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %};} 
 
 /* Breadcrumbs background color and | color */
 /*7*/#breadcrumbs { background: {% firstof config.secondary_color default_config.secondary_color %}; 
@@ -90,6 +90,16 @@ does not effect Change Password/Acccount Managements/... see #3 */
 
 .btn-primary span {
     color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+}
+
+input.input-submit-btn{
+    background: {% firstof config.primary_color default_config.primary_color %};
+    color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+    margin-left: 55px;
+}
+
+input.input-submit-btn:hover{
+    background: {% firstof config.secondary_color default_config.secondary_color %};
 }
 
 .nested-comment {
