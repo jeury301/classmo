@@ -83,9 +83,17 @@ does not effect Change Password/Acccount Managements/... see #3 */
 .jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color
  %}; }
 
- .btn-primary {
+.btn-primary {
     background: {% firstof config.primary_color default_config.primary_color %};
     color: {% firstof config.primary_text_color default_config.primary_text_color %};
+}
+
+.btn-primary span {
+    color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+}
+
+.nested-comment {
+    border-left: 3px solid {% firstof config.jumbotron_color default_config.jumbotron_color %};
 }
 
 

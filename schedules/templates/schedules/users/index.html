@@ -105,9 +105,9 @@
                         <div id="comment-section">
                             <h3>{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
                             <div class="post-listing">
-                                {% if post.body|length > 15 %}
-                                <span style="padding-right:15px;">{{post.body|slice:"0:20"}}</span> {% else %}
-                                <span style="padding-right:15px;clear:right;">{{post.body}}</span> {% endif %}
+                                {% if post.title|length > 15 %}
+                                <span style="padding-right:15px;">{{post.title|slice:"0:20"}}</span> {% else %}
+                                <span style="padding-right:15px;clear:right;">{{post.title}}</span> {% endif %}
                                 <a href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right" style="float:right"></i></a></div>
                         </div>
                         {% endfor %} {% else %}
