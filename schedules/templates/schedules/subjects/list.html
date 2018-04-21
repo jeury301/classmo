@@ -34,14 +34,22 @@
                                 <br/>
                                 <p class="card-text">
                                     {%if is_mine%}
-                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'mine'%}" role="button">My Registrations</a>
+                                    <a class="btn btn-primary button" style="float:none;" href="{%url 'schedules:sessions' course.pk 'mine'%}" role="button">
+                                        <span>My Registrations</span>
+                                    </a>
                                     &nbsp;&nbsp;
-                                    <a class="info-button btn-lg" href="{%url 'schedules:sessions' course.pk 'all'%}" role="button">Other Available Sessions</a>
+                                    <a class="btn btn-primary button" style="float:none;" href="{%url 'schedules:sessions' course.pk 'all'%}" role="button">
+                                        <span>Other Available Sessions</span>
+                                    </a>
                                     {%else%}
-                                    <a class="default-button btn-lg" href="{%url 'schedules:sessions' course.pk 'all'%}" role="button">More Info</a>
+                                    <a class="btn btn-primary button" style="float:none;" href="{%url 'schedules:sessions' course.pk 'all'%}" role="button">
+                                        <span>More Info</span>
+                                    </a>
                                     {%endif%}
                                     &nbsp;&nbsp;
-                                    <a class="default-button btn-lg" href="{%url 'discussions:list_posts' course.pk%}" role="button">Discussion forum</a>
+                                    <a class="btn btn-primary button" style="float:none;" href="{%url 'discussions:list_posts' course.pk%}" role="button">
+                                        <Span>Discussion forum</Span>
+                                    </a>
                                 </p>
                             </div>
                         </div>

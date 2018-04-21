@@ -68,7 +68,7 @@ a.button
 
 /*7 button hover color */
  a.button:hover
- { background-color:{% firstof config.secondary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %};} 
+ { background-color:{% firstof config.secondary_color default_config.secondary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %};} 
 
 /*8 Breadcrumbs background color */
 #breadcrumbs { background: {% firstof config.secondary_color default_config.secondary_color %}; }
@@ -94,17 +94,25 @@ a.button
     color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
 }
 
+input.input-submit-btn{
+    background: {% firstof config.primary_color default_config.primary_color %};
+    color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+    margin-left: 55px;
+}
 
-.fa, .fa-arrow-circle-right
-{
+input.input-submit-btn:hover{
+    background: {% firstof config.secondary_color default_config.secondary_color %};
+}
+
+.fa, .fa-arrow-circle-right {
     color: {% firstof config.secondary_color default_config.secondary_color %};
 }
+
 
 #changelist-filter { 
     background-color: {% firstof config.jumbotron_color default_config.jumbotron_color %};
  
 }
-
 
 
 .nested-comment {
