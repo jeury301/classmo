@@ -99,8 +99,14 @@
                         <h2>Home</h2>
                         <h3 style="font-size:1.2em;">Quick Actions</h3>
                         <ul>
-                            <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1"><span style="font-size:1.2em;color:black">Discussion Forum</a></li>
-                            <li><a href="{% url 'schedules:account' %}" title="Thing 2"><span style="font-size:1.2em;color:black;">Update My Info</span></a></li>
+                            <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1">
+                               <i class="fas fa-arrow-right" style="float:left;margin-top:3px;padding-right:2px;"></i>
+                                <span style="font-size:1.2em;color:black">Discussion Forum</a></li>
+                            <li>
+                                <a href="{% url 'schedules:account' %}" title="Thing 2">
+                                    <i class="fas fa-arrow-right" style="float:left;margin-top:3px;padding-right:2px;"></i>
+                                    <span style="font-size:1.2em;color:black;">Update My Info</span></a>
+                            </li>
                         </ul>
                         {% endif %} {% if is_instructor %}
                         <h2>Home</h2>
@@ -129,7 +135,7 @@
                                 <span>{{post.title|slice:"0:140"}}...</span> {% else %}
                                 <span>{{post.title}}</span> {% endif %}
                         </div>
-                        <a style="border-bottom: 1px solid #666;" href="{% url 'discussions:list_comments' post.id %}"><span id="arrow"><i class="fas fa-arrow-circle-right" style="float:right"></i></span><br></a>
+                        <a style="border-bottom: 1px solid #666;padding-right:5px;" href="{% url 'discussions:list_comments' post.id %}"><span id="arrow"><i class="fas fa-arrow-circle-right" style="float:right"></i></span><br></a>
                         </div>
                         {% endfor %} {% else %}
                         <Span style="padding-left:1.5em;padding-right:2em;">Looks like nothing is here for you</Span> {% endif %}
