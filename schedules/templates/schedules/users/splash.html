@@ -246,8 +246,8 @@ font-size:.5rem;
    t=total animation duration =(a+b)*n =30
   START OF TRANSITION SECTION
 */
-{% if default_config.splash_images %}
-{% with trans_info=default_config.splash_images|get_transition_info %}
+{% if config.splash_images %}
+{% with trans_info=config.splash_images|get_transition_info %}
 {% if trans_info %}
 #cf img, #cf span
 {
@@ -277,16 +277,12 @@ font-size:.5rem;
 {
   animation-delay: {{key}}s;
 }
-#cf span:nth-of-type({{forloop.counter}}) 
-{
-  animation-delay: {{key}}s;
-}
 
 {% endfor %}
 {% endif %}
 {% endwith %}
 {% else %}
-{% with trans_info=config.splash_images|get_transition_info %}
+{% with trans_info=default_config.splash_images|get_transition_info %}
 {% if trans_info %}
 #cf img, #cf span
 {
@@ -311,14 +307,10 @@ font-size:.5rem;
 }
 
 {% for key in trans_info.image_of_nth %}
-{{ forloop.counter0 }}
-#cf img:nth-of-type({{forloop.counter}}s) {
+#cf img:nth-of-type({{forloop.counter}}) {
   animation-delay: {{key}}s;
 }
-#cf span:nth-of-type({{forloop.counter}}) 
-{
-  animation-delay: {{key}}s;
-}
+
 {% endfor %}
 {% endif %}
 {% endwith %}
@@ -409,7 +401,7 @@ console.log("Centered");
 {% load i18n %}
 <body>
     <!-- Container -->
-    <div id="cover"><h1>Loading Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
+    <div id="cover"><h1>Powered by Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
             <!-- Header -->
             <div id="header">

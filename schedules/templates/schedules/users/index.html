@@ -29,28 +29,28 @@
         <div class="row">
             <div class="col-md-8" id="session-container">
                 <!-- Col content -->
+                {% if request.user.is_authenticated and user|has_group:"Students" or user|has_group:"Instructors"  %}
                 <!-- Student start -->
-                {% if user.is_authenticated %}
                 {% if registrations %} {% for reg in registrations %}
                 <div class="card">
                     <div class="card-header">
-                        <h1><strong>{{reg.subject.name}}</strong></h1><strong style="float:right;">{{ reg.pk|get_time_from_now }}</strong></div>
+                        <h1><strong>{{reg.subject.name}}</strong></h1> <strong id="time">{{ reg.pk | get_time_from_now }}</strong></div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
                                 <ul>
                                     <li><strong>Location:</strong> {{reg.location}}</li>
                                     <li><strong>Instructor:</strong> {{reg.instructor}}</li>
-                                    {% if request.user|has_group:"Instructors" %}
-                                    <li><strong>Capacity:</strong> {{reg.registered_students}}/{{reg.max_capacity}}</li>
-                                    {% endif %}
                                     <li><strong>Date:</strong> {{ reg.pk|get_day_of_week }}</li>
+                                    {% if request.user|has_group:"Instructors" %}
+                                    <li><strong>Capacity:</strong>{{reg.registered_students}}/{{reg.max_capacity}}</li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <div class="col-md-8">
                                 <ul id="info-list">
                                     <li id="top-element">
-                                        <h3 style="margin-top:.2em;padding:1px;">Details:</h3></li>
+                                        <h3>Details:</h3></li>
                                     {% if reg.subject.description|length < 500 %} 
                                     <li>{{reg.subject.description}}</li>
                                         {% else %}
@@ -61,57 +61,79 @@
                         </div>
                         <br>
                         <a class="btn btn-primary button" id="detail-button" href="{% url 'schedules:session' reg.id %}" role="button"><Span>View Details</Span></a>
+                        {% if request.user|has_group:"Instructors" %}
+                        <a class="btn btn-primary button" id="detail-button" style="margin-right:1em;" href="{% url 'schedules:session_setudents' reg.id %}" role="button"><Span>View Students</Span></a>
+                        {% endif %}
                     </div>
                 </div>
                 <br> {% endfor %} {% else %}
+                <!-- No sessions-->
                 <div class="jumbotron">
                     <h1 class="display-4">{%firstof config.welcome_title default_config.welcome_title%}</h1>
                     <p class="lead">{%firstof config.slogan default_config.slogan%}</p>
                     <!-- <hr class="my-4">-->
-                    <p class="lead">Hello instructor, looks like you're not assigned to any sessions, click to browse available sessions</p>
+                    <p class="lead">{%firstof config.welcome_body default_config.welcome_body%}</p>
                     <br>
-                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span>Browse</Span></a>
+                    <a class="btn btn-primary button" style="float:none;" href="{% url 'schedules:subjects' 'all' %}" role="button"><Span>Let's Get Started!</Span></a>
                 </div>
-                {% endif %} {% else %}
-                <div class="card" style="">
-                    <div class="card-header" style="">You don't have a role</div>
-                    <div class="card-body">
-                        <p> Before using classmo features, please choose a role</p>
-                    </div>
+                {% endif %} 
+                <br> 
+                
+                 {% else %}
+               <div class="jumbotron">
+                    <h1 class="display-4">Welcome Admin</h1>
+                    <p class="lead">From this view you can manage the data tables and users as well as their groups</p>
+                    <!-- <hr class="my-4">-->
+                    <p class="lead">---</p>
+                    <br>
+                    <a class="btn btn-primary button" style="float:none;" href="{% url 'admin:login' %}" role="button"><Span>Go to Admin Site</Span></a>
                 </div>
                 {% endif %}
                 <br>
             </div>
             <!--end teacher -->
             <div class="col-md-4" style="">
-                <div class="module filtered">
+                <div class="module filtered" id="quick-actions">
                     <div id="changelist-filter" style="width: 100%">
                         {% if is_student %}
                         <h2>Quick Actions</h2>
                         <h3>Things</h3>
                         <ul>
-                            <li><a href="#" title="Thing 1">Your Instructors</a></li>
-                            <li><a href="#" title="Thing 2">Thing 2</a></li>
+                            <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1">Discussion Forum</a></li>
+                            <li><a href="{% url 'schedules:account' %}" title="Thing 2">Update My Info</a></li>
                         </ul>
                         {% endif %} {% if is_instructor %}
                         <h2>Home</h2>
                         <h3>Quick Actions</h3>
                         <ul>
                             <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1">Discussion Forum</a></li>
-                            <li><a href="#" title="Thing 2">View Upcoming Sessions</a></li>
+                            <li><a href="{% url 'schedules:account' %}" title="Thing 2">Update My Info</a></li>
+                            <li><a href="#" title="My Info">My Students</a></li>
                         </ul>
                         {% endif %}
-                        <h2>Recent Comments</h2> {% if post_list %} {% for post in post_list %}
+                        <h2 style="margin:0;">Recent Posts</h2> 
+                        <div id="recent-comments">{% if post_list %} {% for post in post_list %}
                         <div id="comment-section">
-                            <h3>{{post.author}}</h3><span style="font-size:10px;">posted in </span><span>{{post.subject}}</span>
-                            <div class="post-listing">
-                                {% if post.title|length > 15 %}
-                                <span style="padding-right:15px;">{{post.title|slice:"0:20"}}</span> {% else %}
-                                <span style="padding-right:15px;clear:right;">{{post.title}}</span> {% endif %}
-                                <a href="{% url 'discussions:list_comments' post.id %}"><i class="fas fa-arrow-circle-right" style="float:right"></i></a></div>
+<<<<<<< HEAD
+                            <div id="comment-header" style="padding-left:1em;padding-bottom:.5em;">
+                            <table id="comment-table">
+                                <tbody>
+                            <tr><th><em style="font-size:1.2em;">{{post.author}}</em></th>
+                                <th><span style="font-size:.9em;">posted in</span></th>
+                                    <th><span><em style="font-size:1.2em;">{{post.subject}}</em></span></th></tr>
+                                </tbody>
+                        </table>
+                    </div>
+                            <div class="post-listing" style="padding-right:2em;border-bottom:none;padding-bottom:0px;">
+                                {% if post.title|length > 140 %}
+                                <span>{{post.title|slice:"0:140"}}...</span> {% else %}
+                                <span>{{post.title}}</span> {% endif %}
+                        </div>
+                        <a style="border-bottom: 1px solid #666;" href="{% url 'discussions:list_comments' post.id %}"><span id="arrow"><i class="fas fa-arrow-circle-right" style="float:right"></i></span><br></a>
                         </div>
                         {% endfor %} {% else %}
-                        <Span style="padding-left:15px;padding-right:15px;">Looks like nothing is here for you</Span> {% endif %}
+                        <Span style="padding-left:1.5em;padding-right:2em;">Looks like nothing is here for you</Span> {% endif %}
+                    </div>
                     </div>
                 </div>
             </div>
