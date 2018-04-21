@@ -85,16 +85,15 @@ a.button
 /*11 Discssuin forum link colors */
 #post-title { color: {% firstof config.primary_color default_config.primary_color %}; }
 
-.jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color
- %}; }
 
- .btn-primary {
+.btn-primary {
     background: {% firstof config.primary_color default_config.primary_color %};
     color: {% firstof config.primary_text_color default_config.primary_text_color %};
 }
 .btn-primary span {
     color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
 }
+
 
 .fa, .fa-arrow-circle-right
 {
@@ -103,6 +102,26 @@ a.button
 
 #quick-actions { background-color: {% firstof config.jumbotron_color default_config.jumbotron_color
  %}; }
+
+
+
+.nested-comment {
+    border-left: 3px solid {% firstof config.jumbotron_color default_config.jumbotron_color %};
+}
+
+/* Global font family */
+html *
+{
+   font-family: {% firstof config.font_family default_config.font_family %} !important;
+}
+
+/* Jumbotron background color */
+
+.jumbotron {
+    background-color: {% firstof config.jumbotron_color default_config.jumbotron_color %};
+}
+
+
 
 </style>
 </head>
@@ -118,7 +137,7 @@ a.button
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
                         {%if config.logo %}
-                      <span>{{config.logo}}</span>
+                      <span><img src="{{config.logo}}" height="35px"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}

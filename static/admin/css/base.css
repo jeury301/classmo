@@ -999,7 +999,11 @@ table#change-history tbody th {
 }
 
 a:-webkit-any-link {
-    color: -webkit-link;
+    color: #417690;
     cursor: pointer;
     text-decoration:none;
+}
+
+a:hover:-webkit-any-link {
+    color: #274656;
 }

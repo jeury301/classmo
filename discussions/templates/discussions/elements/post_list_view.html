@@ -35,7 +35,7 @@
     <div class="post-rightbox">
         <div>
             <h2 class="post-title">
-              <a href="{% url 'discussions:list_comments' post.post.id %}">
+              <a id="post-title" href="{% url 'discussions:list_comments' post.post.id %}">
                 {{post.post.title}}
               </a>
             </h2>
@@ -61,7 +61,7 @@
         </div>
         <div>
             <small>
-                <a href="{% url 'discussions:list_comments' post.post.id %}">{{post.comment_cnt}} comments</a>
+                <a id="post-title" href="{% url 'discussions:list_comments' post.post.id %}">{{post.comment_cnt}} comments</a>
             </small>
         </div>
     </div>

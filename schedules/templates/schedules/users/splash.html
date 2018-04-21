@@ -55,9 +55,9 @@ body
 #footer p{
 display:inline-block;
 margin-top:1vh;
-border-bottom:solid 1px {% firstof config.secondary_color default_config.secondary_color %};
+border-bottom:solid 1px {% firstof config.primary_text_color default_config.primary_text_color %};
 z-index:1;
-margin-left:100px;
+margin-left:20px;
 color:{% firstof config.primary_text_color default_config.primary_text_color %};
 }
 #cover
@@ -316,6 +316,11 @@ font-size:.5rem;
 {% endwith %}
 {% endif %}
 /* END OF TRANSISTION SECTION */
+
+html *
+{
+   font-family: {% firstof config.font_family default_config.font_family %} !important;
+}
 
 </style>
  <script>
