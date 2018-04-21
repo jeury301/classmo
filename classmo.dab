@@ -1,0 +1,41 @@
+{
+  "Services": {
+    "db": {
+      "Image": "postgres@sha256:8b59f342fbd813e05dc22c11b3a30404fe13a5921ff812a836617530a0ba7fbd", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 5432, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "nginx": {
+      "Image": "nginx@sha256:285b49d42c703fdf257d1e2422765c4ba9d3e37768d6ea83d7fe2043dad6e63d", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 8000, 
+          "Protocol": "tcp"
+        }
+      ]
+    }, 
+    "web": {
+      "Image": "sidhumehtab/classmo@sha256:06a0c26a35ef30ef0317b2193c0d6aa2ecc06c92444c436ecbb1ade2d4136888", 
+      "Networks": [
+        "default"
+      ], 
+      "Ports": [
+        {
+          "Port": 8000, 
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  }, 
+  "Version": "0.1"
+}
