@@ -93,14 +93,14 @@
             </div>
             <!--end teacher -->
             <div class="col-md-4" style="">
-                <div class="module filtered" id="quick-actions">
+                <div class="module filtered">
                     <div id="changelist-filter" style="width: 100%">
                         {% if is_student %}
-                        <h2>Quick Actions</h2>
-                        <h3>Things</h3>
+                        <h2>Home</h2>
+                        <h3 style="font-size:1.2em;">Quick Actions</h3>
                         <ul>
-                            <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1">Discussion Forum</a></li>
-                            <li><a href="{% url 'schedules:account' %}" title="Thing 2">Update My Info</a></li>
+                            <li><a href="{% url 'discussions:discussion_index' %}" title="Thing 1"><span style="font-size:1.2em;color:black">Discussion Forum</a></li>
+                            <li><a href="{% url 'schedules:account' %}" title="Thing 2"><span style="font-size:1.2em;color:black;">Update My Info</span></a></li>
                         </ul>
                         {% endif %} {% if is_instructor %}
                         <h2>Home</h2>
@@ -114,7 +114,7 @@
                         <h2 style="margin:0;">Recent Posts</h2> 
                         <div id="recent-comments">{% if post_list %} {% for post in post_list %}
                         <div id="comment-section">
-<<<<<<< HEAD
+
                             <div id="comment-header" style="padding-left:1em;padding-bottom:.5em;">
                             <table id="comment-table">
                                 <tbody>
