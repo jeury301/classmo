@@ -93,7 +93,7 @@
             </div>
             <!--end teacher -->
             <div class="col-md-4" style="">
-                <div class="module filtered">
+                <div class="module filtered" id="quick-actions">
                     <div id="changelist-filter" style="width: 100%">
                         {% if is_student %}
                         <h2>Quick Actions</h2>
@@ -111,24 +111,25 @@
                             <li><a href="#" title="My Info">My Students</a></li>
                         </ul>
                         {% endif %}
-                        <h2 style="margin:0;">Recent Comments</h2> 
+                        <h2 style="margin:0;">Recent Posts</h2> 
                         <div id="recent-comments">{% if post_list %} {% for post in post_list %}
                         <div id="comment-section">
                             <div id="comment-header" style="padding-left:1em;padding-bottom:.5em;">
                             <table id="comment-table">
                                 <tbody>
                             <tr><th><em style="font-size:1.2em;">{{post.author}}</em></th>
-                                <th><span style="font-size:.7em;">posted in </span></th>
+                                <th><span style="font-size:.9em;">posted in</span></th>
                                     <th><span><em style="font-size:1.2em;">{{post.subject}}</em></span></th></tr>
                                 </tbody>
                         </table>
                     </div>
                             <div class="post-listing" style="padding-right:2em;border-bottom:none;padding-bottom:0px;">
-                                {% if post.body|length > 140 %}
-                                <span>{{post.body|slice:"0:140"}}...</span> {% else %}
-                                <span>{{post.body}}</span> {% endif %}
+                                {% if post.title|length > 140 %}
+                                <span>{{post.title|slice:"0:140"}}...</span> {% else %}
+                                <span>{{post.title}}</span> {% endif %}
                         </div>
-                        <a style="border-bottom: 1px dotted #666;" href="{% url 'discussions:list_comments' post.id %}"><span id="arrow"><i class="fas fa-arrow-circle-right" style="float:right"></i></span></a></div>
+                        <a style="border-bottom: 1px solid #666;" href="{% url 'discussions:list_comments' post.id %}"><span id="arrow"><i class="fas fa-arrow-circle-right" style="float:right"></i></span><br></a>
+                        </div>
                         {% endfor %} {% else %}
                         <Span style="padding-left:1.5em;padding-right:2em;">Looks like nothing is here for you</Span> {% endif %}
                     </div>

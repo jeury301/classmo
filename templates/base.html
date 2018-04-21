@@ -101,6 +101,8 @@ a.button
     color: {% firstof config.secondary_color default_config.secondary_color %};
 }
 
+#quick-actions { background-color: {% firstof config.jumbotron_color default_config.jumbotron_color
+ %}; }
 
 </style>
 </head>
@@ -116,7 +118,7 @@ a.button
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
                         {%if config.logo %}
-                      <span><img src="{{config.logo}}" style="width:30%;height:30%;margin-bottom:-3%;"></span>
+                      <span>{{config.logo}}</span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
