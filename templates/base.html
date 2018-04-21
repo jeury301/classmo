@@ -96,6 +96,18 @@ does not effect Change Password/Acccount Managements/... see #3 */
     border-left: 3px solid {% firstof config.jumbotron_color default_config.jumbotron_color %};
 }
 
+/* Global font family */
+html *
+{
+   font-family: {% firstof config.font_family default_config.font_family %} !important;
+}
+
+/* Jumbotron background color */
+
+.jumbotron {
+    background-color: {% firstof config.jumbotron_color default_config.jumbotron_color %};
+}
+
 
 </style>
 </head>
@@ -111,7 +123,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
                         {%if config.logo %}
-                      <span>{{config.logo}}</span>
+                      <span><img src="{{config.logo}}" height="35px"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
