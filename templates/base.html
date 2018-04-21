@@ -37,47 +37,52 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/datatables.min.js'%}"></script>
 <style>
-/* Top header background color as well as text color for welcome message,
+/*1 Top header background color as well as text color for welcome message,
 does not effect Change Password/Acccount Managements/... see #3 */
-/*1*/#header {
+#header {
     background:{% firstof config.primary_color default_config.primary_color %};
-    color:{% firstof config.secondary_text_color default_config.secondary_text_color %};
+    color:{% firstof config.primary_text_color default_config.primary_text_color %};
 }
+/*2 Card header text color */
     .card-header {color:{% firstof config.secondary_text_color default_config.secondary_text_color %};}
 
 /* Company branding text color */
 /*2*/#branding a:link, #branding a:visited { color:{% firstof config.primary_text_color default_config.primary_text_color %}; }
 
      
-/* Text color for User account options at top-right of header */
-/*3*/#user-tools a:link, #user-tools a:visited {color:{% firstof config.secondary_color default_config.secondary_color %};}
+/*3 Text color for User account options at top-right of header */
+#user-tools a:link, #user-tools a:visited, #user-tools2 {
+    color:{% firstof config.secondary_text_color default_config.secondary_text_color %};
+}
 
 
-/* card header colors, for anything using bootstrap cards */
-/*4*/.card-header {background-color:{% firstof config.secondary_color default_config.secondary_color %};}
+/*4 card header colors, for anything using bootstrap cards */
+.card-header {background-color:{% firstof config.secondary_color default_config.secondary_color %};}
 
- /* Quick actions header */
-/*5*/.module h2 {background:{% firstof config.secondary_color default_config.secondary_color %};}
+ /*5 Quick actions header */
+.module h2 {background:{% firstof config.secondary_color default_config.secondary_color %};}
 
-/* index buttons "View Details", color and hover color */
-/*6*/a.button
+/*6 index buttons "View Details", color and hover color */
+a.button
  { background-color:{% firstof config.primary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %}; } 
 
+/*7 button hover color */
  a.button:hover
  { background-color:{% firstof config.secondary_color default_config.primary_color %}; border-color:{% firstof config.primary_color default_config.primary_color %};} 
 
-/* Breadcrumbs background color and | color */
-/*7*/#breadcrumbs { background: {% firstof config.secondary_color default_config.secondary_color %}; 
-   /* color:{% firstof config.primary_text_color default_config.primary_text_color %}; */ }
+/*8 Breadcrumbs background color */
+#breadcrumbs { background: {% firstof config.secondary_color default_config.secondary_color %}; }
 
-/* #breadcrumbs a { color:{% firstof config.primary_text_color default_config.primary_text_color %}; } */
+ /* breadcrumbs text color */
+ #breadcrumbs span { color:{% firstof config.secondary_text_color default_config.secondary_text_color %}; } 
 
-/* session-list view buttons , left button #8, right button #9, use !important to ovveride boostrap*/
-/*8*/.submit-button, .default-button { background: {% firstof config.primary_color default_config.primary_color %} !important; color: #fff !important; } 
+/*9 session-list view buttons , left button #9, right button #10, use !important to ovveride boostrap*/
+.submit-button, .default-button { background: {% firstof config.primary_color default_config.primary_color %} !important; color: #fff !important; } 
 
-/*9*/.info-button { background: {% firstof config.secondary_color default_config.secondary_color %} 
+/*10*/.info-button { background: {% firstof config.secondary_color default_config.secondary_color %} 
 !important; color: #fff !important; }
 
+/*11 Discssuin forum link colors */
 #post-title { color: {% firstof config.primary_color default_config.primary_color %}; }
 
 .jumbotron { background: {% firstof config.jumbotron_color default_config.jumbotron_color
@@ -86,6 +91,14 @@ does not effect Change Password/Acccount Managements/... see #3 */
  .btn-primary {
     background: {% firstof config.primary_color default_config.primary_color %};
     color: {% firstof config.primary_text_color default_config.primary_text_color %};
+}
+.btn-primary span {
+    color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+}
+
+.fa, .fa-arrow-circle-right
+{
+    color: {% firstof config.secondary_color default_config.secondary_color %};
 }
 
 
@@ -103,7 +116,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
                         {%if config.logo %}
-                      <span>{{config.logo}}</span>
+                      <span><img src="{{config.logo}}" style="width:30%;height:30%;margin-bottom:-3%;"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
@@ -143,6 +156,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
             <!-- END Header -->
             {% block breadcrumbs %}
             <div id="breadcrumbs" class="breadcrumbs">
+                <span>
                 <a href="{% url 'schedules:index' %}">{% trans 'Home' %}</a>
                 {%if is_instructor or user.is_staff%}
                 | <a href="{% url 'schedules:assignments' 'mine' %}">{% trans 'Sessions' %}</a>
@@ -152,6 +166,7 @@ does not effect Change Password/Acccount Managements/... see #3 */
                 | <a href="{% url 'schedules:subjects' 'mine'%}">{% trans 'My Courses' %}</a>
                 {%endif%}
                 | <a href="{% url 'discussions:discussion_index' %}">{% trans 'Discussions' %}</a>
+            </span>
             </div>
             {% endblock %} 
         {% endif %} 
