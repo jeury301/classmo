@@ -968,3 +968,9 @@ table#change-history tbody th {
 .popup #header {
     padding: 10px 20px;
 }
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration:none;
+}
