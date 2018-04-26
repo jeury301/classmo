@@ -202,9 +202,6 @@ color:{% firstof config.primary_text_color default_config.primary_text_color %};
   z-index:1;
 }
 
-
-/*.blue-background {background-color:#417690;}*/
-
 #cf span
 {
 position:absolute;
@@ -401,15 +398,15 @@ console.log("Centered");
 {% load i18n %}
 <body>
     <!-- Container -->
-    <div id="cover"><h1>Powered by Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
+    <div id="cover"><h1>Powered by Classmo&nbsp&nbsp<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
             <!-- Header -->
             <div id="header">
                 <div id="branding">
                     <h1 id="site-name">
                     <a href="/">
-                      {%if config.logo == 'disabled' %}
-                      <span id="brand">{{config.logo}}</span>
+                      {%if config.small_logo %}
+                      <span><img src="{{config.small_logo}}" height="35px"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
@@ -451,11 +448,11 @@ console.log("Centered");
                     <h1 class="card-title" id="card-title">{%firstof config.slogan default_config.slogan %}</h1>
 <!--                     <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center; margin-top: 0px" class="card-text">Organize, schedule, meet, achieve</p>
                     <br> -->
-                    <a href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
+                    <a href="{% url 'schedules:register' %}" class="btn btn-primary signup-button">
                         <span>Signup</span>
                       </a>
                     <br>
-                    <a href="{% url 'login' %}" class="btn btn-primary blue-background signup-button">
+                    <a href="{% url 'login' %}" class="btn btn-primary signup-button">
                         <span>Already a member?</span> 
                     </a>
                 </div>

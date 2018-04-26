@@ -146,8 +146,8 @@ html *
                 <div id="branding" style="vertical-align: middle; margin-top: 6px">
                     <h1 id="site-name" style="vertical-align: middle">
                         <a id="name" href="/">
-                        {%if config.logo %}
-                      <span><img src="{{config.logo}}" height="35px"></span>
+                        {%if config.small_logo %}
+                      <span><img src="{{config.small_logo}}" height="35px"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
