@@ -63,15 +63,15 @@
         <div>
 
             <small>
-                <a href="#">Report</a>
+                <a id="post-title" href="#">Report</a>
                 |
-                <a href="{% url 'discussions:new_top' post.post.id %}">Reply</a>
+                <a id="post-title" href="{% url 'discussions:new_top' post.post.id %}">Reply</a>
             </small>
         </div>
         {% else %}
         <div>
             <small>
-                <a href="{% url 'login' %}">Log in to reply</a>
+                <a id="post-title" href="{% url 'login' %}">Log in to reply</a>
             </small>
         </div>
         {% endif %}

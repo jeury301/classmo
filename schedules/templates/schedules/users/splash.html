@@ -55,9 +55,9 @@ body
 #footer p{
 display:inline-block;
 margin-top:1vh;
-border-bottom:solid 1px #f5dd5d;
+border-bottom:solid 1px {% firstof config.primary_text_color default_config.primary_text_color %};
 z-index:1;
-margin-left:100px;
+margin-left:20px;
 color:{% firstof config.primary_text_color default_config.primary_text_color %};
 }
 #cover
@@ -202,9 +202,6 @@ color:{% firstof config.primary_text_color default_config.primary_text_color %};
   z-index:1;
 }
 
-
-/*.blue-background {background-color:#417690;}*/
-
 #cf span
 {
 position:absolute;
@@ -246,8 +243,8 @@ font-size:.5rem;
    t=total animation duration =(a+b)*n =30
   START OF TRANSITION SECTION
 */
-{% if default_config.splash_images %}
-{% with trans_info=default_config.splash_images|get_transition_info %}
+{% if config.splash_images %}
+{% with trans_info=config.splash_images|get_transition_info %}
 {% if trans_info %}
 #cf img, #cf span
 {
@@ -277,16 +274,12 @@ font-size:.5rem;
 {
   animation-delay: {{key}}s;
 }
-#cf span:nth-of-type({{forloop.counter}}) 
-{
-  animation-delay: {{key}}s;
-}
 
 {% endfor %}
 {% endif %}
 {% endwith %}
 {% else %}
-{% with trans_info=config.splash_images|get_transition_info %}
+{% with trans_info=default_config.splash_images|get_transition_info %}
 {% if trans_info %}
 #cf img, #cf span
 {
@@ -311,19 +304,20 @@ font-size:.5rem;
 }
 
 {% for key in trans_info.image_of_nth %}
-{{ forloop.counter0 }}
-#cf img:nth-of-type({{forloop.counter}}s) {
+#cf img:nth-of-type({{forloop.counter}}) {
   animation-delay: {{key}}s;
 }
-#cf span:nth-of-type({{forloop.counter}}) 
-{
-  animation-delay: {{key}}s;
-}
+
 {% endfor %}
 {% endif %}
 {% endwith %}
 {% endif %}
 /* END OF TRANSISTION SECTION */
+
+html *
+{
+   font-family: {% firstof config.font_family default_config.font_family %} !important;
+}
 
 </style>
  <script>
@@ -404,15 +398,15 @@ console.log("Centered");
 {% load i18n %}
 <body>
     <!-- Container -->
-    <div id="cover"><h1>Loading Classmo<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
+    <div id="cover"><h1>Powered by Classmo&nbsp&nbsp<i id="spinner" class="fa fa-spinner fa-spin"></i></h1></div>
         <div id="container">
             <!-- Header -->
             <div id="header">
                 <div id="branding">
                     <h1 id="site-name">
                     <a href="/">
-                      {%if config.logo == 'disabled' %}
-                      <span id="brand">{{config.logo}}</span>
+                      {%if config.small_logo %}
+                      <span><img src="{{config.small_logo}}" height="35px"></span>
                       {% else %}
                       {% firstof config.company default_config.company %}
                       {% endif %}
@@ -454,11 +448,11 @@ console.log("Centered");
                     <h1 class="card-title" id="card-title">{%firstof config.slogan default_config.slogan %}</h1>
 <!--                     <p style="display:block;width:100%;align-items:center;margin:auto;text-align:center; margin-top: 0px" class="card-text">Organize, schedule, meet, achieve</p>
                     <br> -->
-                    <a href="{% url 'schedules:register' %}" class="btn btn-primary blue-background signup-button">
+                    <a href="{% url 'schedules:register' %}" class="btn btn-primary signup-button">
                         <span>Signup</span>
                       </a>
                     <br>
-                    <a href="{% url 'login' %}" class="btn btn-primary blue-background signup-button">
+                    <a href="{% url 'login' %}" class="btn btn-primary signup-button">
                         <span>Already a member?</span> 
                     </a>
                 </div>

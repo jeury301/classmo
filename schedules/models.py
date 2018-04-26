@@ -361,6 +361,7 @@ class Config(models.Model):
     splash_license_1 = models.CharField(max_length=1280, default="", blank=True)
     splash_license_2 = models.CharField(max_length=1280, default="", blank=True)
     splash_license_3 = models.CharField(max_length=1280, default="", blank=True)
+    small_logo =models.CharField(max_length=1280,default="",blank=True)
     is_active = models.BooleanField(default=False)
 
     def __str__(self):

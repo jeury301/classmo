@@ -59,11 +59,11 @@
         <div>
             <small>
             {% if user.is_authenticated%}
-                <a href="#">Report</a>
+                <a id="post-title" href="#">Report</a>
                 |
-                <a href="{% url 'discussions:new_child' comment.comment.id %}">Reply</a>
+                <a id="post-title" href="{% url 'discussions:new_child' comment.comment.id %}">Reply</a>
             {% else %}
-                <a href="{% url 'login' %}">Log in to reply</a>
+                <a id="post-title" href="{% url 'login' %}">Log in to reply</a>
             {% endif %}
             </small>
         </div>

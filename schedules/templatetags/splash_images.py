@@ -32,10 +32,9 @@ def get_transition_info(dictionary):
 		l=l-(a+b)
 		image_of_nth.append(l)
 
-	
+
 	trans_info={"a":a,"b":b,"n":n,"t":t,"oplist":oplist,"image_of_nth":image_of_nth}
-	print("FUCKING TRANS_INFO")
-	print(trans_info)
+	
 	return trans_info
 
 

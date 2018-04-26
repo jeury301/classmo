@@ -7,6 +7,9 @@ services:
       #- "8080:80"
       #- "8000:80"
       - "80:80"
+      #- "8000:8000"
+      #- "80:80"
+
     volumes:
       ##- ./:/src
       - /home/mss87/classmo:/src
@@ -30,6 +33,7 @@ services:
       #- POSTGRES_USER:classmouser
       #- POSTGRES_PASSWORD:classmopassword
   web:
+    image: sidhumehtab/classmo_web
     build: .
     #ports:
     #  - "8000:8000"
@@ -38,6 +42,8 @@ services:
     expose:
       #- "8080"
       - "80"
+      #- "8000"
+      #- "80"
 
 volumes:
   pg_data: {}
