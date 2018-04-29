@@ -3,8 +3,9 @@ from django.contrib.auth.models import Group
 from django.utils import timezone
 from django.conf import settings
 
-from schedules.models import Subject, Location, Session, Profile
+from schedules.models import Subject, Location, Session, Profile, Config
 from setup_scripts.test_data import data
+from setup_scripts.config_data import config_data
 from setup_scripts.create_disc_demo import create_demo
 
 from datetime import datetime, timedelta
@@ -126,6 +127,46 @@ def create_sessions(data, settings, timezone, timedelta, Subject, Session, Locat
 
     print("Session data loaded to db")
 
+def create_configs(config_data, Config):
+    """Loading an initial set of configs to the database
+    """
+    print("Loading config data to db")
+    # retrieving subjects from data
+    configs = config_data['configs']
+
+    # for each config data, create a config entity in db
+    for config in configs:
+        try:
+            # avoiding duplicate configs
+            config_check = Config.objects.get(company=config['company'])
+        except Config.DoesNotExist:
+            # config with company name does not exists, let's create it
+            config_entity = Config(
+                company = config['company'],
+                primary_color = config['primary_color'],
+                secondary_color = config['secondary_color'],
+                logo = config['logo'],
+                slogan = config['slogan'],
+                font_family = config['font_family'],
+                welcome_title = config['welcome_title'],
+                welcome_body = config['welcome_body'],
+                all_courses_body = config['all_courses_body'],
+                my_courses_body = config['my_courses_body'],
+                discussion_body = config['discussion_body'],
+                primary_text_color = config['primary_text_color'],
+                secondary_text_color = config['secondary_text_color'],
+                jumbotron_color = config['jumbotron_color'],
+                splash_url_1 = config['splash_url_1'],
+                splash_url_2 = config['splash_url_2'],
+                splash_url_3 = config['splash_url_3'],
+                splash_license_1 = config['splash_license_1'],
+                splash_license_2 = config['splash_license_2'],
+                splash_license_3 = config['splash_license_3'],
+                small_logo = config['small_logo']
+            )
+            config_entity.save()
+    print("Config data loaded to db")
+
 def create_forums(settings, create_demo, Subject, User):
     """Creatin discussion data
     """
@@ -148,6 +189,8 @@ create_locations(data, Location)
 create_instructors(data, settings, User, Group, Profile)
 # initializing session data
 create_sessions(data, settings, timezone, timedelta, Subject,Session,Location, User)
+# initializing config data
+create_configs(config_data, Config)
 # initializing forum data
 create_forums(settings, create_demo, Subject, User)
 
