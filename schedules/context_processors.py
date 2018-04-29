@@ -92,7 +92,7 @@ def custom_config():
 
     # retrieving the first active custom configuration from db (latest modified)
     db_config = Config.objects.filter(
-        is_active=True).order_by('-modified_date').first()
+        is_active=True).order_by('-updated').first()
 
     # checking db contains an active configurations
     if db_config:

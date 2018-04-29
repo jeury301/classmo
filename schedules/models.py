@@ -338,7 +338,7 @@ class Profile(models.Model):
             final_fetch.append(d_object)
         return final_fetch
         
-class Config(BaseModel):
+class Config(models.Model):
     """Config contains metadata for the custom configuration
     """
     company = models.CharField(max_length=1280, 
@@ -372,6 +372,7 @@ class Config(BaseModel):
         default="", blank=True)
     small_logo =models.CharField(max_length=1280,default="",blank=True)
     is_active = models.BooleanField(default=False)
+    updated=models.DateTimeField(auto_now_add=False, auto_now=False)
 
     def __str__(self):
         return self.company
