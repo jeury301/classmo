@@ -6,7 +6,7 @@ from django.conf import settings
 from schedules.models import Subject, Location, Session, Profile, Config
 from setup_scripts.test_data_flight import data
 from setup_scripts.config_data import config_data
-from setup_scripts.create_disc_demo import create_demo
+from setup_scripts.create_disc_demo_flight import create_demo
 
 from datetime import datetime, timedelta
 
@@ -139,15 +139,6 @@ def create_configs(config_data, Config):
         try:
             # avoiding duplicate configs
             config_check = Config.objects.get(company=config['company'])
-            
-            is_active = False
-            # activating yoga configuration
-            if config['name'] == "flight":
-                is_active = True
-
-            config_check.is_active = is_active
-            config_check.save()
-            
         except Config.DoesNotExist:
             # config with company name does not exists, let's create it
 
