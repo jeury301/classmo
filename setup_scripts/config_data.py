@@ -78,7 +78,7 @@ config_data['configs'] = [
         "my_courses_body": ("Wow! Looks like you're taking to the sky soon!  Amazing!"),
         "discussion_body": ("Talk with other pilots in training to swap tips, stories, and advice.  It's a great way to network and connect - you never know, it might land you a job!"),
         "primary_text_color": "#ec4067",
-        "secondary_text_color": "#ef5d60",
+        "secondary_text_color": "#fbd8f3",
         "jumbotron_color":"#fbd8f3",
         "splash_url_1":"/static/images/flight_splash_background1.jpg",
         "splash_url_2":"/static/images/flight_splash_background2.jpg",
@@ -86,6 +86,6 @@ config_data['configs'] = [
         "splash_license_1":("Photo license: Public Domain"),
         "splash_license_2":("Photo license: Creative Commons (Felix Konig)"),
         "splash_license_3":("Photo license: Released into Public Domain"),
-        "small_logo":""
+        "small_logo":"/static/images/demo_logos/flightschool_logo_horiz.png"
     }
 ]
