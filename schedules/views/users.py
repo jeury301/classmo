@@ -13,8 +13,14 @@ from schedules.models import Profile, Session
 from discussions.models import Post, Comment
 from datetime import date
 from ..forms import UserRegistrationForm, UserProfileForm, UserAccountForm
+from django.contrib.auth.forms import PasswordChangeForm
 import json
 from django.conf import settings
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.contrib import messages
+
 
 
 
@@ -30,10 +36,13 @@ def index(request):
             for sesh in session_list:
                 sesh_list.append(sesh.session)
             temp=Session.order_by_upcoming(sesh_list)
+            ###print(temp,"THIS IS TEMP")
             for reg in session_list:
                 instructor=reg.session.instructor
-                l=Post.objects.filter(author=instructor).filter(subject=reg.session.subject).order_by('-created_date')[:5] 
+                l=Post.objects.filter(author=instructor).filter(subject=reg.session.subject).order_by('-created_date')
                 post_list+=l
+            session_list=temp
+            post_list=post_list[:4]
             return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
 
         if is_instructor:
@@ -48,6 +57,7 @@ def index(request):
                 l=Post.objects.filter(subject=subject).exclude(author=current_user).order_by('-created_date')[:5]
                 post_list+=l
             session_list=temp
+            post_list=post_list[:4]
             return render(request,'schedules/users/index.html',{"registrations":session_list,"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
         else:
             return render(request,'schedules/users/index.html',{"is_instructor":is_instructor,"is_student":is_student,"post_list":post_list})
@@ -97,10 +107,26 @@ def user_registration(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             email = form.cleaned_data['email']
+            try:
+                checkp = validate_password(password,user=None,password_validators=None)
+            except ValidationError as exc:
+               mess=exc
+               for m in mess:
+                messages.add_message(request,messages.ERROR,m)
+
+               return render(request, 'schedules/users/register.html', {
+                    'form': form
+                    })
+
+
+            
             # creating a user
-            user=User.objects.create_user(username,email,password)
+            if checkp is None:
+                user=User.objects.create_user(username,email,password)
 
             check = authenticate(request, username=username, password=password)
+
+            
             #return HttpResponse(json.dumps(form.cleaned_data), content_type='application/json')
 
             # authenticating user
@@ -118,7 +144,8 @@ def user_registration(request):
                 # redirect to a prfile
                 return redirect('schedules:index')
             else:
-                return HttpResponse("Something terrible happened")
+                form=UserRegistrationForm(request.POST)
+                return render(request, 'schedules/users/register.html', {'form': form})
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -220,3 +247,23 @@ def user_account(request):
         }
         form = UserAccountForm(initial=initial_data)
     return render(request, 'schedules/users/account.html', {'form': form})
+
+
+@login_required
+def pass_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('schedules:pass_change')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'schedules/users/pass_change.html', {
+        'form': form
+    })
+
+       

@@ -15,11 +15,6 @@ body {
 
 /* LINKS */
 
-a:link, a:visited {
-    color: #447e9b;
-    text-decoration: none;
-}
-
 a:focus, a:hover {
     color: #036;
 }
@@ -241,6 +236,35 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 
 /* TABLES */
 
+#comment-table 
+{
+    border-collapse: collapse;
+    border-color: #ccc;
+}
+
+#comment-table td, #comment-table th
+{
+    min-width:5em;
+    font-size: 13px;
+    line-height: 16px;
+     border-bottom:0px; 
+    vertical-align: top;
+    padding: 8px;
+    padding-bottom:0px;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+#comment-table th {
+    font-weight: 600;
+    text-align: left;
+    padding-bottom:2px;
+    /* border-right: 2px outset; */
+}
+#comment-table tr {
+    /* border-bottom:2px inset; */
+    /* border-left:1px dotted; */
+}
+
+}
 table {
     border-collapse: collapse;
     border-color: #ccc;
@@ -445,6 +469,10 @@ select[multiple] {
 }
 
 /* FORM BUTTONS */
+a.button { 
+    float:right; 
+    padding: 10px 15px; 
+} 
 
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: #79aec8;
@@ -453,10 +481,6 @@ select[multiple] {
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
-}
-
-a.button {
-    padding: 4px 5px;
 }
 
 .button:active, input[type=submit]:active, input[type=button]:active,
@@ -789,6 +813,7 @@ table#change-history tbody th {
     margin-right: -300px;
 }
 
+
 #footer {
     clear: both;
     padding: 10px;
@@ -850,10 +875,6 @@ table#change-history tbody th {
     color: #f5dd5d;
 }
 
-#branding h1, #branding h1 a:link, #branding h1 a:visited {
-    color: #f5dd5d;
-}
-
 #branding h2 {
     padding: 0 10px;
     font-size: 14px;
@@ -878,7 +899,7 @@ table#change-history tbody th {
 }
 
 #user-tools a {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    /*border-bottom: 1px solid rgba(255, 255, 255, 0.25); */
 }
 
 #user-tools a:focus, #user-tools a:hover {
@@ -975,4 +996,14 @@ table#change-history tbody th {
 
 .popup #header {
     padding: 10px 20px;
+}
+
+a:-webkit-any-link {
+    color: #417690;
+    cursor: pointer;
+    text-decoration:none;
+}
+
+a:hover:-webkit-any-link {
+    color: #274656;
 }

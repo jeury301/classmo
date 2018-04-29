@@ -29,6 +29,7 @@ urlpatterns = [
     path('register/',users.user_registration,name='register'),
     # User profile (all users)
     path('profile/',users.user_profile,name='profile'),
+    path('pass_change',users.pass_change,name='pass_change'),
     # User account (all users)
     path('account/',users.user_account,name='account'),
     path('subjects/<int:subject_id>/details',subjects.detail, name='detail'),

@@ -19,7 +19,8 @@ def subjects(request, request_type):
     user = request.user
     my_courses = ""
     all_courses = ""
-    
+    is_mine = False
+
     # check type of request
     if request_type == "all":
         # activating view for all subjects
@@ -29,16 +30,13 @@ def subjects(request, request_type):
         # activating view for user csubjects
         my_courses = "active-link-blue"
         subjects = Registration.subjects_for_student(user.id)
-
-        # checking if user has no subjects
-        if not bool(subjects):
-            # redirecting to all subjects
-            return redirect("schedules:subjects", "all")
+        is_mine = True
 
     context = {
         "courses": subjects,
         "my_courses":my_courses,
-        "all_courses":all_courses
+        "all_courses":all_courses,
+        "is_mine":is_mine
     }
     return render(request, 'schedules/subjects/list.html', context)
 
@@ -79,11 +77,6 @@ def sessions(request, subject_id, request_type):
         else:
             my_sessions = "active-link-blue"
             sessions = Session.my_sessions(subject_id, student.id)
-            
-            # checking if user has no sessions
-            if not bool(sessions):
-                # redirecting to all subjects
-                return redirect("schedules:sessions", subject_id, "all")
 
         context = {
             "sessions":sessions,

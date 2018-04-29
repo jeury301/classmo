@@ -7,7 +7,7 @@
 <div class="container">
     <div class="discuss-topnav">
         <small>
-            <a href="{% url 'discussions:list_posts' subject.id %}">
+            <a id="post-title" href="{% url 'discussions:list_posts' subject.id %}">
                 < Back to {{ subject.name }} forum
             </a>
         </small>
@@ -23,7 +23,7 @@
         {{ form.as_table }}
         </table>
         <br/>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" class="input-submit-btn" />
     </form>
 </div>
 

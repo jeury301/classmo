@@ -1,0 +1,5 @@
+usage
+
+java radix2 input_text_file output_text_file
+
+java radix2 f.txt g.txt

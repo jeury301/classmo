@@ -6,7 +6,7 @@
 
     <div class="general-topnav">
         <small>
-            <a href="{% url 'schedules:subjects' 'mine'%}">
+            <a id="post-title" href="{% url 'schedules:subjects' 'mine'%}">
                 < Back to Courses
             </a>
         </small>
@@ -19,6 +19,7 @@
                 <p>Here you can view and manage sessions for this course.</p>
                 <p><a href="{%url 'discussions:list_posts' subject.pk%}" style="text-decoration: underline;">{{subject}} forum</a></p>
             </div>
+            {%if all_sessions or sessions|length%}
             <table class="table dt-responsive table-hover" id="subjects">
                 <thead>
                     <tr>
@@ -49,6 +50,13 @@
                     {%endfor%}
                 </tbody>
             </table>
+            {%else%}
+            <div class="jumbotron general-top">
+                <h1><i class="fa fa-exclamation-triangle"></i> You don't have any sessions registered!</h1>
+                <p>Why not view all available sessions for this course?</p>
+                <a class="btn btn-primary button" style="float:none;" href="{%url 'schedules:sessions' subject.id 'all'%}" role="button"><span>View Sessions</Span></a>
+            </div>
+            {%endif%}
         </div>
         <div class="col-md-3">
             <div class="module filtered">

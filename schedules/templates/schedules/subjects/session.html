@@ -3,9 +3,9 @@
     <div class="general-topnav">
         <small>
             {%if is_instructor%}
-            <a href="{% url 'schedules:assignments' 'mine'%}">< Back to {{session.subject.name}}</a>
+            <a id="post-title" href="{% url 'schedules:assignments' 'mine'%}">< Back to {{session.subject.name}}</a>
             {%elif is_student%}
-            <a href="{% url 'schedules:sessions' session.subject.id 'mine' %}">< Back to {{session.subject.name}}</a>
+            <a id="post-title" href="{% url 'schedules:sessions' session.subject.id 'mine' %}">< Back to {{session.subject.name}}</a>
             {%endif%}
         </small>
     </div>
@@ -19,30 +19,35 @@
                 {%if is_student%}
                 <div class="card" id="changelist">
                     {%if is_registered%}
-                    <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <div class="card-block module filtered" id="toolbar" style="margin:0px;">
                         <h2 class="card-title" style="background: ">Registration Status</h2>
-                        <div style="padding: 10px;">
-                            <span class="badge badge-success">
-                                <h4>You are registered!</h4>
-                            </span>                   
-                        </div>
+                        <br>
+                        <div style="text-align:center">
+                            <span class="badge badge-success" style="display:inline-block;padding:15px;padding-right:30px;padding-left:30px; font-size:.8rem;font-family:Roboto,Lucida Grande,DejaVu Sans,Bitstream Vera Sans,Verdana,Arial,sans-serif;font-weight:400">
+                                You are registered!
+                            </span>
+                  </div>
                     </div>
                     {%else%}
-                    <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <div class="card-block module filtered" id="toolbar" style="margin:0px;">
                         <h2 class="card-title">Register for this session</h2>
-                        <div style="padding: 10px;">
-                            <form action="{% url 'schedules:registration' session.id %}" method="post">
+                        <br>
+                        <div>
+                            <form action="{% url 'schedules:registration' session.id %}" method="post" id="session_registration">
                                 {% csrf_token %}
                                 <input type="hidden" name="user_id" value="{{user.id}}">
-                                <input type="submit" class="submit-button" value="Register" />
+
                             </form>
+                            <div style="text-align:center">
+                            <a class="btn btn-primary button" style="display:inline-block;float:none;padding:10px;padding-left:30px;padding-right:30px;" href="javascript:submitForm()" role="button"><span>Register</span></a>
+                            </div>
                         </div>
                     </div>
                     {%endif%}
                 </div>
                 {%endif%}
             </div>
-            
+
             <div class="col-md-9">
                 <div class="card" id="changelist">
                     <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
@@ -87,4 +92,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function submitForm(){
+        $("#session_registration").submit();
+    }
+</script>
 {%endblock content%}

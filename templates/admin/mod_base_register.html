@@ -1,10 +1,28 @@
 {% extends "admin/base.html" %}
-
-{% block title %}{{ site_title|default:_('Classmo') }}{% endblock %}
+{% block title %}{%firstof config.company default_config.company%}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name" style="color: #F5DD5C;">
-    <a href="{% url 'schedules:index' %}" style="color: #F5DD5C;">{{ site_header|default:_('Classmo Register') }}</a>
+<style>
+#header {
+    background:{% firstof config.primary_color default_config.primary_color %};
+    color:{% firstof config.primary_text_color default_config.primary_text_color %};
+}
+#header a:link, #header a:visited {color:{% firstof config.primary_text_color default_config.primary_text_color %};}
+#reg-button {
+	background:{% firstof config.secondary_color default_config.secondary_color %};
+	color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+}
+  div a strong {color:{% firstof config.secondary_color default_config.secondary_color %};}
+ #login-button { 
+ 	background:{% firstof config.secondary_color default_config.secondary_color %}; 
+ 	color: {% firstof config.secondary_text_color default_config.secondary_text_color %};
+ }
+</style>
+
+<h1 id="site-name">
+    <a href="{% url 'schedules:index' %}" style="text-decoration: none;">
+        {%firstof config.company default_config.company%}
+    </a>
 </h1>
 {% endblock %}
 

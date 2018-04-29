@@ -1,6 +1,13 @@
 {% extends "admin/mod_base_register.html" %}
 {% load i18n static %}
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}" />
+
+<style>
+html *
+{
+   font-family: {% firstof config.font_family default_config.font_family %} !important;
+}
+</style>
 {{ form.media }}
 {% endblock %}
 {% block bodyclass %}{{ block.super }} login{% endblock %}
@@ -14,8 +21,8 @@
         </table>
         <br>
         <div>
-            <input type="submit" value="{% trans 'Register' %}" style="display:block;width:100%; font-size: 20px"/>
-        </div>    
+            <input id="reg-button" type="submit" value="{% trans 'Register' %}" style="display:block;width:100%; font-size: 20px"/>
+        </div>
     </form>
     <div style="padding-top: 20px; text-align: center;">
         <span style="text-align: center;">

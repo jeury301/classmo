@@ -10,7 +10,7 @@
     <div class="discuss-topnav">
 
         <small>
-        <a href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
+        <a id="post-title" href="{% url 'discussions:list_posts' post.post.subject.id %}">< Back to {{post.post.subject.name}} forum</a>
         </small>
         
     </div>
@@ -23,7 +23,7 @@
         {% for comment in comments %}
             {% if comment.rel_depth > 0 %}
                 {% for i in comment.depth_counter %}
-                <ul class="no-bullets">
+                <ul class="no-bullets nested-comment">
                 {% endfor %}
             {% endif %}
             {% if comment.rel_depth < 0 %}

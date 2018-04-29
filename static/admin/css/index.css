@@ -1,45 +1,18 @@
-#session-container
-{
-	/*background:linear-gradient(white,#79aec8,#417690);*/
-}
+.gravatar-header { font-size: 2.0rem;padding-right:.5rem;}
+ #gravatar-span {vertical-align:middle;}
+ .card-header h1 {display:inline;color:white;}
+ #time {float:right;color:white;}
+ #info-list {padding-right:40px;}
+ #top-element {padding-top:0;}
+ #top-element h3 {margin-top:.2em;padding:1px;}
+ #detail-button span {color:white;}
+ .jumbostron span{color:white;}
+ #comment-section h3 {display:inline-block;padding-right:.2rem;}
+ .post-listing {padding-left:15px;}
+ .post-listing a {margin-right:.5rem;color:#417690;}
+.glyph-link {float:right;}
+ .comment-header {background-color:#e9ecef;padding:0;padding-left:1rem;padding-bottom:.5rem;}
+ #changelist-filter ul {border-bottom:none;}
+ #row2 {background-color:#e9ecef;}
 
-#row2
-{	
-	/*background:linear-gradient(white,#79aec8,#417690);*/
-	background-color:#e9ecef;	
-}
-
-.gravatar-header span
-{
-	padding-right:.5rem;
-}
-
-.glyph-link
-{
-float:right;
-}
-.comment-header
-{
-	background-color:#e9ecef;
-	padding:0;
-	padding-left:1rem;
-	padding-bottom:.5rem;
-}
-.card-header
-{
-	background-color:#e9ecef;
-}
-
-a.button
-{
-	float:right;
-	background-color:#417690;
-	border-color:#417690;
-	padding: 10px 15px;
-}
-
-#changelist-filter ul
-{
-	border-bottom:none;
-}
 
