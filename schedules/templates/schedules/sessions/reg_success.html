@@ -2,11 +2,25 @@
 {% block content %}
 <div class="container">
     {% if error %}
-        <p>{{error}}</p>
+        <div class="jumbotron general-top">
+            <h1>{{error}}!</h1>
+        </div>
     {% else %}
-        <p>Registration Successful</p>
+        <div class="jumbotron general-top">
+            <h1>Registration successful! 
+                <i class="fa fa-check" style="color: #28a745"></i>
+                <i class="fa fa-check" style="color: #28a745"></i>
+            </h1>
+            <p>
+                <span class="btn-success" style="padding: 5px;">
+                    You are now registered for this course!
+                </span>
+            </p>
+         </div>
     {% endif %}
-    <a href="{% url 'schedules:session' session %}">Go back</a>
+    <a href="{% url 'schedules:session' session %}" class="btn btn-primary button" style="float:none;" role="button">
+        <span>Go back</span>
+    </a>
 </div>
 {% endblock %}
 

@@ -19,7 +19,7 @@
                 <p>Here you can view and manage sessions for this course.</p>
                 <p><a href="{%url 'discussions:list_posts' subject.pk%}" style="text-decoration: underline;">{{subject}} forum</a></p>
             </div>
-            {%if sessions|length%}
+            {%if all_sessions or sessions|length%}
             <table class="table dt-responsive table-hover" id="subjects">
                 <thead>
                     <tr>
@@ -52,10 +52,9 @@
             </table>
             {%else%}
             <div class="jumbotron general-top">
-                <h3><i class="fa fa-exclamation-triangle"></i> 
-                    You don't have any sessions registered</h3>
-                <br/>
-                <p>Why not view <a class="btn success-button" href="{%url 'schedules:sessions' subject.id 'all'%}">available sessions</a> for this course?</p>
+                <h1><i class="fa fa-exclamation-triangle"></i> You don't have any sessions registered!</h1>
+                <p>Why not view all available sessions for this course?</p>
+                <a class="btn btn-primary button" style="float:none;" href="{%url 'schedules:sessions' subject.id 'all'%}" role="button"><span>View Sessions</Span></a>
             </div>
             {%endif%}
         </div>

@@ -338,12 +338,15 @@ class Profile(models.Model):
             final_fetch.append(d_object)
         return final_fetch
         
-class Config(models.Model):
+class Config(BaseModel):
     """Config contains metadata for the custom configuration
     """
-    company = models.CharField(max_length=1280, default="", blank=True)
-    primary_color = models.CharField(max_length=7, default="#417690", blank=True)
-    secondary_color = models.CharField(max_length=7, default="#79aec8", blank=True)
+    company = models.CharField(max_length=1280, 
+        default="", blank=True)
+    primary_color = models.CharField(max_length=7, 
+        default="#417690", blank=True)
+    secondary_color = models.CharField(max_length=7, 
+        default="#79aec8", blank=True)
     logo = models.CharField(max_length=1280, default="", blank=True)
     slogan = models.CharField(max_length=1280, default="", blank=True)
     font_family = models.CharField(max_length=1280, default="", blank=True)
@@ -352,15 +355,21 @@ class Config(models.Model):
     all_courses_body = models.CharField(max_length=1280, default="", blank=True)
     my_courses_body = models.CharField(max_length=1280, default="", blank=True)
     discussion_body = models.CharField(max_length=1280, default="", blank=True)
-    primary_text_color = models.CharField(max_length=7, default="#f5dd5d", blank=True)
-    secondary_text_color = models.CharField(max_length=7, default="#ffffff", blank=True)
-    jumbotron_color = models.CharField(max_length=7, default="#eceeef", blank=True)
+    primary_text_color = models.CharField(max_length=7, 
+        default="#f5dd5d", blank=True)
+    secondary_text_color = models.CharField(max_length=7, 
+        default="#ffffff", blank=True)
+    jumbotron_color = models.CharField(max_length=7, 
+        default="#eceeef", blank=True)
     splash_url_1 = models.CharField(max_length=1280, default="", blank=True)
     splash_url_2 = models.CharField(max_length=1280, default="", blank=True)
     splash_url_3 = models.CharField(max_length=1280, default="", blank=True)
-    splash_license_1 = models.CharField(max_length=1280, default="", blank=True)
-    splash_license_2 = models.CharField(max_length=1280, default="", blank=True)
-    splash_license_3 = models.CharField(max_length=1280, default="", blank=True)
+    splash_license_1 = models.CharField(max_length=1280, 
+        default="", blank=True)
+    splash_license_2 = models.CharField(max_length=1280, 
+        default="", blank=True)
+    splash_license_3 = models.CharField(max_length=1280, 
+        default="", blank=True)
     small_logo =models.CharField(max_length=1280,default="",blank=True)
     is_active = models.BooleanField(default=False)
 

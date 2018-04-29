@@ -48,7 +48,7 @@
                                     {%endif%}
                                     &nbsp;&nbsp;
                                     <a class="btn btn-primary button" style="float:none;" href="{%url 'discussions:list_posts' course.pk%}" role="button">
-                                        <Span>Discussion forum</Span>
+                                        <span>Discussion forum</Span>
                                     </a>
                                 </p>
                             </div>
@@ -63,10 +63,9 @@
                 {%endfor%}
                 {%else%}
                 <div class="jumbotron general-top">
-                
-                <h3><i class="fa fa-exclamation-triangle"></i> You are not registered to any courses!</h3>
-                    <br/>
-                    <p>Why not view <a class="btn success-button" href="{%url 'schedules:subjects' 'all'%}">all available courses</a> to register?</p>
+                    <h1><i class="fa fa-exclamation-triangle"></i> You are not registered to any courses!</h1>
+                        <p>Why not view all available courses to register?</p>
+                        <a class="btn btn-primary button" style="float:none;" href="{%url 'schedules:subjects' 'all'%}" role="button"><span>View Courses</Span></a>
                 </div>
                 {%endif%}
                 </div>

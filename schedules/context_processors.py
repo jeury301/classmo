@@ -10,8 +10,10 @@ def global_context(request):
     used by any template.
     """
     current_user = request.user
-    is_instructor = portal_tools.is_member(current_user, settings.GROUPS["INSTRUCTORS"])
-    is_student = portal_tools.is_member(current_user, settings.GROUPS["STUDENTS"])
+    is_instructor = portal_tools.is_member(current_user, 
+        settings.GROUPS["INSTRUCTORS"])
+    is_student = portal_tools.is_member(current_user, 
+        settings.GROUPS["STUDENTS"])
 
     role = "user"
 
@@ -34,19 +36,29 @@ def global_context(request):
         "secondary_color": "#79aec8",
         "logo": "",
         "slogan": "Organize. Connect. Achieve.",
-        "font_family": '"Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif',
+        "font_family": ('"Roboto","Lucida Grande",\
+            "DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif'),
         "welcome_title": "Welcome to Classmo",
-        "welcome_body": "Classmo is the place to succeed, click below to get registered!",
-        "all_courses_body": "Here you can find all the courses available for regisration.  Click \"More Info\" to see sessions available for registration",
-        "my_courses_body": "These are courses that you've registered for.  You can check your existing and past registrations, and register for new sessions.",
-        "discussion_body": "Here you can ask questions and get answers for a variety of subjects",
+        "welcome_body": ("Classmo is the place to succeed, click below\
+            to get registered!"),
+        "all_courses_body": ("Here you can find all the courses available for \
+            regisration.  Click \"More Info\" to see sessions available \
+            for registration"),
+        "my_courses_body": ("These are courses that you've registered for.  \
+            You can check your existing and past registrations, and register \
+            for new sessions."),
+        "discussion_body": ("Here you can ask questions and get answers for a \
+            variety of subjects"),
         "primary_text_color": "#f5dd5d",
         "secondary_text_color": "#ffffff",
         "jumbotron_color":"#eceeef",
         "splash_images": {
-            "images/splash_background1.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0",
-            "images/splash_background3.jpg":"Photo by Emgonzalez License: Public Domain",
-            "images/splash_background2.jpg":"Photo by DAVID ILIFF. License: CC-BY-SA 3.0"
+            "images/splash_background1.jpg":("Photo by DAVID ILIFF. \
+                License: CC-BY-SA 3.0"),
+            "images/splash_background3.jpg":("Photo by Emgonzalez. \
+                License: Public Domain"),
+            "images/splash_background2.jpg":("Photo by DAVID ILIFF. \
+                License: CC-BY-SA 3.0")
         }
     }
     
@@ -78,8 +90,9 @@ def custom_config():
     add_splash = True
     splash_images = {}
 
-    # retrieving the first active custom configuration from db
-    db_config = Config.objects.filter(is_active=True).first()
+    # retrieving the first active custom configuration from db (latest modified)
+    db_config = Config.objects.filter(
+        is_active=True).order_by('-modified_date').first()
 
     # checking db contains an active configurations
     if db_config:

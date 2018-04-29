@@ -19,23 +19,24 @@
                 {%if is_student%}
                 <div class="card" id="changelist">
                     {%if is_registered%}
-                    <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <div class="card-block module filtered" id="toolbar">
                         <h2 class="card-title" style="background: ">Registration Status</h2>
-                        <div style="padding: 10px;">
-                            <span class="badge badge-success">
-                                <h4>You are registered!</h4>
-                            </span>                   
-                        </div>
+                        <br>
+                        <span class="btn-success" style="padding: 10px;">
+                            You are registered!
+                        </span>                   
                     </div>
                     {%else%}
-                    <div class="card-block module filtered" id="toolbar" style="padding: 20px;">
+                    <div class="card-block module filtered" id="toolbar">
                         <h2 class="card-title">Register for this session</h2>
-                        <div style="padding: 10px;">
-                            <form action="{% url 'schedules:registration' session.id %}" method="post">
+                        <br>
+                        <div>
+                            <form action="{% url 'schedules:registration' session.id %}" method="post" id="session_registration">
                                 {% csrf_token %}
                                 <input type="hidden" name="user_id" value="{{user.id}}">
-                                <input type="submit" class="submit-button" value="Register" />
+                                
                             </form>
+                            <a class="btn btn-primary button" style="float:none;" href="javascript:submitForm()" role="button"><span>Register</Span></a>
                         </div>
                     </div>
                     {%endif%}
@@ -87,4 +88,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function submitForm(){
+        $("#session_registration").submit();
+    }
+</script>
 {%endblock content%}
