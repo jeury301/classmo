@@ -3,9 +3,9 @@
     <div class="general-topnav">
         <small>
             {%if is_instructor%}
-            <a href="{% url 'schedules:assignments' 'mine'%}">< Back to {{session.subject.name}}</a>
+            <a id="post-title" href="{% url 'schedules:assignments' 'mine'%}">< Back to {{session.subject.name}}</a>
             {%elif is_student%}
-            <a href="{% url 'schedules:sessions' session.subject.id 'mine' %}">< Back to {{session.subject.name}}</a>
+            <a id="post-title" href="{% url 'schedules:sessions' session.subject.id 'mine' %}">< Back to {{session.subject.name}}</a>
             {%endif%}
         </small>
     </div>
@@ -24,7 +24,7 @@
                         <br>
                         <span class="btn-success" style="padding: 10px;">
                             You are registered!
-                        </span>                   
+                        </span>
                     </div>
                     {%else%}
                     <div class="card-block module filtered" id="toolbar">
@@ -34,7 +34,7 @@
                             <form action="{% url 'schedules:registration' session.id %}" method="post" id="session_registration">
                                 {% csrf_token %}
                                 <input type="hidden" name="user_id" value="{{user.id}}">
-                                
+
                             </form>
                             <a class="btn btn-primary button" style="float:none;" href="javascript:submitForm()" role="button"><span>Register</Span></a>
                         </div>
@@ -43,7 +43,7 @@
                 </div>
                 {%endif%}
             </div>
-            
+
             <div class="col-md-9">
                 <div class="card" id="changelist">
                     <div class="card-block module filtered" id="toolbar" style="padding: 20px;">

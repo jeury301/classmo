@@ -9,7 +9,6 @@
         <div class="jumbotron general-top">
             <h1>Registration successful! 
                 <i class="fa fa-check" style="color: #28a745"></i>
-                <i class="fa fa-check" style="color: #28a745"></i>
             </h1>
             <p>
                 <span class="btn-success" style="padding: 5px;">
@@ -19,7 +18,10 @@
          </div>
     {% endif %}
     <a href="{% url 'schedules:session' session %}" class="btn btn-primary button" style="float:none;" role="button">
-        <span>Go back</span>
+        <span>View Session Details</span>
+    </a>
+    <a href="{% url 'schedules:index' %}" class="btn btn-primary button" style="float:none;" role="button">
+        <span>Home</span>
     </a>
 </div>
 {% endblock %}
