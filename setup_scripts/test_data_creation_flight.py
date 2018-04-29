@@ -139,6 +139,14 @@ def create_configs(config_data, Config):
         try:
             # avoiding duplicate configs
             config_check = Config.objects.get(company=config['company'])
+
+            is_active = False
+            # activating flight configuration
+            if config['name'] == "flight":
+                is_active = True
+
+            config_check.is_active = is_active
+            config_check.save()
         except Config.DoesNotExist:
             # config with company name does not exists, let's create it
 
