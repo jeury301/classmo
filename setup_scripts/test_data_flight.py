@@ -8,11 +8,11 @@ data = {}
 data['subjects'] = {
     "flight":[
             {
-                "name": "Intro to Flight,
+                "name": "Intro to Flight",
                 "description": "This is a course aimed at absolute beginners who are learn how to fly.  Basic concepts, like flapping your arms wildly to create lift, are touched on.  At the end of the session, participants will have an understanding of what it means to fly, as compared with walking or swimming."
             },
             {
-                "name": "Navigation,
+                "name": "Navigation",
                 "description":"Topics include vectors, directions, yaw, and all that good stuff."
             },
             {
@@ -28,7 +28,7 @@ data['subjects'] = {
                 "description": "Basically like flying a plane, expect there's a lot more spinning involved.  Pilots learn the basics of helicopters by spinning around until they get dizzy, then try to pilot a surplus Apache attack helicopter we purchased from the Army-Navy surplus store on Route 36."
             },
             {
-                "name":"Water Landings,
+                "name":"Water Landings",
                 "description":"Live out your Sully Sullenberger fantasy by crash-landing a Cessna into Lake Michigan.  Definitely bring a bathing suit for this one!"
             }
     ]
@@ -43,7 +43,7 @@ data['locations'] = [
         "address_1": "321 Airport Access Road",
         "city": "Milwaulkee",
         "state": "WI",
-        "zip_code": "56312"
+        "zip_code": "56312",
         "country": "United States"
     },
     {
@@ -52,7 +52,7 @@ data['locations'] = [
         "address_1": "321 Airport Access Road",
         "city": "Milwaulkee",
         "state": "WI",
-        "zip_code": "56312"
+        "zip_code": "56312",
         "country": "United States"
     },
     {
@@ -61,7 +61,7 @@ data['locations'] = [
         "address_1": "321 Airport Access Road",
         "city": "Milwaulkee",
         "state": "WI",
-        "zip_code": "56312"
+        "zip_code": "56312",
         "country": "United States"
     }
 ]
