@@ -19,17 +19,17 @@
                 {%if is_student%}
                 <div class="card" id="changelist">
                     {%if is_registered%}
-                    <div class="card-block module filtered" id="toolbar">
+                    <div class="card-block module filtered" id="toolbar" style="margin:0px;">
                         <h2 class="card-title" style="background: ">Registration Status</h2>
                         <br>
-                        <p>
-                            <span class="btn-success" style="padding: 10px; margin-left: -10px">
+                        <div style="text-align:center">
+                            <span class="badge badge-success" style="display:inline-block;padding:15px;padding-right:30px;padding-left:30px; font-size:.8rem;font-family:Roboto,Lucida Grande,DejaVu Sans,Bitstream Vera Sans,Verdana,Arial,sans-serif;font-weight:400">
                                 You are registered!
                             </span>
-                        </p>
+                  </div>
                     </div>
                     {%else%}
-                    <div class="card-block module filtered" id="toolbar">
+                    <div class="card-block module filtered" id="toolbar" style="margin:0px;">
                         <h2 class="card-title">Register for this session</h2>
                         <br>
                         <div>
@@ -38,7 +38,9 @@
                                 <input type="hidden" name="user_id" value="{{user.id}}">
 
                             </form>
-                            <a class="btn btn-primary button" style="float:none;" href="javascript:submitForm()" role="button"><span>Register</Span></a>
+                            <div style="text-align:center">
+                            <a class="btn btn-primary button" style="display:inline-block;float:none;padding:10px;padding-left:30px;padding-right:30px;" href="javascript:submitForm()" role="button"><span>Register</span></a>
+                            </div>
                         </div>
                     </div>
                     {%endif%}
