@@ -4,9 +4,9 @@ from django.utils import timezone
 from django.conf import settings
 
 from schedules.models import Subject, Location, Session, Profile, Config
-from setup_scripts.test_data import data
+from setup_scripts.test_data_yoga import data
 from setup_scripts.config_data import config_data
-from setup_scripts.create_disc_demo import create_demo
+from setup_scripts.create_disc_demo_yoga import create_demo
 
 from datetime import datetime, timedelta
 
@@ -15,7 +15,7 @@ def create_subjects(data, Subject):
     """
     print("Loading subject data to db")
     # retrieving subjects from data
-    subjects = data['subjects']['cs']
+    subjects = data['subjects']['yoga']
 
     # for each subject data, create a subject entity in db
     for subject in subjects:
@@ -139,8 +139,22 @@ def create_configs(config_data, Config):
         try:
             # avoiding duplicate configs
             config_check = Config.objects.get(company=config['company'])
+
+            is_active = False
+            # activating yoga configuration
+            if config['name'] == "yoga":
+                is_active = True
+
+            config_check.is_active = is_active
+            config_check.save()
         except Config.DoesNotExist:
             # config with company name does not exists, let's create it
+
+            is_active = False
+            # activating yoga configuration
+            if config['name'] == "yoga":
+                is_active = True
+
             config_entity = Config(
                 company = config['company'],
                 primary_color = config['primary_color'],
@@ -162,7 +176,8 @@ def create_configs(config_data, Config):
                 splash_license_1 = config['splash_license_1'],
                 splash_license_2 = config['splash_license_2'],
                 splash_license_3 = config['splash_license_3'],
-                small_logo = config['small_logo']
+                small_logo = config['small_logo'],
+                is_active = is_active
             )
             config_entity.save()
     print("Config data loaded to db")
