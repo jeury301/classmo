@@ -36,29 +36,29 @@ def global_context(request):
         "secondary_color": "#79aec8",
         "logo": "",
         "slogan": "Organize. Connect. Achieve.",
-        "font_family": ('"Roboto","Lucida Grande",\
-            "DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif'),
+        "font_family": ('"Roboto","Lucida Grande",'
+            '"DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif'),
         "welcome_title": "Welcome to Classmo",
-        "welcome_body": ("Classmo is the place to succeed, click below\
-            to get registered!"),
-        "all_courses_body": ("Here you can find all the courses available for \
-            regisration.  Click \"More Info\" to see sessions available \
-            for registration"),
-        "my_courses_body": ("These are courses that you've registered for.  \
-            You can check your existing and past registrations, and register \
-            for new sessions."),
-        "discussion_body": ("Here you can ask questions and get answers for a \
-            variety of subjects"),
+        "welcome_body": ("Classmo is the place to succeed, click below "
+            "to get registered!"),
+        "all_courses_body": ("Here you can find all the courses available for "
+            "regisration.  Click \"More Info\" to see sessions available "
+            "for registration"),
+        "my_courses_body": ("These are courses that you've registered for. "
+            "You can check your existing and past registrations, and register "
+            "for new sessions."),
+        "discussion_body": ("Here you can ask questions and get answers for a "
+            "variety of subjects"),
         "primary_text_color": "#f5dd5d",
         "secondary_text_color": "#ffffff",
         "jumbotron_color":"#eceeef",
         "splash_images": {
-            "images/splash_background1.jpg":("Photo by DAVID ILIFF. \
-                License: CC-BY-SA 3.0"),
-            "images/splash_background3.jpg":("Photo by Emgonzalez. \
-                License: Public Domain"),
-            "images/splash_background2.jpg":("Photo by DAVID ILIFF. \
-                License: CC-BY-SA 3.0")
+            "images/splash_background1.jpg":("Photo by DAVID ILIFF. "
+                "License: CC-BY-SA 3.0"),
+            "images/splash_background3.jpg":("Photo by Emgonzalez. "
+                "License: Public Domain"),
+            "images/splash_background2.jpg":("Photo by DAVID ILIFF. "
+                "License: CC-BY-SA 3.0")
         }
     }
     
