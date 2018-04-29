@@ -162,7 +162,7 @@ def create_configs(config_data, Config):
                 splash_license_1 = config['splash_license_1'],
                 splash_license_2 = config['splash_license_2'],
                 splash_license_3 = config['splash_license_3'],
-                small_logo = config['small_logo'],
+                small_logo = config['small_logo']
             )
             config_entity.save()
     print("Config data loaded to db")
@@ -189,7 +189,7 @@ create_locations(data, Location)
 create_instructors(data, settings, User, Group, Profile)
 # initializing session data
 create_sessions(data, settings, timezone, timedelta, Subject,Session,Location, User)
-# initializing subject data
+# initializing config data
 create_configs(config_data, Config)
 # initializing forum data
 create_forums(settings, create_demo, Subject, User)
