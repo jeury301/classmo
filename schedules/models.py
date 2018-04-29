@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from operator import itemgetter 
+from operator import itemgetter
 from collections import OrderedDict
 from django.utils import timezone
 
@@ -28,7 +28,7 @@ class BaseModel(models.Model):
 
 
 class Subject(BaseModel):
-    """Subject its a dump table that contains the list of subjects that the 
+    """Subject its a dump table that contains the list of subjects that the
     system supports
     """
     name = models.CharField(max_length=200)
@@ -124,16 +124,16 @@ class Session(BaseModel):
         times_list=OrderedDict(sorted(times_list.items(),key=itemgetter(0)))
         i=0
         for key, value in times_list.items():
-            
+
             ordered_sessions.append(value)
             print(key," ",ordered_sessions[i])
             i=i+1
         return ordered_sessions
 
 
-                
 
-    @classmethod    
+
+    @classmethod
     def instructor_assignments(self,instructor):
         """Returns list of sessions assigned to current instructor
         """
@@ -141,7 +141,7 @@ class Session(BaseModel):
 
     @classmethod
     def other_sessions(self, subject_id, student_id):
-        """Returns old sessions for a given subject in which the current 
+        """Returns old sessions for a given subject in which the current
         student does not belong to
         """
         subject_sessions = self.objects.filter(subject=subject_id)
@@ -154,9 +154,9 @@ class Session(BaseModel):
             print("Checking other sessions")
             try:
                 print("Checking count sessions")
-                print(Registration.student_registration_for_session(student_id, 
+                print(Registration.student_registration_for_session(student_id,
                     session.id))
-                if Registration.student_registration_for_session(student_id, 
+                if Registration.student_registration_for_session(student_id,
                     session.id):
                     # student is registered for session, ignored.
                     pass
@@ -167,7 +167,7 @@ class Session(BaseModel):
 
     @classmethod
     def my_sessions(self, subject_id, student_id):
-        """Return current sessions for subject in which a student has been 
+        """Return current sessions for subject in which a student has been
         registered
         """
         subject_sessions = self.objects.filter(subject=subject_id)
@@ -176,7 +176,7 @@ class Session(BaseModel):
         for session in subject_sessions:
             print("Checking my sessions")
             try:
-                if Registration.student_registration_for_session(student_id, 
+                if Registration.student_registration_for_session(student_id,
                     session.id):
                     # student is registered for session
                     final_sessions.append(session)
@@ -214,7 +214,7 @@ class Registration(BaseModel):
         return super(Registration, self).delete(*args, **kwargs)
 
     def registration_validator(self):
-        """Validating registration before creation. A registration will be 
+        """Validating registration before creation. A registration will be
         created, only if any of the following violations occur:
         - registered_students == max_capacity
         - some undefined ones yet
@@ -231,7 +231,7 @@ class Registration(BaseModel):
             # session is full
             violations.append(1)
         return bool(violations)
-    
+
     @classmethod
     def fetch_all(cls):
         """Fetches list of objects
@@ -241,7 +241,7 @@ class Registration(BaseModel):
             final_fetch.append(d_object)
         return final_fetch
 
-    @classmethod    
+    @classmethod
     def student_registrations(cls,student):
         """Returns list of registrations for given students
         """
@@ -270,7 +270,7 @@ class Registration(BaseModel):
             # for registration check if subject is in list
             if registration.session.subject not in subjects:
                 # new subject
-                subjects.append(registration.session.subject) 
+                subjects.append(registration.session.subject)
         return subjects
 
 
@@ -288,7 +288,7 @@ class Homework(BaseModel):
 
 
 class Profile(models.Model):
-    """Profile contains metadata from the user that are not essential, 
+    """Profile contains metadata from the user that are not essential,
     but its useful to have
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -337,15 +337,15 @@ class Profile(models.Model):
         for d_object in cls.objects.all():
             final_fetch.append(d_object)
         return final_fetch
-        
+
 class Config(models.Model):
     """Config contains metadata for the custom configuration
     """
-    company = models.CharField(max_length=1280, 
+    company = models.CharField(max_length=1280,
         default="", blank=True)
-    primary_color = models.CharField(max_length=7, 
+    primary_color = models.CharField(max_length=7,
         default="#417690", blank=True)
-    secondary_color = models.CharField(max_length=7, 
+    secondary_color = models.CharField(max_length=7,
         default="#79aec8", blank=True)
     logo = models.CharField(max_length=1280, default="", blank=True)
     slogan = models.CharField(max_length=1280, default="", blank=True)
@@ -355,29 +355,24 @@ class Config(models.Model):
     all_courses_body = models.CharField(max_length=1280, default="", blank=True)
     my_courses_body = models.CharField(max_length=1280, default="", blank=True)
     discussion_body = models.CharField(max_length=1280, default="", blank=True)
-    primary_text_color = models.CharField(max_length=7, 
+    primary_text_color = models.CharField(max_length=7,
         default="#f5dd5d", blank=True)
-    secondary_text_color = models.CharField(max_length=7, 
+    secondary_text_color = models.CharField(max_length=7,
         default="#ffffff", blank=True)
-    jumbotron_color = models.CharField(max_length=7, 
+    jumbotron_color = models.CharField(max_length=7,
         default="#eceeef", blank=True)
     splash_url_1 = models.CharField(max_length=1280, default="", blank=True)
     splash_url_2 = models.CharField(max_length=1280, default="", blank=True)
     splash_url_3 = models.CharField(max_length=1280, default="", blank=True)
-    splash_license_1 = models.CharField(max_length=1280, 
+    splash_license_1 = models.CharField(max_length=1280,
         default="", blank=True)
-    splash_license_2 = models.CharField(max_length=1280, 
+    splash_license_2 = models.CharField(max_length=1280,
         default="", blank=True)
-    splash_license_3 = models.CharField(max_length=1280, 
+    splash_license_3 = models.CharField(max_length=1280,
         default="", blank=True)
     small_logo =models.CharField(max_length=1280,default="",blank=True)
     is_active = models.BooleanField(default=False)
-    updated=models.DateTimeField(auto_now_add=False, auto_now=False)
+    updated=models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.company
-
-
-
-
-
