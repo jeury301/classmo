@@ -304,7 +304,7 @@ font-size:.5rem;
 }
 
 {% for key in trans_info.image_of_nth %}
-#cf img:nth-of-type({{forloop.counter}}) {
+#cf img:nth-of-type({{forloop.counter}}), #cf span:nth-of-type({{forloop.counter}}) {
   animation-delay: {{key}}s;
 }
 

@@ -130,10 +130,15 @@ html *
 .jumbotron {
     background-color: {% firstof config.jumbotron_color default_config.jumbotron_color %};
 }
-
+/* Overides the green color on the data tables view buttons on view students */
 .success-button
 {
     background-color: {% firstof config.primary_color default_config.primary_color %}!important;
+}
+
+.default-button:hover, .success-button:hover
+{
+    background-color: {% firstof config.secondary_color default_config.secondary_color %}!important;
 }
 
 
@@ -175,7 +180,7 @@ html *
                         {% endif %} 
                         {% if user.has_usable_password %}
                         <span id=user-tools2>
-                        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>/ 
+                        <a href="{% url 'schedules:pass_change' %}">{% trans 'Change password' %}</a>/ 
                         {% endif %}
                         <a href="{% url 'schedules:profile' %}">{% trans 'Account Management' %}</a>/ 
                         <a href="{% url 'logout' %}?next=/">{% trans 'Log out' %}</a> 
