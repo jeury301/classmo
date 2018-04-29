@@ -54,9 +54,9 @@ config_data['configs'] = [
         "primary_text_color": "#f5dd5d",
         "secondary_text_color": "#ffffff",
         "jumbotron_color":"#eceeef",
-        "splash_url_1":"images/splash_background1.jpg",
-        "splash_url_2":"images/splash_background3.jpg",
-        "splash_url_3":"images/splash_background2.jpg",
+        "splash_url_1":"/static/images/splash_background1.jpg",
+        "splash_url_2":"/static/images/splash_background3.jpg",
+        "splash_url_3":"/static/images/splash_background2.jpg",
         "splash_license_1":("Photo by DAVID ILIFF. "
                 "License: CC-BY-SA 3.0"),
         "splash_license_2":("Photo by Emgonzalez. "
