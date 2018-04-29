@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 
 from schedules.models import Subject, Location, Session, Profile
-from setup_scripts.test_data import data
+from setup_scripts.test_data_yoga import data
 from setup_scripts.create_disc_demo import create_demo
 
 from datetime import datetime, timedelta
@@ -14,7 +14,7 @@ def create_subjects(data, Subject):
     """
     print("Loading subject data to db")
     # retrieving subjects from data
-    subjects = data['subjects']['cs']
+    subjects = data['subjects']['yoga']
 
     # for each subject data, create a subject entity in db
     for subject in subjects:
