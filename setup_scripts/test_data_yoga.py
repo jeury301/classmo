@@ -121,14 +121,14 @@ data['instructors'] = [
 data['sessions'] = [
     {
         "name":"Morning",
-        "instructor":"llay"
+        "instructor":"hlee"
     },
     {
         "name":"Afternoon",
-        "instructor":"gryan"
+        "instructor":"yberra"
     },
     {
         "name":"Evening",
-        "instructor":"asohn"
+        "instructor":"myogi"
     }
 ]
