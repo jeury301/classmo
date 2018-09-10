@@ -1,4 +1,4 @@
-ompiled source #
+Compiled source #
 ###################
 *.com
 *.class
@@ -49,6 +49,7 @@ settings.py
 settings_v2.py
 settingsDOCKER.py
 settingsLOCALHOST.py
+settingsOLD.py
 
 # Django stuff #
 ################
