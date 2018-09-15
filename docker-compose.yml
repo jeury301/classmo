@@ -4,8 +4,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8000:8000"
-      #- "80:80"
+      - "80:80"
 
     volumes:
       - ./:/src
@@ -29,13 +28,10 @@ services:
   web:
     image: sidhumehtab/classmo_web
     build: .
-    ##ports:
-      ##- "8000:8000"
     depends_on:
       - db
     expose:
-      - "8000"
-      #- "80"
+      - "80"
 
 volumes:
   pg_data: {}

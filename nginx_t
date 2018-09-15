@@ -1,13 +1,13 @@
-upstream web {  
+upstream web {
   ip_hash;
-  server web:8000;
+  server web:80;
 }
 
 server {
 
-    location /static/ {    
-      autoindex on;    
-      alias /src/static/; 
+    location /static/ {
+      autoindex on;
+      alias /src/static/;
     }
 
     location / {
@@ -16,6 +16,6 @@ server {
     }
 
     listen 80 default_server;
-    ##listen 8000;
+    ##listen 80;
     server_name localhost;
 }
